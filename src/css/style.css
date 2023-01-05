@@ -1,0 +1,64 @@
+:root {
+  font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
+  font-size: 20px;
+  line-height: 24px;
+  font-weight: 400;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  display: flex;
+  place-items: center;
+  width: 100vw;
+  height: 100vh;
+  text-align: center;
+}
+
+tr {
+  line-height: 25px;
+  min-height: 25px;
+  height: 25px;
+}
+
+#server-section {
+  width: 100vw;
+  height: 10vh;
+}
+
+#server-section .server-icon {
+  height: 6vh;
+  margin: auto;
+}
+
+#folder-section {
+  width: 100vw;
+  height: 15vh;
+}
+
+#folder-section #folder-buttons {
+  margin-top: 5px;
+}
+
+#folder-section > #folder-selector > select{
+  font-size: 30px;
+}
+
+#table-section {
+  width: 100vw;
+  height: 75vh;
+}
+
+#table-section button {
+  margin-top: 10px;
+}
+
+#table-section .table-wrapper {
+  height: 60vh;
+  overflow-y: auto;
+}
