@@ -10,7 +10,9 @@ function createWindow () {
     }
   })
 
-  win.webContents.openDevTools()
+  win.setResizable(false);
+
+  // win.webContents.openDevTools()
 
   win.loadFile('./src/views/index.html')
 }

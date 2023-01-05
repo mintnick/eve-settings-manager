@@ -1,6 +1,6 @@
 :root {
   font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
-  font-size: 20px;
+  font-size: 16px;
   line-height: 24px;
   font-weight: 400;
 
@@ -28,11 +28,11 @@ tr {
 
 #server-section {
   width: 100vw;
-  height: 10vh;
+  height: 8vh;
 }
 
 #server-section .server-icon {
-  height: 6vh;
+  height: 4vh;
   margin: auto;
 }
 
