@@ -35,7 +35,7 @@ async function getServerStatus() {
   const locale = require('../locales/' + language + '.json')
   const serverStatus = $('#server-status')
   const playerCount = $('#player-count')
-  let status, players;
+  let status, players, cssClass;
 
   const res = await phin({
     'url': urls.status[server],
@@ -43,15 +43,19 @@ async function getServerStatus() {
   })
   if (res.statusCode == 504) {
     status = locale.serverStatus.offline
-    players = 0
+    cssClass = 'text-danger fw-bold'
+    players = 'N/A'
   } else if (res.statusCode == 200) {
     status = locale.serverStatus.online
     players = res.body.players
+    cssClass = 'text-success fw-bold'
   }
   console.log(status, players)
 
   serverStatus.text(status)
+  serverStatus.attr('class', cssClass)
   playerCount.text(players)
+  playerCount.attr('class', cssClass)
 }
 
 
