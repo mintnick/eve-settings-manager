@@ -17,14 +17,15 @@ function changeLanguage(lang) {
 
   // server select
   const servers = locale.servers;
+  const server = AppConfig.readSettings('server') ?? 'tranquility'
   serverSelect.find('option').remove();
   for (const [key, value] of Object.entries(servers)) {
     serverSelect.append($('<option>', {
       value: key,
       text: value,
-      selected: (value == lang)
     }))
   }
+  serverSelect.find('option[value="' + server + '"]').prop("selected", true)
   serverTitle.text(serverSelect.find(":selected").text())
   
   // titles
