@@ -1,23 +1,35 @@
 const { app, BrowserWindow } = require('electron')
 const path = require('path')
-// const AppConfig = require('./configuration.js')
+const AppConfig = require('./configuration.js')
 
 function createWindow () {
-  const win = new BrowserWindow({
+  // restore window bounds
+  const savedBounds = AppConfig.readSettings('bounds')
+  const bounds = savedBounds ?? {
     width: 800,
     height: 600,
-    webPreferences: {
-      preload: path.join(__dirname, 'preload.js'),
-      nodeIntegration: true,
-      contextIsolation: false,
-    }
-  })
+    minWidth: 800,
+    minHeight: 600,
+  }
+  
+  bounds.webPreferences = {
+    preload: path.join(__dirname, 'preload.js'),
+    nodeIntegration: true,
+    contextIsolation: false,
+  }
+  const win = new BrowserWindow(bounds)
 
   // win.setResizable(false);
 
   win.webContents.openDevTools()
 
   win.loadFile('./src/views/index.html')
+
+  // save position when close
+  win.on('close', () => {
+    let winBounds = win.getBounds();
+    AppConfig.saveSettings('bounds', winBounds)
+  })
 }
 
 app.whenReady().then(() => {
