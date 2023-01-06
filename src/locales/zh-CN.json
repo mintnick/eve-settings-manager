@@ -1,0 +1,16 @@
+{
+  "servers": {
+    "tranquility": "宁静",
+    "serenity": "晨曦"
+  },
+  "titles":{
+    "character": "角色",
+    "account": "帐号"
+  },
+  "buttons": {
+    "selectFolder": "选择文件夹",
+    "openFolder": "打开文件夹",
+    "overwriteChar": "覆盖所有角色",
+    "overwriteAccount": "覆盖所有帐号"
+  }
+}

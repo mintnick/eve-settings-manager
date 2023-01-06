@@ -31,9 +31,21 @@ tr {
   height: 8vh;
 }
 
-#server-section .server-icon {
-  height: 4vh;
+#server-section img {
+  height: 25px;
   margin: auto;
+}
+
+#server-section select {
+  width: 25vw;
+}
+
+#server-section .btn-group > img#server-icon {
+  filter: invert(49%) sepia(47%) saturate(6672%) hue-rotate(178deg) brightness(92%) contrast(98%);
+}
+
+#server-section .btn-group > img#lang-icon {
+  filter: invert(71%) sepia(60%) saturate(482%) hue-rotate(19deg) brightness(85%) contrast(97%);
 }
 
 #folder-section {
@@ -41,8 +53,8 @@ tr {
   height: 15vh;
 }
 
-#folder-section #folder-buttons {
-  margin-top: 5px;
+#folder-section #folder-buttons > button{
+  width: 20vw;
 }
 
 #folder-section > #folder-selector > select{
@@ -55,6 +67,7 @@ tr {
 }
 
 #table-section button {
+  width: 30vw;
   margin-top: 10px;
 }
 

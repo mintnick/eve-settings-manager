@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
     <!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'"> -->
-    <meta http-equiv="Content-Security-Policy" content="default-src *; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' 'unsafe-eval'">
+    <!-- <meta http-equiv="Content-Security-Policy" content="default-src *; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' 'unsafe-eval'"> -->
     <link href="../bootstrap/css/bootstrap.min.css" rel="stylesheet" >
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
     <link href="../css/style.css" rel="stylesheet" >
@@ -17,35 +17,21 @@
       <div id="server-section" class="border-bottom row">
         <div class="col-4">
           <div class="btn-group">
-            <img src="../assets/server.svg" class="server-icon me-2"/>
-            <button type="button" class="btn btn-success dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-              Server
-            </button>
-            <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="#">Action</a></li>
-              <li><a class="dropdown-item" href="#">Another action</a></li>
-              <li><a class="dropdown-item" href="#">Something else here</a></li>
-              <li><hr class="dropdown-divider"></li>
-              <li><a class="dropdown-item" href="#">Separated link</a></li>
-            </ul>
+            <img src="../assets/server.svg" class="server-icon me-2" id="server-icon"/>
+            <select id="server-select" class="form-select" aria-label="Default select example">
+            </select>
           </div>
         </div>
         <div class="col-4">
-          <h2>Server Name</h2>
+          <h2 id="server-title">Server Name</h2>
         </div>
         <div class="col-4">
           <div class="btn-group">
-            <img src="../assets/language.svg" class="server-icon me-2"/>
-            <button type="button" class="btn btn-info dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-              Languages
-            </button>
-            <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="#">Action</a></li>
-              <li><a class="dropdown-item" href="#">Another action</a></li>
-              <li><a class="dropdown-item" href="#">Something else here</a></li>
-              <li><hr class="dropdown-divider"></li>
-              <li><a class="dropdown-item" href="#">Separated link</a></li>
-            </ul>
+            <img src="../assets/language.svg" class="server-icon me-2" id="lang-icon"/>
+            <select id="language-select" class="form-select" aria-label="Default select example">
+              <option value="en">English</option>
+              <option value="zh-CN">简体中文</option>
+            </select>
           </div>
         </div>
       </div>
@@ -58,14 +44,14 @@
             <option value="3">Three</option>
           </select>
         </div>
-        <div id="folder-buttons" class="d-flex justify-content-evenly">
-          <button type="button" class="btn btn-outline-primary">select folder</button>
-          <button type="button" class="btn btn-outline-primary">open folder</button>
+        <div id="folder-buttons" class="d-flex justify-content-evenly mt-2">
+          <button id="select-folder-btn" type="button" class="btn btn-outline-primary">select folder</button>
+          <button id="open-folder-btn" type="button" class="btn btn-outline-primary">open folder</button>
         </div>
       </div>
       <div id="table-section" class="row">
         <div class="col-8 border-end">
-          Characters
+          <h5 id="char-table-title">Characters</h5>
           <div class="table-wrapper">
             <table class="table">
               <thead>
@@ -153,10 +139,10 @@
             </table>
           </div>
           
-          <button type="button" class="btn btn-warning">overwrite chars</button>
+          <button id="overwrite-char-btn" type="button" class="btn btn-success">overwrite chars</button>
         </div>
         <div class="col-4">
-          Accounts
+          <h5 id="account-table-title">Accounts</h5>
           <div class="table-wrapper">
             <table class="table">
               <thead>
@@ -190,9 +176,10 @@
               </tbody>
             </table>
           </div>
-          <button type="button" class="btn btn-warning">overwrite accounts</button>
+          <button id="overwrite-account-btn" type="button" class="btn btn-success">overwrite accounts</button>
         </div>
       </div>
     </div>
   </body>
+  <script src="./renderer.js"></script>
 </html>

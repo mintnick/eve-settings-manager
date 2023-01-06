@@ -1,0 +1,16 @@
+{
+  "servers": {
+    "tranquility": "Tranquility",
+    "serenity": "Serenity"
+  },
+  "titles":{
+    "character": "Character",
+    "account": "Account"
+  },
+  "buttons": {
+    "selectFolder": "Select Folder",
+    "openFolder": "Open Folder",
+    "overwriteChar": "Overwrite Characters",
+    "overwriteAccount": "Overwrite Accounts"
+  }
+}

@@ -1,18 +1,21 @@
 const { app, BrowserWindow } = require('electron')
 const path = require('path')
+// const AppConfig = require('./configuration.js')
 
 function createWindow () {
   const win = new BrowserWindow({
     width: 800,
     height: 600,
     webPreferences: {
-      preload: path.join(__dirname, 'preload.js')
+      preload: path.join(__dirname, 'preload.js'),
+      nodeIntegration: true,
+      contextIsolation: false,
     }
   })
 
-  win.setResizable(false);
+  // win.setResizable(false);
 
-  // win.webContents.openDevTools()
+  win.webContents.openDevTools()
 
   win.loadFile('./src/views/index.html')
 }
@@ -28,7 +31,5 @@ app.whenReady().then(() => {
 })
 
 app.on('window-all-closed', () => {
-  if (process.platform !== 'darwin') {
-    app.quit()
-  }
+  if (process.platform !== 'darwin') app.quit()
 })
