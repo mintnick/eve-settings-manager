@@ -66,7 +66,7 @@ function setSelectedFolder(folderPath) {
 // FIXME not inside the folder on Mac
 function openFolder() {
   const path = join($('#folder-select').val(), folderName)
-  console.log(path)
+  // console.log(path)
   shell.showItemInFolder(path)
 }
 

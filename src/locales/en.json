@@ -5,12 +5,18 @@
   },
   "titles":{
     "character": "Character",
-    "account": "Account"
+    "account": "Account",
+    "serverStatus": "Status",
+    "players": "Players"
   },
   "buttons": {
     "selectFolder": "Select Folder",
     "openFolder": "Open Folder",
     "overwriteChar": "Overwrite Characters",
     "overwriteAccount": "Overwrite Accounts"
+  },
+  "serverStatus": {
+    "online": "Online",
+    "offline": "Offline"
   }
 }

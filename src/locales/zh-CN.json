@@ -5,12 +5,18 @@
   },
   "titles":{
     "character": "角色",
-    "account": "帐号"
+    "account": "帐号",
+    "serverStatus": "状态",
+    "players": "玩家数"
   },
   "buttons": {
     "selectFolder": "选择文件夹",
     "openFolder": "打开文件夹",
     "overwriteChar": "覆盖所有角色",
     "overwriteAccount": "覆盖所有帐号"
+  },
+  "serverStatus": {
+    "online": "在线",
+    "offline": "离线"
   }
 }

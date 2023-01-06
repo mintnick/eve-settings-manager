@@ -2,7 +2,7 @@ const { ipcRenderer } = require('electron')
 const $ = require('jquery')
 const AppConfig = require('../configuration')
 const changeLanguage = require('./change-language')
-const changeServer = require('./change-server')
+const { changeServer, getServerStatus } = require('./eve-server')
 const { openFolder, readDefaultFolders, setSelectedFolder } = require('./eve-folder')
 
 const languageSelect = $('#language-select')
@@ -48,6 +48,7 @@ function bindEvents() {
     AppConfig.saveSettings('server', selectedServer)
     changeServer(selectedServer)
     readDefaultFolders()
+    getServerStatus()
   })
 
   folderSelect.on('change', () => {
