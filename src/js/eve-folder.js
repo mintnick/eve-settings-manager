@@ -2,6 +2,7 @@ const $ = require('jquery')
 const { shell } = require('electron')
 const { join } = require('path')
 const { readdir } = require('node:fs/promises')
+const AppConfig = require('../configuration')
 
 const surfixes = {
   "tranquility": "eve_sharedcache_tq_tranquility",
@@ -31,22 +32,35 @@ async function readDefaultFolders() {
     .filter(dirent => dirent.isDirectory())
     .filter(dirent => dirent.name.endsWith(surfixes[server]))
     .map(dirent => join(fullPath, dirent.name))
-  // console.log(defaultDirs)
 
+  if (defaultDirs.length == 0) return
+
+  // write default dirs
   const folderSelect = $('#folder-select')
-  // TODO check selected folder
   folderSelect.find('option').remove()
   for (const dir of defaultDirs) {
-    console.log(dir)
     folderSelect.append($('<option>', {
       value: dir,
       text: dir
     }))
   }
+  // load saved folder
+  let savedFolder = AppConfig.readSettings('savedFolder:' + server)
+  if (!savedFolder) {
+    savedFolder = defaultDirs[0]
+  } else if (!defaultDirs.includes(savedFolder)) {
+    folderSelect.append($('<option>', {
+      value: savedFolder,
+      text: savedFolder,
+    }))
+  }
+  folderSelect.find('option[value="' + savedFolder + '"]').prop("selected", true)
 }
 
+// FIXME not inside the folder on Mac
 function openFolder() {
-  const path = $('#folder-select').val()
+  const path = join($('#folder-select').val(), folderName)
+  console.log(path)
   shell.showItemInFolder(path)
 }
 
