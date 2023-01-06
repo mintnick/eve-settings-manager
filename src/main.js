@@ -1,4 +1,4 @@
-const { app, BrowserWindow } = require('electron')
+const { app, BrowserWindow, ipcMain, dialog } = require('electron')
 const path = require('path')
 const AppConfig = require('./configuration.js')
 
@@ -33,6 +33,8 @@ function createWindow () {
 }
 
 app.whenReady().then(() => {
+  ipcMain.handle('dialog:SelectFolder', openFolderDialog)
+
   createWindow()
 
   app.on('activate', () => {
@@ -45,3 +47,10 @@ app.whenReady().then(() => {
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') app.quit()
 })
+
+// open folder dialog
+async function openFolderDialog() {
+  const { canceled, filePaths } = await dialog.showOpenDialog({ properties: ['openDirectory'] })
+  if (canceled) return 
+  else return filePaths[0]
+}

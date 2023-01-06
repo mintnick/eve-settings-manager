@@ -1,5 +1,5 @@
 const $ = require('jquery')
-const { shell } = require('electron')
+const { shell, dialog } = require('electron')
 const { join } = require('path')
 const { readdir } = require('node:fs/promises')
 const AppConfig = require('../configuration')
@@ -57,6 +57,12 @@ async function readDefaultFolders() {
   folderSelect.find('option[value="' + savedFolder + '"]').prop("selected", true)
 }
 
+function setSelectedFolder(folderPath) {
+  console.log(folderPath)
+  const folderSelect = $('#folder-select')
+  // TODO add option, clear option
+}
+
 // FIXME not inside the folder on Mac
 function openFolder() {
   const path = join($('#folder-select').val(), folderName)
@@ -66,5 +72,6 @@ function openFolder() {
 
 module.exports = {
   readDefaultFolders,
+  setSelectedFolder,
   openFolder,
 }

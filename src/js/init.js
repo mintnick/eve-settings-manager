@@ -1,12 +1,14 @@
+const { ipcRenderer } = require('electron')
 const $ = require('jquery')
 const AppConfig = require('../configuration')
 const changeLanguage = require('./change-language')
 const changeServer = require('./change-server')
-const { openFolder, readDefaultFolders } = require('./eve-folder')
+const { openFolder, readDefaultFolders, setSelectedFolder } = require('./eve-folder')
 
 const languageSelect = $('#language-select')
 const serverSelect = $('#server-select')
 const folderSelect = $('#folder-select')
+const selectFolderButton = $('#select-folder-btn')
 const openFolderButton = $('#open-folder-btn')
 
 function init() {
@@ -28,9 +30,10 @@ function initSelects() {
     AppConfig.saveSettings('server', 'tranquility')
     server = 'tranquility'
   }
-  
   serverSelect.val(server)
   changeServer(server)
+
+  readDefaultFolders()
 }
 
 function bindEvents() {
@@ -52,6 +55,12 @@ function bindEvents() {
     const server = serverSelect.val()
     AppConfig.saveSettings('savedFolder:' + server, selectedFolder)
     // TODO refresh tables
+  })
+
+  selectFolderButton.on('click', async (e) => {
+    e.preventDefault()
+    const folderPath = await window.electronAPI.openFolderDialog()
+    setSelectedFolder(folderPath)
   })
 
   openFolderButton.on('click', (e) => {
