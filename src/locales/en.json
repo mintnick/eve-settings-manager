@@ -13,6 +13,8 @@
     "selectFolder": "Select Folder",
     "openFolder": "Open Folder",
     "overwriteChar": "Overwrite Characters",
+    "overwriteSelected": "Overwrite To...",
+    "login": "Login",
     "overwriteAccount": "Overwrite Accounts"
   },
   "serverStatus": {

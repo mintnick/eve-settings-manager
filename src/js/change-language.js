@@ -11,7 +11,9 @@ function changeLanguage(lang) {
   const selectFolderBtn = $('#select-folder-btn')
   const openFolderBtn = $('#open-folder-btn')
   const overwriteCharBtn = $('#overwrite-char-btn')
+  const overwriteSelectedBtn = $('#overwrite-selected-btn')
   const overwriteAccountBtn = $('#overwrite-account-btn')
+  const loginBtn = $('#login-btn')
   const charTableTitle = $('#char-table-title')
   const accountTableTitle = $('#account-table-title')
   const serverStatusTitle = $('#server-status-title')
@@ -42,7 +44,9 @@ function changeLanguage(lang) {
   selectFolderBtn.text(buttons.selectFolder)
   openFolderBtn.text(buttons.openFolder)
   overwriteCharBtn.text(buttons.overwriteChar)
+  overwriteSelectedBtn.text(buttons.overwriteSelected)
   overwriteAccountBtn.text(buttons.overwriteAccount)
+  loginBtn.text(buttons.login)
 }
 
 module.exports = changeLanguage

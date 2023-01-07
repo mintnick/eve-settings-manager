@@ -13,6 +13,8 @@
     "selectFolder": "选择文件夹",
     "openFolder": "打开文件夹",
     "overwriteChar": "覆盖所有角色",
+    "overwriteSelected": "覆盖指定角色...",
+    "login": "登录",
     "overwriteAccount": "覆盖所有帐号"
   },
   "serverStatus": {
