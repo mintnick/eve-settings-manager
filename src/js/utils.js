@@ -1,7 +1,7 @@
 const { ipcRenderer } = require('electron')
 const $ = require('jquery')
 const AppConfig = require('../configuration')
-const changeLanguage = require('./change-language')
+const { changeLanguage } = require('./change-language')
 const { changeServer, getServerStatus } = require('./eve-server')
 const { openFolder, readDefaultFolders, setSelectedFolder, readSettingFiles } = require('./eve-folder')
 

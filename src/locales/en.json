@@ -13,9 +13,9 @@
     "selectFolder": "Select Folder",
     "openFolder": "Open Folder",
     "overwriteChar": "Overwrite All",
-    "overwriteSelected": "Overwrite To...",
-    "login": "Login",
-    "overwriteAccount": "Overwrite All"
+    "overwriteSelectedChar": "Overwrite...",
+    "overwriteAccount": "Overwrite All",
+    "overwriteSelectedAccount": "Overwrite..."
   },
   "serverStatus": {
     "online": "Online",

@@ -13,9 +13,9 @@
     "selectFolder": "选择文件夹",
     "openFolder": "打开文件夹",
     "overwriteChar": "覆盖所有角色",
-    "overwriteSelected": "覆盖指定角色...",
-    "login": "登录",
-    "overwriteAccount": "覆盖所有帐号"
+    "overwriteSelectedChar": "覆盖角色...",
+    "overwriteAccount": "覆盖所有帐号",
+    "overwriteSelectedAccount": "覆盖帐号..."
   },
   "serverStatus": {
     "online": "在线",

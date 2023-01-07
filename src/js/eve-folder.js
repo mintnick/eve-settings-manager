@@ -1,8 +1,10 @@
 const $ = require('jquery')
 const { shell } = require('electron')
-const { join, extname } = require('path')
+const { join } = require('path')
+const { stat } = require('fs')
 const { readdir } = require('node:fs/promises')
 const AppConfig = require('../configuration')
+const phin = require('phin')
 
 const surfixes = {
   "tranquility": "eve_sharedcache_tq_tranquility",
@@ -16,6 +18,16 @@ const paths = {
 const prefixes = {
   "user": "core_user_",
   "char": "core_char_"
+}
+const urls = {
+  "charName": {
+    "tranquility": "https://esi.evetech.net/latest/characters/",
+    "serenity": "https://esi.evepc.163.com/latest/characters/"
+  },
+  "surfix": {
+    "tranquility": "/?datasource=tranquility",
+    "serenity": "/?datasource=serenity"
+  }
 }
 const folderName = 'settings_Default'
 // const prefixUser = 'core_user_'
@@ -57,7 +69,7 @@ async function readDefaultFolders() {
   folderSelect.find('option[value="' + savedFolder + '"]').prop("selected", true)
 }
 
-function setSelectedFolder(folderPath) {
+async function setSelectedFolder(folderPath) {
   if (!folderPath || folderPath.length == 0) return
   const server = $('#server-select').val()
   AppConfig.saveSettings('savedFolder.' + server, folderPath)
@@ -67,6 +79,10 @@ function setSelectedFolder(folderPath) {
     text: folderPath,
     selected: true
   }))
+  
+  await new Promise(r => setTimeout(r, 500));
+
+  readSettingFiles()
 }
 
 // FIXME not inside the folder on Mac
@@ -77,33 +93,79 @@ function openFolder() {
 
 // TODO read files in folder
 async function readSettingFiles() {
+  // set loading text
+  const loadingOpts = $('.loading-opt')
+  loadingOpts.text('loading...')
+
+  // read files
   const p = join($('#folder-select').val(), folderName)
+  const server = $('#server-select').val()
+  if (!p) return
   const files =
     (await readdir(p, { withFileTypes: true }))
     .filter(dirent => dirent.isFile())
     .filter(dirent => ( dirent.name.startsWith('core_') && dirent.name.endsWith('.dat')))
     .map(dirent => dirent.name)
-  const chars = files.filter(file => file.startsWith(prefixes.char))
-  const users = files.filter(file => file.startsWith(prefixes.user))
-  console.log(chars, users)
+  const charFiles = files.filter(file => file.startsWith(prefixes.char))
+  const userFiles = files.filter(file => file.startsWith(prefixes.user))
 
+  // construct char and user objects
+  const chars = {}
+  const users = {}
+
+  for (const file of charFiles) {
+    chars[file] = {}
+    const id = file.split('.')[0].split('_')[2]
+    chars[file].id = id
+
+    stat(join(p, file), (err, stats) => {
+      if (err) return
+      chars[file].mtime = stats.mtime.toLocaleString('zh-CN')
+    })
+
+    // TODO check local storage
+    const res = await phin(urls.charName[server] + id + urls.surfix[server])
+    if (res.statusCode == 200) chars[file].name = JSON.parse(res.body).name
+    else chars[file].name = '<unknown>'
+  }
+
+  for (const file of userFiles) {
+    users[file] = {}
+    const id = file.split('.')[0].split('_')[2]
+    users[file].id = id
+
+    stat(join(p, file), (err, stats) => {
+      if (err) return
+      users[file].mtime = stats.mtime.toLocaleString('zh-CN')
+    })
+  }
+
+  console.log(chars, users)
+  
+  // render selects
   const charSelect = $('#char-select')
   charSelect.find('option').remove()
-  for (const char of chars) {
+  for (const [filename, values] of Object.entries(chars)) {
+    console.log(values)
     charSelect.append($('<option>', {
-      value: char,
-      text: char.split('.')[0].split('_')[2]
+      value: filename,
+      text: values.id + ' - ' + values.name + ' - ' + values.mtime
     }))
   }
 
   const userSelect = $('#user-select')
   userSelect.find('option').remove()
-  for (const user of users) {
+  for (const [filename, values] of Object.entries(users)) {
+    console.log(values)
     userSelect.append($('<option>', {
-      value: user,
-      text: user.split('.')[0].split('_')[2]
+      value: filename,
+      text: values.id + ' - ' + values.mtime  // FIXME mtime missing
     }))
   }
+}
+
+function overwrite(type, prototype, target = []) {
+
 }
 
 module.exports = {
@@ -111,4 +173,5 @@ module.exports = {
   setSelectedFolder,
   openFolder,
   readSettingFiles,
+  overwrite,
 }
