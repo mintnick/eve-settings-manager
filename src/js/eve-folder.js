@@ -1,5 +1,5 @@
 const $ = require('jquery')
-const { shell, dialog } = require('electron')
+const { shell } = require('electron')
 const { join } = require('path')
 const { readdir } = require('node:fs/promises')
 const AppConfig = require('../configuration')
@@ -45,7 +45,7 @@ async function readDefaultFolders() {
     }))
   }
   // load saved folder
-  let savedFolder = AppConfig.readSettings('savedFolder:' + server)
+  let savedFolder = AppConfig.readSettings('savedFolder.' + server)
   if (!savedFolder) {
     savedFolder = defaultDirs[0]
   } else if (!defaultDirs.includes(savedFolder)) {
@@ -58,9 +58,15 @@ async function readDefaultFolders() {
 }
 
 function setSelectedFolder(folderPath) {
-  console.log(folderPath)
+  if (!folderPath || folderPath.length == 0) return
+  const server = $('#server-select').val()
+  AppConfig.saveSettings('savedFolder.' + server, folderPath)
   const folderSelect = $('#folder-select')
-  // TODO add option, clear option
+  folderSelect.append($('<option>', {
+    value: folderPath,
+    text: folderPath,
+    selected: true
+  }))
 }
 
 // FIXME not inside the folder on Mac

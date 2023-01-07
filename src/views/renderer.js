@@ -1,3 +1,3 @@
-const init = require('../js/init')
+const { init } = require('../js/utils')
 
 init()

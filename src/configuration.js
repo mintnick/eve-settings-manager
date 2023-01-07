@@ -1,21 +1,15 @@
 'use strict';
 
-function getUserHome() {
-  return process.env[(process.platform === 'win32') ? 'USERPROFILE' : 'HOME'];
-}
+const Store = require('electron-store')
 
-const nconf = require('nconf').file({
-  file: `${getUserHome()}/.esm.json`,
-});
+const store = new Store()
 
 function saveSettings(settingKey, settingValue) {
-  nconf.set(settingKey, settingValue);
-  nconf.save();
+  store.set(settingKey, settingValue)
 }
 
 function readSettings(settingKey) {
-  nconf.load();
-  return nconf.get(settingKey);
+  return store.get(settingKey);
 }
 
 module.exports = {

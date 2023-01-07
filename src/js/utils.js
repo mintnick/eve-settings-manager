@@ -54,7 +54,7 @@ function bindEvents() {
   folderSelect.on('change', () => {
     const selectedFolder = folderSelect.val()
     const server = serverSelect.val()
-    AppConfig.saveSettings('savedFolder:' + server, selectedFolder)
+    AppConfig.saveSettings('savedFolder.' + server, selectedFolder)
     // TODO refresh tables
   })
 
@@ -70,4 +70,6 @@ function bindEvents() {
   })
 }
 
-module.exports = init
+module.exports = {
+  init,
+}

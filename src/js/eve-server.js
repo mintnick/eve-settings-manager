@@ -14,7 +14,6 @@ const urls = {
     "tranquility": "https://esi.evetech.net/latest/status/",
     "serenity": "https://esi.evepc.163.com/latest/status/?datasource=serenity"
   }
-  
 }
 
 function changeServer(server) {
@@ -50,14 +49,12 @@ async function getServerStatus() {
     players = res.body.players
     cssClass = 'text-success fw-bold'
   }
-  console.log(status, players)
 
   serverStatus.text(status)
   serverStatus.attr('class', cssClass)
   playerCount.text(players)
   playerCount.attr('class', cssClass)
 }
-
 
 module.exports = {
   changeServer,

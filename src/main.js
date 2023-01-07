@@ -8,10 +8,7 @@ function createWindow () {
   const bounds = savedBounds ?? {
     width: 800,
     height: 600,
-    minWidth: 800,
-    minHeight: 600,
   }
-  
   bounds.webPreferences = {
     preload: path.join(__dirname, 'preload.js'),
     nodeIntegration: true,
@@ -27,13 +24,17 @@ function createWindow () {
 
   // save position when close
   win.on('close', () => {
-    let winBounds = win.getBounds();
+    const winBounds = win.getBounds();
     AppConfig.saveSettings('bounds', winBounds)
   })
 }
 
 app.whenReady().then(() => {
   ipcMain.handle('dialog:SelectFolder', openFolderDialog)
+  ipcMain.on('setting:save', (event, key) => {
+    console.log(key)
+    // AppConfig.saveSettings(key, value)
+  })
 
   createWindow()
 

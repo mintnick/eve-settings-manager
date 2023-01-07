@@ -1,6 +1,6 @@
 :root {
   font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
-  font-size: 16px;
+  font-size: 14px;
   line-height: 24px;
   font-weight: 400;
 
@@ -28,7 +28,7 @@ tr {
 
 #server-section {
   width: 100vw;
-  height: 8vh;
+  height: 50px;
 }
 
 #server-section img {
@@ -50,7 +50,7 @@ tr {
 
 #folder-section {
   width: 100vw;
-  height: 15vh;
+  height: 80px;
 }
 
 #folder-section #folder-buttons > button{
@@ -58,12 +58,12 @@ tr {
 }
 
 #folder-section > #folder-selector > select{
-  font-size: 30px;
+  font-size: 35px;
 }
 
 #table-section {
   width: 100vw;
-  height: 75vh;
+  /* height: 80vh; */
 }
 
 #table-section button {
@@ -72,6 +72,6 @@ tr {
 }
 
 #table-section .table-wrapper {
-  height: 60vh;
+  height: 370px;
   overflow-y: auto;
 }
