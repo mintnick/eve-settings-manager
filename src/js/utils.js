@@ -3,7 +3,7 @@ const $ = require('jquery')
 const AppConfig = require('../configuration')
 const changeLanguage = require('./change-language')
 const { changeServer, getServerStatus } = require('./eve-server')
-const { openFolder, readDefaultFolders, setSelectedFolder } = require('./eve-folder')
+const { openFolder, readDefaultFolders, setSelectedFolder, readSettingFiles } = require('./eve-folder')
 
 const languageSelect = $('#language-select')
 const serverSelect = $('#server-select')
@@ -16,7 +16,7 @@ function init() {
   bindEvents()
 }
 
-function initSelects() {
+async function initSelects() {
   let language = AppConfig.readSettings('language')
   if (!language) {
     AppConfig.saveSettings('language', 'zh-CN')
@@ -34,6 +34,10 @@ function initSelects() {
   changeServer(server)
 
   readDefaultFolders()
+
+  await new Promise(r => setTimeout(r, 500));
+
+  readSettingFiles()
 }
 
 function bindEvents() {

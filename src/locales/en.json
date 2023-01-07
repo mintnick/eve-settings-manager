@@ -12,10 +12,10 @@
   "buttons": {
     "selectFolder": "Select Folder",
     "openFolder": "Open Folder",
-    "overwriteChar": "Overwrite Characters",
+    "overwriteChar": "Overwrite All",
     "overwriteSelected": "Overwrite To...",
     "login": "Login",
-    "overwriteAccount": "Overwrite Accounts"
+    "overwriteAccount": "Overwrite All"
   },
   "serverStatus": {
     "online": "Online",

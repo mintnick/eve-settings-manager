@@ -1,6 +1,6 @@
 const $ = require('jquery')
 const { shell } = require('electron')
-const { join } = require('path')
+const { join, extname } = require('path')
 const { readdir } = require('node:fs/promises')
 const AppConfig = require('../configuration')
 
@@ -71,13 +71,44 @@ function setSelectedFolder(folderPath) {
 
 // FIXME not inside the folder on Mac
 function openFolder() {
-  const path = join($('#folder-select').val(), folderName)
-  // console.log(path)
-  shell.showItemInFolder(path)
+  const p = join($('#folder-select').val(), folderName)
+  shell.showItemInFolder(p)
+}
+
+// TODO read files in folder
+async function readSettingFiles() {
+  const p = join($('#folder-select').val(), folderName)
+  const files =
+    (await readdir(p, { withFileTypes: true }))
+    .filter(dirent => dirent.isFile())
+    .filter(dirent => ( dirent.name.startsWith('core_') && dirent.name.endsWith('.dat')))
+    .map(dirent => dirent.name)
+  const chars = files.filter(file => file.startsWith(prefixes.char))
+  const users = files.filter(file => file.startsWith(prefixes.user))
+  console.log(chars, users)
+
+  const charSelect = $('#char-select')
+  charSelect.find('option').remove()
+  for (const char of chars) {
+    charSelect.append($('<option>', {
+      value: char,
+      text: char.split('.')[0].split('_')[2]
+    }))
+  }
+
+  const userSelect = $('#user-select')
+  userSelect.find('option').remove()
+  for (const user of users) {
+    userSelect.append($('<option>', {
+      value: user,
+      text: user.split('.')[0].split('_')[2]
+    }))
+  }
 }
 
 module.exports = {
   readDefaultFolders,
   setSelectedFolder,
   openFolder,
+  readSettingFiles,
 }
