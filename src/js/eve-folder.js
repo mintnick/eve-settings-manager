@@ -1,7 +1,7 @@
 const $ = require('jquery')
 const { shell } = require('electron')
 const { join } = require('path')
-const { stat } = require('fs')
+const { statSync } = require('fs')
 const { readdir } = require('node:fs/promises')
 const AppConfig = require('../configuration')
 const phin = require('phin')
@@ -30,8 +30,6 @@ const urls = {
   }
 }
 const folderName = 'settings_Default'
-// const prefixUser = 'core_user_'
-// const prefixChar = 'core_char_'
 
 async function readDefaultFolders() {
   const server = $('#server-select').val() ?? 'tranquility'
@@ -105,7 +103,7 @@ async function readSettingFiles() {
     (await readdir(p, { withFileTypes: true }))
     .filter(dirent => dirent.isFile())
     .filter(dirent => ( dirent.name.startsWith('core_') && dirent.name.endsWith('.dat')))
-    .map(dirent => dirent.name)
+    .map(dirent => dirent.name.split('.')[0])
   const charFiles = files.filter(file => file.startsWith(prefixes.char))
   const userFiles = files.filter(file => file.startsWith(prefixes.user))
 
@@ -115,29 +113,51 @@ async function readSettingFiles() {
 
   for (const file of charFiles) {
     chars[file] = {}
-    const id = file.split('.')[0].split('_')[2]
+    const id = file.split('_')[2]
     chars[file].id = id
 
-    stat(join(p, file), (err, stats) => {
-      if (err) return
-      chars[file].mtime = stats.mtime.toLocaleString('zh-CN')
-    })
+    // statSync(join(p, file + '.dat'), (err, stats) => {
+    //   console.log(stats)
+    //   if (err) return
+    //   chars[file].mtime = stats.mtime.toLocaleString('zh-CN')
+    // })
+    chars[file].mtime = statSync(join(p, file + '.dat')).mtime.toLocaleString('zh-CN')
 
-    // TODO check local storage
-    const res = await phin(urls.charName[server] + id + urls.surfix[server])
-    if (res.statusCode == 200) chars[file].name = JSON.parse(res.body).name
-    else chars[file].name = '<unknown>'
+    const savedName = AppConfig.readSettings(`names.${server}.${file}`)
+    if (savedName) {
+      chars[file].name = savedName
+    } else {
+      const res = await phin(urls.charName[server] + id + urls.surfix[server])
+      if (res.statusCode == 200) {
+        const name = JSON.parse(res.body).name
+        chars[file].name = name
+        AppConfig.saveSettings(`names.${server}.${file}`, name)
+      }
+      else chars[file].name = '<unknown>'
+    }
+
+    const savedDescription = AppConfig.readSettings(`descriptions.${server}.${file}`)
+    if (savedDescription) {
+      chars[file].description = savedDescription
+      console.log(savedDescription)
+    }
   }
 
   for (const file of userFiles) {
     users[file] = {}
-    const id = file.split('.')[0].split('_')[2]
+    const id = file.split('_')[2]
     users[file].id = id
 
-    stat(join(p, file), (err, stats) => {
-      if (err) return
-      users[file].mtime = stats.mtime.toLocaleString('zh-CN')
-    })
+    // statSync(join(p, file + '.dat'), (err, stats) => {
+    //   if (err) return
+    //   users[file].mtime = stats.mtime.toLocaleString('zh-CN')
+    // })
+    users[file].mtime = statSync(join(p, file + '.dat')).mtime.toLocaleString('zh-CN')
+    const savedDescription = AppConfig.readSettings(`descriptions.${server}.${file}`)
+    if (savedDescription) {
+      users[file].description = savedDescription
+      console.log(savedDescription)
+    }
   }
 
   console.log(chars, users)
@@ -146,10 +166,12 @@ async function readSettingFiles() {
   const charSelect = $('#char-select')
   charSelect.find('option').remove()
   for (const [filename, values] of Object.entries(chars)) {
-    console.log(values)
+    // console.log(values)
+    const opt_text = values.id + ' - ' + values.name + ' - ' + values.mtime + (values.description ? ` - [${values.description}]` : '')
     charSelect.append($('<option>', {
       value: filename,
-      text: values.id + ' - ' + values.name + ' - ' + values.mtime
+      // text: values.id + ' - ' + values.name + ' - ' + values.mtime
+      text: opt_text
     }))
   }
 
@@ -157,9 +179,11 @@ async function readSettingFiles() {
   userSelect.find('option').remove()
   for (const [filename, values] of Object.entries(users)) {
     console.log(values)
+    const opt_text = values.id + ' - ' + values.mtime + (values.description ? ` - [${values.description}]` : '')
     userSelect.append($('<option>', {
       value: filename,
-      text: values.id + ' - ' + values.mtime  // FIXME mtime missing
+      // text: values.id + ' - ' + values.mtime  // FIXME mtime missing
+      text: opt_text
     }))
   }
 }
