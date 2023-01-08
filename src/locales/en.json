@@ -12,6 +12,7 @@
   "buttons": {
     "selectFolder": "Select Folder",
     "openFolder": "Open Folder",
+    "editDescription": "Edit Description",
     "overwriteChar": "Overwrite All",
     "overwriteSelectedChar": "Overwrite...",
     "overwriteAccount": "Overwrite All",

@@ -6,7 +6,7 @@ function createWindow () {
   // restore window bounds
   const savedBounds = AppConfig.readSettings('bounds')
   const bounds = savedBounds ?? {
-    width: 800,
+    width: 1080,
     height: 600,
   }
   bounds.webPreferences = {

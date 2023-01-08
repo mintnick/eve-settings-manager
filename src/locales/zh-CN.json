@@ -12,6 +12,7 @@
   "buttons": {
     "selectFolder": "选择文件夹",
     "openFolder": "打开文件夹",
+    "editDescription": "编辑备注",
     "overwriteChar": "覆盖所有角色",
     "overwriteSelectedChar": "覆盖角色...",
     "overwriteAccount": "覆盖所有帐号",
