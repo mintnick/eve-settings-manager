@@ -4,13 +4,15 @@ const AppConfig = require('../configuration')
 const { changeLanguage } = require('./change-language')
 const { changeServer, getServerStatus } = require('./eve-server')
 const { openFolder, readDefaultFolders, setSelectedFolder, readSettingFiles } = require('./eve-folder')
+const { editDescription } = require('./edit-description')
 
 const languageSelect = $('#language-select')
 const serverSelect = $('#server-select')
 const folderSelect = $('#folder-select')
 const selectFolderButton = $('#select-folder-btn')
 const openFolderButton = $('#open-folder-btn')
-const editCharDescriptionButton = $('#edit-char-description-btn')
+const editDescriptionButtons = $('.edit-description-btn')
+console.log(editDescriptionButtons)
 
 function init() {
   initSelects()
@@ -74,9 +76,27 @@ function bindEvents() {
     openFolder()
   })
 
-  editCharDescriptionButton.on('click', (e) => {
+  editDescriptionButtons.on('click', async (e) => {
     e.preventDefault()
-    window.electronAPI.openDescriptionDialog(1, 2)
+    const args = {}
+
+    const id = e.target.id
+    const type = (id == "edit-char-description-btn") ? 'char' : 'user'
+    args.type = type
+    const file = $(`#${type}-select`).val()
+    if (!file) return
+    args.file = file
+    
+    const server = $('#server-select').val()
+    args.server = server
+
+    const savedDescription = AppConfig.readSettings(`descriptions.${server}.${file}`)
+    if (savedDescription) args.savedDescription = savedDescription
+
+    const description = await window.electronAPI.openDescriptionDialog(args)
+    if (!description || description == '' || description == savedDescription) return
+    args.savedDescription = description
+    editDescription(args)
   })
 }
 

@@ -7,7 +7,8 @@
     "character": "角色",
     "account": "帐号",
     "serverStatus": "状态",
-    "players": "玩家数"
+    "players": "玩家数",
+    "editDesc": "编辑备注"
   },
   "buttons": {
     "selectFolder": "选择文件夹",
@@ -16,7 +17,9 @@
     "overwriteChar": "覆盖所有角色",
     "overwriteSelectedChar": "覆盖角色...",
     "overwriteAccount": "覆盖所有帐号",
-    "overwriteSelectedAccount": "覆盖帐号..."
+    "overwriteSelectedAccount": "覆盖帐号...",
+    "confirm": "确认",
+    "cancel": "取消"
   },
   "serverStatus": {
     "online": "在线",

@@ -3,6 +3,7 @@ const path = require('path')
 const AppConfig = require('./configuration.js')
 const prompt = require('electron-prompt')
 const $ = require('jquery')
+const { resolve } = require('path')
 
 function createWindow () {
   // restore window bounds
@@ -33,7 +34,7 @@ function createWindow () {
 
 app.whenReady().then(() => {
   ipcMain.handle('dialog:SelectFolder', openFolderDialog)
-  ipcMain.on('dialog:EditDescription', openDescriptionDialog)
+  ipcMain.handle('dialog:EditDescription', (event, args) => openDescriptionDialog(args))
 
   createWindow()
 
@@ -55,25 +56,25 @@ async function openFolderDialog() {
   else return filePaths[0]
 }
 
-async function openDescriptionDialog(arg1, arg2) {
-  // TODO passing multiple args
-  console.log(arg1, arg2)
+async function openDescriptionDialog(args) {
+  const language = AppConfig.readSettings('language')
+  const locale = require(`./locales/${language}.json`)
 
-  prompt({
-    title: 'Prompt example',
-    label: 'URL:',
-    value: arg1 + arg2,
+  const description = await prompt({
+    title: locale.titles.editDesc,
+    label: '',
+    value: args.savedDescription ?? '',
     inputAttrs: {
-        type: 'url'
+        type: 'text',
     },
-    type: 'input'
+    type: 'input',
+    resizable: false,
+    alwaysOnTop: true,
+    buttonLabels: {
+      "ok": locale.buttons.confirm,
+      "cancel": locale.buttons.cancel
+    }
   })
-  .then((r) => {
-      if(r === null) {
-          console.log('user cancelled');
-      } else {
-          console.log('result', r);
-      }
-  })
-  .catch(console.error);
+
+  return description
 }

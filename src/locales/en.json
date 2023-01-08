@@ -7,7 +7,8 @@
     "character": "Character",
     "account": "Account",
     "serverStatus": "Status",
-    "players": "Players"
+    "players": "Players",
+    "editDesc": "Edit Description"
   },
   "buttons": {
     "selectFolder": "Select Folder",
@@ -16,7 +17,9 @@
     "overwriteChar": "Overwrite All",
     "overwriteSelectedChar": "Overwrite...",
     "overwriteAccount": "Overwrite All",
-    "overwriteSelectedAccount": "Overwrite..."
+    "overwriteSelectedAccount": "Overwrite...",
+    "confirm": "Confirm",
+    "cancel": "Cancel"
   },
   "serverStatus": {
     "online": "Online",
