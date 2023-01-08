@@ -5,6 +5,7 @@ const { statSync } = require('fs')
 const { readdir } = require('node:fs/promises')
 const AppConfig = require('../configuration')
 const phin = require('phin')
+const { BrowserWindow } = require('electron')
 
 const surfixes = {
   "tranquility": "eve_sharedcache_tq_tranquility",
@@ -89,7 +90,6 @@ function openFolder() {
   shell.showItemInFolder(p)
 }
 
-// TODO read files in folder
 async function readSettingFiles() {
   // set loading text
   const loadingOpts = $('.loading-opt')
@@ -116,11 +116,6 @@ async function readSettingFiles() {
     const id = file.split('_')[2]
     chars[file].id = id
 
-    // statSync(join(p, file + '.dat'), (err, stats) => {
-    //   console.log(stats)
-    //   if (err) return
-    //   chars[file].mtime = stats.mtime.toLocaleString('zh-CN')
-    // })
     chars[file].mtime = statSync(join(p, file + '.dat')).mtime.toLocaleString('zh-CN')
 
     const savedName = AppConfig.readSettings(`names.${server}.${file}`)
@@ -139,7 +134,7 @@ async function readSettingFiles() {
     const savedDescription = AppConfig.readSettings(`descriptions.${server}.${file}`)
     if (savedDescription) {
       chars[file].description = savedDescription
-      console.log(savedDescription)
+      // console.log(savedDescription)
     }
   }
 
@@ -148,19 +143,15 @@ async function readSettingFiles() {
     const id = file.split('_')[2]
     users[file].id = id
 
-    // statSync(join(p, file + '.dat'), (err, stats) => {
-    //   if (err) return
-    //   users[file].mtime = stats.mtime.toLocaleString('zh-CN')
-    // })
     users[file].mtime = statSync(join(p, file + '.dat')).mtime.toLocaleString('zh-CN')
     const savedDescription = AppConfig.readSettings(`descriptions.${server}.${file}`)
     if (savedDescription) {
       users[file].description = savedDescription
-      console.log(savedDescription)
+      // console.log(savedDescription)
     }
   }
 
-  console.log(chars, users)
+  // console.log(chars, users)
   
   // render selects
   const charSelect = $('#char-select')
@@ -170,7 +161,6 @@ async function readSettingFiles() {
     const opt_text = values.id + ' - ' + values.name + ' - ' + values.mtime + (values.description ? ` - [${values.description}]` : '')
     charSelect.append($('<option>', {
       value: filename,
-      // text: values.id + ' - ' + values.name + ' - ' + values.mtime
       text: opt_text
     }))
   }
@@ -178,11 +168,10 @@ async function readSettingFiles() {
   const userSelect = $('#user-select')
   userSelect.find('option').remove()
   for (const [filename, values] of Object.entries(users)) {
-    console.log(values)
+    // console.log(values)
     const opt_text = values.id + ' - ' + values.mtime + (values.description ? ` - [${values.description}]` : '')
     userSelect.append($('<option>', {
       value: filename,
-      // text: values.id + ' - ' + values.mtime  // FIXME mtime missing
       text: opt_text
     }))
   }

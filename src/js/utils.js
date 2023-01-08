@@ -10,6 +10,7 @@ const serverSelect = $('#server-select')
 const folderSelect = $('#folder-select')
 const selectFolderButton = $('#select-folder-btn')
 const openFolderButton = $('#open-folder-btn')
+const editCharDescriptionButton = $('#edit-char-description-btn')
 
 function init() {
   initSelects()
@@ -59,7 +60,7 @@ function bindEvents() {
     const selectedFolder = folderSelect.val()
     const server = serverSelect.val()
     AppConfig.saveSettings('savedFolder.' + server, selectedFolder)
-    // TODO refresh tables
+    readSettingFiles()
   })
 
   selectFolderButton.on('click', async (e) => {
@@ -71,6 +72,11 @@ function bindEvents() {
   openFolderButton.on('click', (e) => {
     e.preventDefault()
     openFolder()
+  })
+
+  editCharDescriptionButton.on('click', (e) => {
+    e.preventDefault()
+    window.electronAPI.openDescriptionDialog(1, 2)
   })
 }
 
