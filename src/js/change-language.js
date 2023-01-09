@@ -4,7 +4,7 @@ const AppConfig = require('../configuration')
 
 function changeLanguage(lang) {
   AppConfig.saveSettings('language', lang);
-  const locale = require('../locales/'+lang+'.json')
+  const locale = getLocale()
 
   const serverSelect = $('#server-select');
   const serverTitle = $('#server-title')
@@ -55,6 +55,13 @@ function changeLanguage(lang) {
   editAccountDescriptionBtn.text(buttons.editDescription)
 }
 
+function getLocale() {
+  const language = AppConfig.readSettings('language')
+  const locale = require(`../locales/${language}.json`)
+  return locale
+}
+
 module.exports = {
   changeLanguage,
+  getLocale
 }

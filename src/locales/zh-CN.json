@@ -8,7 +8,9 @@
     "account": "帐号",
     "serverStatus": "状态",
     "players": "玩家数",
-    "editDesc": "编辑备注"
+    "editDesc": "编辑备注",
+    "success": "完成",
+    "successMsg": "覆盖完成"
   },
   "buttons": {
     "selectFolder": "选择文件夹",

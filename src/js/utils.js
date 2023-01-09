@@ -117,6 +117,12 @@ function bindEvents() {
     else args.scope = 'all'
 
     overwriteAll(args)
+
+    await new Promise(r => setTimeout(r, 100));
+
+    readSettingFiles()
+    
+    window.electronAPI.openNotificationDialog()
   })
 }
 

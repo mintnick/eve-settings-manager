@@ -3,7 +3,7 @@ const path = require('path')
 const AppConfig = require('./configuration.js')
 const prompt = require('electron-prompt')
 const $ = require('jquery')
-const { resolve } = require('path')
+const { getLocale } = require('./js/change-language')
 
 function createWindow () {
   // restore window bounds
@@ -35,6 +35,7 @@ function createWindow () {
 app.whenReady().then(() => {
   ipcMain.handle('dialog:SelectFolder', openFolderDialog)
   ipcMain.handle('dialog:EditDescription', (event, args) => openDescriptionDialog(args))
+  ipcMain.on('dialog:Notification', openNotificationWindow)
 
   createWindow()
 
@@ -57,8 +58,7 @@ async function openFolderDialog() {
 }
 
 async function openDescriptionDialog(args) {
-  const language = AppConfig.readSettings('language')
-  const locale = require(`./locales/${language}.json`)
+  const locale = getLocale()
 
   const description = await prompt({
     title: locale.titles.editDesc,
@@ -77,4 +77,18 @@ async function openDescriptionDialog(args) {
   })
 
   return description
+}
+
+function openNotificationWindow() {
+  const locale = getLocale()
+  // const p = path.join(__dirname, 'assets', 'check.png')
+  // console.log(p)
+
+  dialog.showMessageBoxSync({
+    message: locale.titles.successMsg,
+    type: "info",
+    buttons: [locale.buttons.confirm],
+    title: locale.titles.success,
+    icon: path.join(__dirname, 'assets', 'check.png'),
+  })
 }

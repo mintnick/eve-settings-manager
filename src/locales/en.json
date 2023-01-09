@@ -8,7 +8,9 @@
     "account": "Accounts",
     "serverStatus": "Status",
     "players": "Players",
-    "editDesc": "Edit Description"
+    "editDesc": "Edit Description",
+    "success": "Success",
+    "successMsg": "Overwrite Finished"
   },
   "buttons": {
     "selectFolder": "Select Folder",

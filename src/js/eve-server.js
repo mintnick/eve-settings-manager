@@ -8,6 +8,7 @@
 const phin = require('phin')
 const $ = require('jquery')
 const AppConfig = require('../configuration')
+const { getLocale } = require('./change-language')
 
 const urls = {
   "status": {
@@ -18,8 +19,7 @@ const urls = {
 
 function changeServer(server) {
   AppConfig.saveSettings('server', server)
-  const lang = AppConfig.readSettings('language') ?? 'zh-CN'
-  const locale = require('../locales/' + lang + '.json')
+  const locale = getLocale()
   const title = locale.servers[server]
 
   const serverTitle = $('#server-title')
@@ -30,8 +30,7 @@ function changeServer(server) {
 
 async function getServerStatus() {
   const server = $('#server-select').val()
-  const language = $('#language-select').val()
-  const locale = require('../locales/' + language + '.json')
+  const locale = getLocale()
   const serverStatus = $('#server-status')
   const playerCount = $('#player-count')
   let status, players, cssClass;
