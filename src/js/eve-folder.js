@@ -2,7 +2,7 @@ const $ = require('jquery')
 const { shell } = require('electron')
 const { join } = require('path')
 const { statSync } = require('fs')
-const { readdir } = require('node:fs/promises')
+const { readdir, readFile, writeFile } = require('node:fs/promises')
 const AppConfig = require('../configuration')
 const phin = require('phin')
 const { BrowserWindow } = require('electron')
@@ -177,8 +177,17 @@ async function readSettingFiles() {
   }
 }
 
-function overwrite(type, prototype, target = []) {
-  // TODO overwrite
+// TODO
+async function overwriteAll(args) {
+  const content = await readFile(join(args.folder, args.selected + '.dat'))
+
+  let targets = $(`#${args.type}-select option`).not(':selected').toArray()
+  targets = targets.map(t => t.value + '.dat')
+
+  for (const target of targets) {
+    const filePath = join(args.folder, target)
+    await writeFile(filePath, content)
+  }
 }
 
 module.exports = {
@@ -186,5 +195,5 @@ module.exports = {
   setSelectedFolder,
   openFolder,
   readSettingFiles,
-  overwrite,
+  overwriteAll,
 }

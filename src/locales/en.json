@@ -4,8 +4,8 @@
     "serenity": "Serenity"
   },
   "titles":{
-    "character": "Character",
-    "account": "Account",
+    "character": "Characters",
+    "account": "Accounts",
     "serverStatus": "Status",
     "players": "Players",
     "editDesc": "Edit Description"

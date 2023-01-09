@@ -3,8 +3,9 @@ const $ = require('jquery')
 const AppConfig = require('../configuration')
 const { changeLanguage } = require('./change-language')
 const { changeServer, getServerStatus } = require('./eve-server')
-const { openFolder, readDefaultFolders, setSelectedFolder, readSettingFiles } = require('./eve-folder')
+const { openFolder, readDefaultFolders, setSelectedFolder, readSettingFiles, overwriteAll } = require('./eve-folder')
 const { editDescription } = require('./edit-description')
+const { join } = require('path')
 
 const languageSelect = $('#language-select')
 const serverSelect = $('#server-select')
@@ -12,7 +13,7 @@ const folderSelect = $('#folder-select')
 const selectFolderButton = $('#select-folder-btn')
 const openFolderButton = $('#open-folder-btn')
 const editDescriptionButtons = $('.edit-description-btn')
-console.log(editDescriptionButtons)
+const overwriteButtons = $('.overwrite-btn')
 
 function init() {
   initSelects()
@@ -97,6 +98,25 @@ function bindEvents() {
     if (!description || description == '' || description == savedDescription) return
     args.savedDescription = description
     editDescription(args)
+  })
+
+  overwriteButtons.on('click', async (e) => {
+    e.preventDefault()
+    const args = {}
+
+    const btnId = e.target.id
+    if (btnId.includes('char')) args.type = 'char'
+    else args.type = 'user'
+    const select = $(`#${args.type}-select`).val()
+    if (!select) return
+    const folder = $('#folder-select').val()
+    args.folder = join(folder, 'settings_Default')
+    args.selected = select
+
+    if (btnId.includes('selected')) args.scope = 'selected'
+    else args.scope = 'all'
+
+    overwriteAll(args)
   })
 }
 
