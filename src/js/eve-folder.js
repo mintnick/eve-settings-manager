@@ -5,7 +5,6 @@ const { statSync } = require('fs')
 const { readdir, readFile, writeFile } = require('node:fs/promises')
 const AppConfig = require('../configuration')
 const phin = require('phin')
-const { BrowserWindow } = require('electron')
 
 const surfixes = {
   "tranquility": "eve_sharedcache_tq_tranquility",
@@ -92,8 +91,9 @@ function openFolder() {
 
 async function readSettingFiles() {
   // set loading text
-  const loadingOpts = $('.loading-opt')
-  loadingOpts.text('loading...')
+  const selects = $('.select-list')
+  selects.find('option').remove()
+  selects.append($('<option>', { text: 'loading...' }))
 
   // read files
   const p = join($('#folder-select').val(), folderName)
@@ -178,16 +178,17 @@ async function readSettingFiles() {
 }
 
 // TODO
-async function overwriteAll(args) {
+async function overwrite(args) {
+  // console.log(args)
   const content = await readFile(join(args.folder, args.selected + '.dat'))
-
-  let targets = $(`#${args.type}-select option`).not(':selected').toArray()
-  targets = targets.map(t => t.value + '.dat')
-
+  const targets = args.targets
+  if (!targets || targets.length == 0) return
   for (const target of targets) {
     const filePath = join(args.folder, target)
     await writeFile(filePath, content)
   }
+  window.electronAPI.openNotificationDialog()
+  readSettingFiles()
 }
 
 module.exports = {
@@ -195,5 +196,5 @@ module.exports = {
   setSelectedFolder,
   openFolder,
   readSettingFiles,
-  overwriteAll,
+  overwrite,
 }

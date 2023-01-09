@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
     <link href="../css/style.css" rel="stylesheet" >
     <script src="../bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="../js/jquery-3.6.3.js"></script>
+    <!-- <script src="../js/jquery-3.6.3.js"></script> -->
     <title>EVE Settings Manager</title>
   </head>
   <body>
@@ -57,8 +57,7 @@
         <div class="col-7 border-end">
           <h5 id="char-table-title">Characters</h5>
           <div class="table-wrapper">
-            <select id="char-select" class="form-select" size="19">
-              <option class="loading-opt"></option>
+            <select id="char-select" class="form-select select-list" size="19">
             </select>
           </div>
           <div id="char-table-btn-group">
@@ -70,8 +69,7 @@
         <div class="col-5">
           <h5 id="account-table-title">Accounts</h5>
           <div class="table-wrapper">
-            <select id="user-select" class="form-select" size="19">
-              <option class="loading-opt"></option>
+            <select id="user-select" class="form-select select-list" size="19">
             </select>
           </div>
           <div id="account-table-btn-group d-flex justify-content-evenly">
@@ -83,5 +81,9 @@
       </div>
     </div>
   </body>
-  <script src="./renderer.js"></script>
+  <script>
+    const { init } = require('../js/utils')
+
+    init();
+  </script>
 </html>

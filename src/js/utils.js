@@ -3,7 +3,7 @@ const $ = require('jquery')
 const AppConfig = require('../configuration')
 const { changeLanguage } = require('./change-language')
 const { changeServer, getServerStatus } = require('./eve-server')
-const { openFolder, readDefaultFolders, setSelectedFolder, readSettingFiles, overwriteAll } = require('./eve-folder')
+const { openFolder, readDefaultFolders, setSelectedFolder, readSettingFiles, overwrite } = require('./eve-folder')
 const { editDescription } = require('./edit-description')
 const { join } = require('path')
 
@@ -113,16 +113,16 @@ function bindEvents() {
     args.folder = join(folder, 'settings_Default')
     args.selected = select
 
-    if (btnId.includes('selected')) args.scope = 'selected'
-    else args.scope = 'all'
-
-    overwriteAll(args)
-
-    await new Promise(r => setTimeout(r, 100));
-
-    readSettingFiles()
-    
-    window.electronAPI.openNotificationDialog()
+    let targets = $(`#${args.type}-select option`).not(':selected').toArray()
+    if (btnId.includes('selected')) {
+      targets = targets.map(t => t.innerText)
+      args.targets = targets
+      window.electronAPI.openSelectWindow(args)
+    } else {
+      targets = targets.map(t => t.value + '.dat')
+      args.targets = targets
+      await overwrite(args)
+    }
   })
 }
 
