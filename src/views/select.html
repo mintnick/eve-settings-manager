@@ -52,7 +52,7 @@
   confirmBtn.on('click', (e) => {
     e.preventDefault()
     const prefix = localArgs.type == 'char' ? prefixes.char : prefixes.user
-    const selected = select.find(':selected').toArray().map(x => prefix + x.value)
+    const selected = select.find(':selected').toArray().map(x => prefix + x.value + '.dat')
     localArgs.targets = selected
     window.electronAPI.returnSelected(localArgs)
   })

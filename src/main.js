@@ -44,14 +44,13 @@ app.whenReady().then(() => {
   ipcMain.on('returnSelected', async (event, args) => { 
     await selectWin.close()
     // await win.webContents.focus()
-    await win.focus()
-    await new Promise(r => setTimeout(r, 500));
-
+    // app.show()
+    // await new Promise(r => setTimeout(r, 500));
+    await win.reload()
     await overwrite(args)
   })
 
   createWindow()
-  win.focus()
 
   app.on('activate', () => {
     if (BrowserWindow.getAllWindows().length === 0) {

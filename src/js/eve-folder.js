@@ -182,6 +182,7 @@ async function overwrite(args) {
   // console.log(args)
   const content = await readFile(join(args.folder, args.selected + '.dat'))
   const targets = args.targets
+  console.log(targets)
   if (!targets || targets.length == 0) return
   for (const target of targets) {
     const filePath = join(args.folder, target)
