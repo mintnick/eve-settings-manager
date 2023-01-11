@@ -10,11 +10,13 @@
     "players": "Players",
     "editDesc": "Edit Description",
     "success": "Success",
-    "successMsg": "Overwrite Finished"
+    "successMsg": "Overwrite Finished",
+    "selectOverwriteTargets": "Select Overwrite Targets"
   },
   "buttons": {
     "selectFolder": "Select Folder",
     "openFolder": "Open Folder",
+    "clearCache": "Clear Cache",
     "editDescription": "Edit Description",
     "overwriteChar": "Overwrite All",
     "overwriteSelectedChar": "Overwrite...",

@@ -10,10 +10,11 @@ const { join } = require('path')
 const languageSelect = $('#language-select')
 const serverSelect = $('#server-select')
 const folderSelect = $('#folder-select')
-const selectFolderButton = $('#select-folder-btn')
-const openFolderButton = $('#open-folder-btn')
-const editDescriptionButtons = $('.edit-description-btn')
-const overwriteButtons = $('.overwrite-btn')
+const selectFolderBtn = $('#select-folder-btn')
+const openFolderBtn = $('#open-folder-btn')
+const clearCacheBtn = $('#clear-cache-btn')
+const editDescriptionBtn = $('.edit-description-btn')
+const overwriteBtn = $('.overwrite-btn')
 
 function init() {
   initSelects()
@@ -66,18 +67,23 @@ function bindEvents() {
     readSettingFiles()
   })
 
-  selectFolderButton.on('click', async (e) => {
+  selectFolderBtn.on('click', async (e) => {
     e.preventDefault()
     const folderPath = await window.electronAPI.openFolderDialog()
     setSelectedFolder(folderPath)
   })
 
-  openFolderButton.on('click', (e) => {
+  openFolderBtn.on('click', (e) => {
     e.preventDefault()
     openFolder()
   })
 
-  editDescriptionButtons.on('click', async (e) => {
+  clearCacheBtn.on('click', (e) => {
+    e.preventDefault()
+    AppConfig.clear()
+  })
+
+  editDescriptionBtn.on('click', async (e) => {
     e.preventDefault()
     const args = {}
 
@@ -100,7 +106,7 @@ function bindEvents() {
     editDescription(args)
   })
 
-  overwriteButtons.on('click', async (e) => {
+  overwriteBtn.on('click', async (e) => {
     e.preventDefault()
     const args = {}
 

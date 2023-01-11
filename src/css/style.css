@@ -29,6 +29,8 @@ tr {
 #server-section {
   width: 100vw;
   height: 50px;
+  position: absolute;
+  top: 10px;
 }
 
 #server-section img {
@@ -51,6 +53,8 @@ tr {
 #folder-section {
   width: 100vw;
   height: 80px;
+  position: absolute;
+  top: 60px;
 }
 
 #folder-section #folder-buttons > button{
@@ -61,17 +65,32 @@ tr {
   font-size: 35px;
 }
 
-#table-section {
-  width: 100vw;
-  /* height: 80vh; */
+#select-titles {
+  position: absolute;
+  width: 100%;
+  top: 145px;
 }
 
-#table-section button {
+#select-buttons {
+  position: absolute;
+  width: 100%;
+  bottom: 20px;
+}
+
+#select-buttons button {
   width: 30%;
-  margin-top: 5px;
+  font-size: 16px;
+  white-space: nowrap;
+  padding: 1px;
 }
 
-#table-section .table-wrapper {
-  height: 370px;
-  overflow-y: auto;
+#table-section {
+  position: absolute;
+  width: 100%;
+  top: 175px;
+}
+
+#table-section select > option{
+  font-size: 18px;
+  /* zoom: 1.1; */
 }

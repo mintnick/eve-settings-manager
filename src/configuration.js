@@ -12,7 +12,12 @@ function readSettings(settingKey) {
   return store.get(settingKey);
 }
 
+function clear() {
+  store.clear()
+}
+
 module.exports = {
   saveSettings,
   readSettings,
+  clear,
 };

@@ -13,6 +13,7 @@
   </head>
   <body>
     <div class="w-100">
+      <h1 id="select-title">Title</h1>
       <select id="target-select" class="form-select w-100 mb-3" size="20" multiple></select>
       <button id="confirm-btn" type="button" class="btn btn-success w-50">overwrite accounts</button>    </div>
   </body>
@@ -34,10 +35,11 @@
 
   let localArgs
   const locale = getLocale()
+  const selectTitle = $('#select-title')
   const select = $('#target-select')
   const confirmBtn = $('#confirm-btn')
   confirmBtn.text(locale.buttons.confirm)
-
+  selectTitle.text(locale.titles.selectOverwriteTargets)
   ipcRenderer.on('loadSelect', (event, args) => {
     localArgs = args
     const options = args.targets

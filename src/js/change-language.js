@@ -10,6 +10,7 @@ function changeLanguage(lang) {
   const serverTitle = $('#server-title')
   const selectFolderBtn = $('#select-folder-btn')
   const openFolderBtn = $('#open-folder-btn')
+  const clearCacheBtn = $('#clear-cache-btn')
   const editCharDescriptionBtn = $('#edit-char-description-btn')
   const overwriteCharBtn = $('#overwrite-char-btn')
   const overwriteSelectedCharBtn = $('#overwrite-selected-char-btn')
@@ -46,6 +47,7 @@ function changeLanguage(lang) {
   const buttons = locale.buttons;
   selectFolderBtn.text(buttons.selectFolder)
   openFolderBtn.text(buttons.openFolder)
+  clearCacheBtn.text(buttons.clearCache)
   overwriteCharBtn.text(buttons.overwriteChar)
   overwriteSelectedCharBtn.text(buttons.overwriteSelectedChar)
   overwriteAccountBtn.text(buttons.overwriteAccount)

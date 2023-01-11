@@ -13,8 +13,8 @@
     <title>EVE Settings Manager</title>
   </head>
   <body>
-    <div class="d-flex flex-column">
-      <div id="server-section" class="border-bottom row">
+    <div class="">
+      <div id="server-section" class="row">
         <div class="col-4">
           <div class="btn-group">
             <img src="../assets/server.svg" class="server-icon me-2" id="server-icon"/>
@@ -51,29 +51,38 @@
         <div id="folder-buttons" class="d-flex justify-content-evenly mt-2">
           <button id="select-folder-btn" type="button" class="btn btn-outline-primary">select folder</button>
           <button id="open-folder-btn" type="button" class="btn btn-outline-primary">open folder</button>
+          <button id="clear-cache-btn" type="button" class="btn btn-outline-warning">clear cache</button>
         </div>
       </div>
-      <div id="table-section" class="row flex-grow-1">
+      <div id="select-titles" class="row">
+        <div class="col-7">
+          <h4 id="char-table-title">Characters</h4>
+        </div>
+        <div class="col-5">
+          <h4 id="account-table-title">Accounts</h4>
+        </div>
+      </div>
+      <div id="table-section" class="row">
         <div class="col-7 border-end">
-          <h5 id="char-table-title">Characters</h5>
-          <div class="table-wrapper">
-            <select id="char-select" class="form-select select-list" size="19">
-            </select>
-          </div>
+          <select id="char-select" class="form-select select-list" size="20">
+          </select>
+        </div>
+        <div class="col-5">
+          <select id="user-select" class="form-select select-list" size="20">
+          </select>
+        </div>
+      </div>
+      <div id="select-buttons" class="row">
+        <div class="col-7">
           <div id="char-table-btn-group">
-            <button id="edit-char-description-btn" type="button" class="edit-description-btn btn btn-info">edit description</button>
+            <button id="edit-char-description-btn" type="button" class="edit-description-btn btn btn-warning">edit description</button>
             <button id="overwrite-char-btn" type="button" class="overwrite-btn btn btn-success">overwrite all</button>
             <button id="overwrite-selected-char-btn" type="button" class="overwrite-btn btn btn-outline-success">overwrite some</button>
           </div>
         </div>
         <div class="col-5">
-          <h5 id="account-table-title">Accounts</h5>
-          <div class="table-wrapper">
-            <select id="user-select" class="form-select select-list" size="19">
-            </select>
-          </div>
           <div id="account-table-btn-group d-flex justify-content-evenly">
-            <button id="edit-account-description-btn" type="button" class="edit-description-btn btn btn-info">edit description</button>
+            <button id="edit-account-description-btn" type="button" class="edit-description-btn btn btn-warning">edit description</button>
             <button id="overwrite-account-btn" type="button" class="overwrite-btn btn btn-success">overwrite accounts</button>
             <button id="overwrite-selected-account-btn" type="button" class="overwrite-btn btn btn-outline-success">login</button>
           </div>

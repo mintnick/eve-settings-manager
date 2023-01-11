@@ -10,16 +10,21 @@ let win, selectWin
 function createWindow () {
   // restore window bounds
   const savedBounds = AppConfig.readSettings('bounds')
-  const bounds = savedBounds ?? {
+  const bounds = savedBounds
+  const options = {
+    ...bounds,
     width: 1080,
-    height: 600,
+    height: 700,
+    webPreferences: {
+      preload: path.join(__dirname, 'preload.js'),
+      nodeIntegration: true,
+      contextIsolation: false,
+    },
   }
-  bounds.webPreferences = {
-    preload: path.join(__dirname, 'preload.js'),
-    nodeIntegration: true,
-    contextIsolation: false,
-  }
-  win = new BrowserWindow(bounds)
+  // bounds.minWidth = 1080;
+  // bounds.minHeight = 700;
+  // bounds.
+  win = new BrowserWindow(options)
 
   // win.setResizable(false);
 
@@ -107,18 +112,20 @@ dialog.showMessageBoxSync({
 async function openSelectWindow(args) {
   const mainWinBounds = win.getBounds()
   const savedBounds = AppConfig.readSettings('selectWinBounds')
-  const bounds = savedBounds ?? {
-    width: 600,
-    height: 500,
+  const bounds = {
+    ...savedBounds,
+    width: 500,
+    height: 480,
     x: mainWinBounds.x + 200,
     y: mainWinBounds.y + 200,
-  }
-  bounds.webPreferences = {
-    preload: path.join(__dirname, 'preload.js'),
-    nodeIntegration: true,
-    contextIsolation: false,
+    webPreferences: {
+      preload: path.join(__dirname, 'preload.js'),
+      nodeIntegration: true,
+      contextIsolation: false,
+    },
   }
   selectWin = new BrowserWindow(bounds)
+  win.setResizable(false);
   selectWin.webContents.openDevTools()
   // save position when close
   selectWin.on('close', () => {
