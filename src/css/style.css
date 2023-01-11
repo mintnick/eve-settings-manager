@@ -65,6 +65,20 @@ tr {
   font-size: 35px;
 }
 
+#folder-section > #folder-buttons > button#clear-cache-btn {
+  position: relative;
+}
+
+#folder-section > #folder-buttons > button#clear-cache-btn:hover::after {
+  position: absolute;
+  content: attr(data-tooltip);
+  bottom: 2.5rem;
+  left: 0.5rem;
+  background-color: #333;
+  color: white;
+  padding: .25em .5em;
+}
+
 #select-titles {
   position: absolute;
   width: 100%;
@@ -74,7 +88,7 @@ tr {
 #select-buttons {
   position: absolute;
   width: 100%;
-  bottom: 20px;
+  bottom: 10px;
 }
 
 #select-buttons button {

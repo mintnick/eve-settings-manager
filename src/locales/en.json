@@ -17,6 +17,7 @@
     "selectFolder": "Select Folder",
     "openFolder": "Open Folder",
     "clearCache": "Clear Cache",
+    "clearCacheTooltip": "Clear local settings, cached names and descriptions",
     "editDescription": "Edit Description",
     "overwriteChar": "Overwrite All",
     "overwriteSelectedChar": "Overwrite...",

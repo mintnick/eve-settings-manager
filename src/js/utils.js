@@ -37,7 +37,7 @@ async function initSelects() {
   }
   serverSelect.val(server)
   changeServer(server)
-
+  
   readDefaultFolders()
 
   await new Promise(r => setTimeout(r, 500));

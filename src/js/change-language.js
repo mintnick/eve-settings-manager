@@ -48,6 +48,7 @@ function changeLanguage(lang) {
   selectFolderBtn.text(buttons.selectFolder)
   openFolderBtn.text(buttons.openFolder)
   clearCacheBtn.text(buttons.clearCache)
+  clearCacheBtn.attr('data-tooltip', buttons.clearCacheTooltip)
   overwriteCharBtn.text(buttons.overwriteChar)
   overwriteSelectedCharBtn.text(buttons.overwriteSelectedChar)
   overwriteAccountBtn.text(buttons.overwriteAccount)

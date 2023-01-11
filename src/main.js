@@ -28,7 +28,7 @@ function createWindow () {
 
   // win.setResizable(false);
 
-  win.webContents.openDevTools()
+  // win.webContents.openDevTools()
 
   win.loadFile('./src/views/index.html')
 

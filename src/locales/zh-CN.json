@@ -17,6 +17,7 @@
     "selectFolder": "选择文件夹",
     "openFolder": "打开文件夹",
     "clearCache": "清空缓存",
+    "clearCacheTooltip": "清除本地设置、缓存的角色名和备注",
     "editDescription": "编辑备注",
     "overwriteChar": "覆盖所有角色",
     "overwriteSelectedChar": "覆盖角色...",
