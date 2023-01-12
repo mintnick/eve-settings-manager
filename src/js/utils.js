@@ -32,7 +32,6 @@ async function initSelects() {
   languageSelect.find('option').remove()
   for (const locale of locales) {
     const localeFile = require(locale)
-    console.log(locale)
     const langValue = locale.replace(/^.*[\\\/]/, '').split('.')[0]
     languageSelect.append($('<option>', {
       value: langValue,

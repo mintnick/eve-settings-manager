@@ -107,7 +107,9 @@ async function readSettingFiles() {
   selects.append($('<option>', { text: 'loading...' }))
 
   // read files
-  const p = join($('#folder-select').val(), folderName)
+  const selectedFolder = $('#folder-select').val()
+  if (!selectedFolder) return
+  const p = join(selectedFolder, folderName)
   const server = $('#server-select').val()
   if (!p) return
   const files =
@@ -132,14 +134,14 @@ async function readSettingFiles() {
     const savedName = AppConfig.readSettings(`names.${server}.${file}`)
     if (savedName) {
       chars[file].name = savedName
-    } else {
+    } else if (['singularity', 'dawn', 'thunderdome'].includes(server) == false) {
+      chars[file].name = '<unknown>'
       const res = await phin(urls.charName[server] + id + urls.surfix[server])
       if (res.statusCode == 200) {
         const name = JSON.parse(res.body).name
         chars[file].name = name
         AppConfig.saveSettings(`names.${server}.${file}`, name)
       }
-      else chars[file].name = '<unknown>'
     }
 
     const savedDescription = AppConfig.readSettings(`descriptions.${server}.${file}`)

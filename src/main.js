@@ -98,9 +98,9 @@ async function openDescriptionDialog(args) {
 }
 
 function openNotificationWindow() {
-const locale = getLocale()
+  const locale = getLocale()
 
-dialog.showMessageBoxSync({
+  dialog.showMessageBoxSync({
     message: locale.titles.successMsg,
     type: "info",
     buttons: [locale.buttons.confirm],
@@ -126,7 +126,8 @@ async function openSelectWindow(args) {
   }
   selectWin = new BrowserWindow(bounds)
   win.setResizable(false);
-  selectWin.webContents.openDevTools()
+  // selectWin.webContents.openDevTools()
+  
   // save position when close
   selectWin.on('close', () => {
     const selectWinBounds = selectWin.getBounds();

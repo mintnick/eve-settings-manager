@@ -3,9 +3,9 @@
   "servers": {
     "tranquility": "Tranquility",
     "serenity": "Serenity",
-    "singularity": "Singularity(public test server)",
-    "dawn": "Dawn(China new server)",
-    "thunderdome": "Thunderdome(events server)"
+    "singularity": "Singularity",
+    "thunderdome": "Thunderdome",
+    "dawn": "Dawn"
   },
   "titles":{
     "character": "Characters",

@@ -37,9 +37,13 @@ async function changeServer(server) {
 
 async function getServerStatus() {
   const server = $('#server-select').val()
-  const locale = getLocale()
   const serverStatus = $('#server-status')
   const playerCount = $('#player-count')
+  serverStatus.text('')
+  playerCount.text('')
+  if (['singularity', 'dawn', 'thunderdome'].includes(server)) return
+
+  const locale = getLocale()
   let status, players, cssClass;
 
   const res = await phin({

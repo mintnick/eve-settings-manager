@@ -3,9 +3,9 @@
   "servers": {
     "tranquility": "寧靜",
     "serenity": "晨曦",
-    "singularity": "奇點(測試服)",
-    "dawn": "曙光(中國新服)",
-    "thunderdome": "雷電蒼穹(比賽服)"
+    "singularity": "奇點",
+    "thunderdome": "雷電蒼穹",
+    "dawn": "曙光"
   },
   "titles":{
     "character": "角色",
