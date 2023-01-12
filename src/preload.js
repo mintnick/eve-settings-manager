@@ -7,5 +7,6 @@ window.electronAPI = {
   openSelectWindow: (args) => ipcRenderer.send('dialog:SelectTargets', args),
   // onLoadSelect: (args) => ipcRenderer.on('loadSelect', args)
   // closeSelectWindow: () => ipcRenderer.send('dialog:CloseSelect'),
-  returnSelected: (args) => ipcRenderer.send('returnSelected', args)
+  returnSelected: (args) => ipcRenderer.send('returnSelected', args),
+  cancelSelected: () => ipcRenderer.send('cancelSelected')
 }

@@ -26,9 +26,8 @@ function createWindow () {
   // bounds.
   win = new BrowserWindow(options)
 
-  // win.setResizable(false);
-
-  win.webContents.openDevTools()
+  win.setResizable(false);
+  // win.webContents.openDevTools()
 
   win.loadFile('./src/views/index.html')
 
@@ -54,6 +53,7 @@ app.whenReady().then(() => {
     await win.reload()
     await overwrite(args)
   })
+  ipcMain.on('cancelSelected', () => { selectWin.close() })
 
   createWindow()
 
@@ -93,7 +93,7 @@ async function openDescriptionDialog(args) {
       "ok": locale.buttons.confirm,
       "cancel": locale.buttons.cancel
     }
-  })
+  }, win)
 
   return description
 }
@@ -112,11 +112,11 @@ function openNotificationWindow() {
 
 async function openSelectWindow(args) {
   const mainWinBounds = win.getBounds()
-  const savedBounds = AppConfig.readSettings('selectWinBounds')
+  // const savedBounds = AppConfig.readSettings('selectWinBounds')
   const bounds = {
-    ...savedBounds,
+    // ...savedBounds,
     width: 500,
-    height: 480,
+    height: 500,
     x: mainWinBounds.x + 100,
     y: mainWinBounds.y + 100,
     webPreferences: {
@@ -124,16 +124,18 @@ async function openSelectWindow(args) {
       nodeIntegration: true,
       contextIsolation: false,
     },
+    parent: win,
+    modal: true
   }
   selectWin = new BrowserWindow(bounds)
   win.setResizable(false);
   // selectWin.webContents.openDevTools()
   
   // save position when close
-  selectWin.on('close', () => {
-    const selectWinBounds = selectWin.getBounds();
-    AppConfig.saveSettings('selectWinBounds', selectWinBounds)
-  })
+  // selectWin.on('close', () => {
+  //   const selectWinBounds = selectWin.getBounds();
+  //   AppConfig.saveSettings('selectWinBounds', selectWinBounds)
+  // })
 
   await selectWin.loadFile('./src/views/select.html')
   selectWin.webContents.send('loadSelect', args)
