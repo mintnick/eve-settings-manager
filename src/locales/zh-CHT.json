@@ -1,33 +1,37 @@
 {
+  "language": "繁體中文",
   "servers": {
-    "tranquility": "",
-    "serenity": ""
+    "tranquility": "寧靜",
+    "serenity": "晨曦",
+    "singularity": "奇點(測試服)",
+    "dawn": "曙光(中國新服)",
+    "thunderdome": "雷電蒼穹(比賽服)"
   },
   "titles":{
-    "character": "",
-    "account": "",
-    "serverStatus": "",
-    "players": "",
-    "editDesc": "",
-    "success": "",
-    "successMsg": "",
-    "selectOverwriteTargets": ""
+    "character": "角色",
+    "account": "帳號",
+    "serverStatus": "狀態",
+    "players": "玩家數",
+    "editDesc": "編輯備註",
+    "success": "完成",
+    "successMsg": "覆寫完成",
+    "selectOverwriteTargets": "選擇覆寫目標"
   },
   "buttons": {
-    "selectFolder": "",
-    "openFolder": "",
-    "clearCache": "",
-    "clearCacheTooltip": "",
-    "editDescription": "",
-    "overwriteChar": "",
-    "overwriteSelectedChar": "",
-    "overwriteAccount": "",
-    "overwriteSelectedAccount": "",
-    "confirm": "",
-    "cancel": ""
+    "selectFolder": "選擇資料夾",
+    "openFolder": "打開資料夾",
+    "clearCache": "清除設定",
+    "clearCacheTooltip": "清除本地設定、保存的角色名和備註",
+    "editDescription": "編輯備註",
+    "overwriteChar": "覆寫全部",
+    "overwriteSelectedChar": "覆寫...",
+    "overwriteAccount": "覆寫全部",
+    "overwriteSelectedAccount": "覆寫...",
+    "confirm": "確認",
+    "cancel": "取消"
   },
   "serverStatus": {
-    "online": "",
-    "offline": ""
+    "online": "線上",
+    "offline": "離線"
   }
 }

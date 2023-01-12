@@ -28,7 +28,7 @@ function createWindow () {
 
   // win.setResizable(false);
 
-  // win.webContents.openDevTools()
+  win.webContents.openDevTools()
 
   win.loadFile('./src/views/index.html')
 
@@ -116,8 +116,8 @@ async function openSelectWindow(args) {
     ...savedBounds,
     width: 500,
     height: 480,
-    x: mainWinBounds.x + 200,
-    y: mainWinBounds.y + 200,
+    x: mainWinBounds.x + 100,
+    y: mainWinBounds.y + 100,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
       nodeIntegration: true,

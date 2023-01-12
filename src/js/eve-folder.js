@@ -6,9 +6,13 @@ const { readdir, readFile, writeFile } = require('node:fs/promises')
 const AppConfig = require('../configuration')
 const phin = require('phin')
 
+// TODO other surfixes
 const surfixes = {
   "tranquility": "eve_sharedcache_tq_tranquility",
-  "serenity": "eve_sharedcache_serenity_serenity.evepc.163.com"
+  "serenity": "eve_sharedcache_serenity_serenity.evepc.163.com",
+  "singularity": "public test server",
+  "dawn": "new server in China",
+  "thunderdome": "events server"
 }
 const paths = {
   "win32": join('AppData', 'Local', 'CCP', 'EVE'),
@@ -22,13 +26,20 @@ const prefixes = {
 const urls = {
   "charName": {
     "tranquility": "https://esi.evetech.net/latest/characters/",
-    "serenity": "https://esi.evepc.163.com/latest/characters/"
+    "serenity": "https://esi.evepc.163.com/latest/characters/",
+    "singularity": "",
+    "dawn": "",
+    "thunderdome": ""
   },
   "surfix": {
     "tranquility": "/?datasource=tranquility",
-    "serenity": "/?datasource=serenity"
+    "serenity": "/?datasource=serenity",
+    "singularity": "",
+    "dawn": "",
+    "thunderdome": ""
   }
 }
+
 const folderName = 'settings_Default'
 
 async function readDefaultFolders() {

@@ -1,7 +1,11 @@
 {
+  "language": "English",
   "servers": {
     "tranquility": "Tranquility",
-    "serenity": "Serenity"
+    "serenity": "Serenity",
+    "singularity": "Singularity(public test server)",
+    "dawn": "Dawn(China new server)",
+    "thunderdome": "Thunderdome(events server)"
   },
   "titles":{
     "character": "Characters",

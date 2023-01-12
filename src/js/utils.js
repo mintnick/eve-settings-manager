@@ -6,6 +6,9 @@ const { changeServer, getServerStatus } = require('./eve-server')
 const { openFolder, readDefaultFolders, setSelectedFolder, readSettingFiles, overwrite } = require('./eve-folder')
 const { editDescription } = require('./edit-description')
 const { join } = require('path')
+const { readdir } = require('node:fs/promises')
+
+const localePath = join(__dirname, '../locales')
 
 const languageSelect = $('#language-select')
 const serverSelect = $('#server-select')
@@ -22,6 +25,22 @@ function init() {
 }
 
 async function initSelects() {
+  // load languages
+  const locales = (await readdir(localePath, { withFileTypes: true }))
+    .filter(dirent => dirent.isFile() && dirent.name.endsWith('.json'))
+    .map(dirent => join(localePath, dirent.name))
+  languageSelect.find('option').remove()
+  for (const locale of locales) {
+    const localeFile = require(locale)
+    console.log(locale)
+    const langValue = locale.replace(/^.*[\\\/]/, '').split('.')[0]
+    languageSelect.append($('<option>', {
+      value: langValue,
+      text: localeFile.language
+    }))
+  }
+
+  // set language
   let language = AppConfig.readSettings('language')
   if (!language) {
     AppConfig.saveSettings('language', 'zh-CN')
@@ -30,19 +49,19 @@ async function initSelects() {
   languageSelect.val(language)
   changeLanguage(language)
 
+  // set server
   let server = AppConfig.readSettings('server')
   if (!server) {
     AppConfig.saveSettings('server', 'tranquility')
     server = 'tranquility'
   }
   serverSelect.val(server)
-  changeServer(server)
   
-  readDefaultFolders()
+  await readDefaultFolders()
 
-  await new Promise(r => setTimeout(r, 500));
+  await new Promise(r => setTimeout(r, 100));
 
-  readSettingFiles()
+  await readSettingFiles()
 }
 
 function bindEvents() {
@@ -56,8 +75,8 @@ function bindEvents() {
     const selectedServer = serverSelect.val()
     AppConfig.saveSettings('server', selectedServer)
     changeServer(selectedServer)
-    readDefaultFolders()
-    getServerStatus()
+    // readDefaultFolders()
+    // getServerStatus()
   })
 
   folderSelect.on('change', () => {
@@ -101,7 +120,7 @@ function bindEvents() {
     if (savedDescription) args.savedDescription = savedDescription
 
     const description = await window.electronAPI.openDescriptionDialog(args)
-    if (!description || description == '' || description == savedDescription) return
+    if (description == savedDescription) return
     args.savedDescription = description
     editDescription(args)
   })

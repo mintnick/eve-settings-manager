@@ -9,15 +9,20 @@ const phin = require('phin')
 const $ = require('jquery')
 const AppConfig = require('../configuration')
 const { getLocale } = require('./change-language')
+const { readDefaultFolders, readSettingFiles } = require('./eve-folder.js')
 
+// TODO get other urls
 const urls = {
   "status": {
     "tranquility": "https://esi.evetech.net/latest/status/",
-    "serenity": "https://esi.evepc.163.com/latest/status/?datasource=serenity"
-  }
+    "serenity": "https://esi.evepc.163.com/latest/status/?datasource=serenity",
+    "singularity": "",
+    "dawn": "",
+    "thunderdome": ""
+  },
 }
 
-function changeServer(server) {
+async function changeServer(server) {
   AppConfig.saveSettings('server', server)
   const locale = getLocale()
   const title = locale.servers[server]
@@ -25,7 +30,9 @@ function changeServer(server) {
   const serverTitle = $('#server-title')
   serverTitle.text(title)
 
-  getServerStatus()
+  await getServerStatus()
+  await readDefaultFolders()
+  await readSettingFiles()
 }
 
 async function getServerStatus() {
@@ -56,6 +63,7 @@ async function getServerStatus() {
 }
 
 module.exports = {
+  urls,
   changeServer,
   getServerStatus,
 }

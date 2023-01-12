@@ -1,7 +1,11 @@
 {
+  "language": "简体中文",
   "servers": {
     "tranquility": "宁静",
-    "serenity": "晨曦"
+    "serenity": "晨曦",
+    "singularity": "奇点(测试服)",
+    "dawn": "曙光(国服新服务器)",
+    "thunderdome": "雷电穹顶(比赛服)"
   },
   "titles":{
     "character": "角色",
