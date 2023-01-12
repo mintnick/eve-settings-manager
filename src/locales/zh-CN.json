@@ -13,6 +13,7 @@
     "serverStatus": "状态",
     "players": "玩家数",
     "editDesc": "编辑备注",
+    "editLabel": "最多20个字符",
     "success": "完成",
     "successMsg": "覆盖完成",
     "selectOverwriteTargets": "选择覆盖目标"
@@ -27,6 +28,7 @@
     "overwriteSelectedChar": "覆盖角色...",
     "overwriteAccount": "覆盖所有帐号",
     "overwriteSelectedAccount": "覆盖帐号...",
+    "overwriteTooltip": "建议做好备份",
     "confirm": "确认",
     "cancel": "取消"
   },

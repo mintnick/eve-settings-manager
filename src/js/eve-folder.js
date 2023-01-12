@@ -201,7 +201,7 @@ async function overwrite(args) {
     const filePath = join(args.folder, target)
     await writeFile(filePath, content)
   }
-  window.electronAPI.openNotificationDialog()
+  // window.electronAPI.openNotificationDialog()
   readSettingFiles()
 }
 

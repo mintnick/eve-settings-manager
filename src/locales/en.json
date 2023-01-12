@@ -13,6 +13,7 @@
     "serverStatus": "Status",
     "players": "Players",
     "editDesc": "Edit Description",
+    "editLabel": "20 characters maximum",
     "success": "Success",
     "successMsg": "Overwrite Finished",
     "selectOverwriteTargets": "Select Overwrite Targets"
@@ -27,6 +28,7 @@
     "overwriteSelectedChar": "Overwrite...",
     "overwriteAccount": "Overwrite All",
     "overwriteSelectedAccount": "Overwrite...",
+    "overwriteTooltip": "Backup suggested",
     "confirm": "Confirm",
     "cancel": "Cancel"
   },

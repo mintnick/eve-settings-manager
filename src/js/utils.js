@@ -1,8 +1,8 @@
-const { ipcRenderer } = require('electron')
+// const { ipcRenderer } = require('electron')
 const $ = require('jquery')
 const AppConfig = require('../configuration')
 const { changeLanguage } = require('./change-language')
-const { changeServer, getServerStatus } = require('./eve-server')
+const { changeServer } = require('./eve-server')
 const { openFolder, readDefaultFolders, setSelectedFolder, readSettingFiles, overwrite } = require('./eve-folder')
 const { editDescription } = require('./edit-description')
 const { join } = require('path')
@@ -42,7 +42,6 @@ async function initSelects() {
   // set language
   let language = AppConfig.readSettings('language')
   if (!language) {
-    AppConfig.saveSettings('language', 'zh-CN')
     language = 'zh-CN'
   }
   languageSelect.val(language)
@@ -55,12 +54,7 @@ async function initSelects() {
     server = 'tranquility'
   }
   serverSelect.val(server)
-  
-  await readDefaultFolders()
-
-  await new Promise(r => setTimeout(r, 100));
-
-  await readSettingFiles()
+  await changeServer(server)
 }
 
 function bindEvents() {
@@ -119,7 +113,7 @@ function bindEvents() {
     if (savedDescription) args.savedDescription = savedDescription
 
     const description = await window.electronAPI.openDescriptionDialog(args)
-    if (description == savedDescription) return
+    if (description === null || description == savedDescription) return
     args.savedDescription = description
     editDescription(args)
   })

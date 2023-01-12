@@ -80,10 +80,11 @@ async function openDescriptionDialog(args) {
 
   const description = await prompt({
     title: locale.titles.editDesc,
-    label: '',
+    label: locale.titles.editLabel,
     value: args.savedDescription ?? '',
     inputAttrs: {
-        type: 'text',
+      type: 'text',
+      maxlength: 20,
     },
     type: 'input',
     resizable: false,

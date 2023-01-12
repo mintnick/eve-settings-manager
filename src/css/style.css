@@ -108,3 +108,17 @@ tr {
   font-size: 18px;
   /* zoom: 1.1; */
 }
+
+#select-buttons button.overwrite-btn {
+  position: relative;
+}
+
+#select-buttons button.overwrite-btn:hover::after {
+  position: absolute;
+  content: attr(data-tooltip);
+  bottom: 2.5rem;
+  left: 0.5rem;
+  background-color: #333;
+  color: white;
+  padding: .25em .5em;
+}
