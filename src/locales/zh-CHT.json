@@ -16,7 +16,7 @@
     "editLabel": "至多20個字",
     "success": "完成",
     "successMsg": "覆寫完成",
-    "selectOverwriteTargets": "選擇覆寫目標"
+    "selectOverwriteTargets": "選擇覆蓋目標"
   },
   "buttons": {
     "selectFolder": "選擇資料夾",
@@ -28,11 +28,11 @@
     "overwriteSelectedChar": "覆寫...",
     "overwriteAccount": "覆寫全部",
     "overwriteSelectedAccount": "覆寫...",
-    "overwriteTooltip": "建議做好拷貝",
     "confirm": "確認",
     "cancel": "取消"
   },
   "serverStatus": {
+    "unknown": "未知",
     "online": "線上",
     "offline": "離線"
   }

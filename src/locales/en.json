@@ -28,11 +28,11 @@
     "overwriteSelectedChar": "Overwrite...",
     "overwriteAccount": "Overwrite All",
     "overwriteSelectedAccount": "Overwrite...",
-    "overwriteTooltip": "Backup suggested",
     "confirm": "Confirm",
     "cancel": "Cancel"
   },
   "serverStatus": {
+    "unknown": "Unknown",
     "online": "Online",
     "offline": "Offline"
   }

@@ -60,16 +60,14 @@ async function initSelects() {
 function bindEvents() {
   languageSelect.on('change', () => {
     const selectedLang = languageSelect.val()
-    AppConfig.saveSettings('language', selectedLang)
+    // AppConfig.saveSettings('language', selectedLang)
     changeLanguage(selectedLang)
   })
 
   serverSelect.on('change', () => {
     const selectedServer = serverSelect.val()
-    AppConfig.saveSettings('server', selectedServer)
+    // AppConfig.saveSettings('server', selectedServer)
     changeServer(selectedServer)
-    // readDefaultFolders()
-    // getServerStatus()
   })
 
   folderSelect.on('change', () => {
@@ -129,7 +127,7 @@ function bindEvents() {
     if (!select) return
     const folder = $('#folder-select').val()
     args.folder = join(folder, 'settings_Default')
-    args.selected = select
+    args.selected = select + '.dat'
 
     let targets = $(`#${args.type}-select option`).not(':selected').toArray()
     if (btnId.includes('selected')) {

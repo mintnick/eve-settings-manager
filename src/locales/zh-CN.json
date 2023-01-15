@@ -28,11 +28,11 @@
     "overwriteSelectedChar": "覆盖角色...",
     "overwriteAccount": "覆盖所有帐号",
     "overwriteSelectedAccount": "覆盖帐号...",
-    "overwriteTooltip": "建议做好备份",
     "confirm": "确认",
     "cancel": "取消"
   },
   "serverStatus": {
+    "unknown": "未知",
     "online": "在线",
     "offline": "离线"
   }

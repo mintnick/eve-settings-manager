@@ -42,6 +42,7 @@ tr {
   width: 20vw;
 }
 
+/* Top nav icon color */
 #server-section .btn-group > img#server-icon {
   filter: invert(49%) sepia(47%) saturate(6672%) hue-rotate(178deg) brightness(92%) contrast(98%);
 }
@@ -65,6 +66,7 @@ tr {
   font-size: 35px;
 }
 
+/* Clear btn tooptip */
 #folder-section > #folder-buttons > button#clear-cache-btn {
   position: relative;
 }
@@ -107,18 +109,4 @@ tr {
 #table-section select > option{
   font-size: 18px;
   /* zoom: 1.1; */
-}
-
-#select-buttons button.overwrite-btn {
-  position: relative;
-}
-
-#select-buttons button.overwrite-btn:hover::after {
-  position: absolute;
-  content: attr(data-tooltip);
-  bottom: 2.5rem;
-  left: 0.5rem;
-  background-color: #333;
-  color: white;
-  padding: .25em .5em;
 }

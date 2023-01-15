@@ -21,13 +21,10 @@ function createWindow () {
       contextIsolation: false,
     },
   }
-  // bounds.minWidth = 1080;
-  // bounds.minHeight = 700;
-  // bounds.
   win = new BrowserWindow(options)
 
-  win.setResizable(false);
-  // win.webContents.openDevTools()
+  // win.setResizable(false);
+  win.webContents.openDevTools()
 
   win.loadFile('./src/views/index.html')
 
@@ -44,12 +41,8 @@ app.whenReady().then(() => {
   ipcMain.handle('dialog:EditDescription', (event, args) => openDescriptionDialog(args))
   ipcMain.on('dialog:Notification', openNotificationWindow)
   ipcMain.on('dialog:SelectTargets', (event, args) => openSelectWindow(args))
-  // ipcMain.on('dialog:CloseSelect', (event) => selectWin.close() )
   ipcMain.on('returnSelected', async (event, args) => { 
     await selectWin.close()
-    // await win.webContents.focus()
-    // app.show()
-    // await new Promise(r => setTimeout(r, 500));
     await win.reload()
     await overwrite(args)
   })
@@ -101,13 +94,16 @@ async function openDescriptionDialog(args) {
 function openNotificationWindow() {
   const locale = getLocale()
 
-  dialog.showMessageBoxSync({
-    message: locale.titles.successMsg,
-    type: "info",
-    buttons: [locale.buttons.confirm],
-    title: locale.titles.success,
-    icon: path.join(__dirname, 'assets', 'check.png'),
-  })
+  dialog.showMessageBoxSync(
+    win,
+    {
+      message: locale.titles.successMsg,
+      type: "info",
+      buttons: [locale.buttons.confirm],
+      title: locale.titles.success,
+      icon: path.join(__dirname, 'assets', 'check.png'),
+    }
+  )
 }
 
 async function openSelectWindow(args) {

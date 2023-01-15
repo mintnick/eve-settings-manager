@@ -1,6 +1,12 @@
 const $ = require('jquery')
 const AppConfig = require('../configuration')
 
+// @param args {
+//  type: char/user,
+//  file: filename w/o .dat,
+//  server: server,
+//  savedDescription: user input,
+// }
 function editDescription(args) {
   const select = $(`#${args.type}-select`)
   const option = select.find(`option[value=${args.file}]`)

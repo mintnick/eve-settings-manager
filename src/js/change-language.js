@@ -17,7 +17,6 @@ function changeLanguage(lang) {
   const editAccountDescriptionBtn = $('#edit-account-description-btn')
   const overwriteAccountBtn = $('#overwrite-account-btn')
   const overwriteSelectedAccountBtn = $('#overwrite-selected-account-btn')
-  const overwriteBtns = $('.overwrite-btn')
   const charTableTitle = $('#char-table-title')
   const accountTableTitle = $('#account-table-title')
   const serverStatusTitle = $('#server-status-title')
@@ -53,11 +52,11 @@ function changeLanguage(lang) {
   overwriteSelectedCharBtn.text(buttons.overwriteSelectedChar)
   overwriteAccountBtn.text(buttons.overwriteAccount)
   overwriteSelectedAccountBtn.text(buttons.overwriteSelectedAccount)
-  overwriteBtns.attr('data-tooltip', buttons.overwriteTooltip)
   editCharDescriptionBtn.text(buttons.editDescription)
   editAccountDescriptionBtn.text(buttons.editDescription)
 }
 
+// get current locale file
 function getLocale() {
   const language = AppConfig.readSettings('language')
   const locale = require(`../locales/${language}.json`)
