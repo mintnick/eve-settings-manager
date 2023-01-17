@@ -32,7 +32,6 @@
     "cancel": "Cancel"
   },
   "serverStatus": {
-    "unknown": "Unknown",
     "online": "Online",
     "offline": "Offline"
   }

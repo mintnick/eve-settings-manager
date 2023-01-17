@@ -3,7 +3,7 @@ const $ = require('jquery')
 const AppConfig = require('../configuration')
 const { changeLanguage } = require('./change-language')
 const { changeServer } = require('./eve-server')
-const { openFolder, readDefaultFolders, setSelectedFolder, readSettingFiles, overwrite } = require('./eve-folder')
+const { openFolder, setSelectedFolder, readSettingFiles, overwrite } = require('./eve-folder')
 const { editDescription } = require('./edit-description')
 const { join } = require('path')
 const { readdir } = require('node:fs/promises')
@@ -25,7 +25,7 @@ function init() {
 }
 
 async function initSelects() {
-  // load languages
+  // load locale files
   const locales = (await readdir(localePath, { withFileTypes: true }))
     .filter(dirent => dirent.isFile() && dirent.name.endsWith('.json'))
     .map(dirent => join(localePath, dirent.name))
@@ -60,20 +60,18 @@ async function initSelects() {
 function bindEvents() {
   languageSelect.on('change', () => {
     const selectedLang = languageSelect.val()
-    // AppConfig.saveSettings('language', selectedLang)
     changeLanguage(selectedLang)
   })
 
   serverSelect.on('change', () => {
     const selectedServer = serverSelect.val()
-    // AppConfig.saveSettings('server', selectedServer)
     changeServer(selectedServer)
   })
 
   folderSelect.on('change', () => {
     const selectedFolder = folderSelect.val()
     const server = serverSelect.val()
-    AppConfig.saveSettings('savedFolder.' + server, selectedFolder)
+    AppConfig.saveSettings(`savedFolder.${server}`, selectedFolder)
     readSettingFiles()
   })
 

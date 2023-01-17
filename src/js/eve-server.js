@@ -35,7 +35,7 @@ async function getServerStatus() {
   playerCount.text('')
 
   const locale = getLocale()
-  let status = locale.serverStatus.unknown,
+  let status = 'N/A',
   players = 'N/A',
   cssClass = 'text-warning fw-bold';
 
@@ -47,23 +47,20 @@ async function getServerStatus() {
     if (res.statusCode == 504) {
       status = locale.serverStatus.offline
       cssClass = 'text-danger fw-bold'
-      players = 'N/A'
     } else if (res.statusCode == 200) {
       status = locale.serverStatus.online
       players = res.body.players
       cssClass = 'text-success fw-bold'
     }
-    console.log(status, players, cssClass)
   }
-    
-    serverStatus.text(status)
-    serverStatus.attr('class', cssClass)
-    playerCount.text(players)
+
+  serverStatus.text(status)
+  serverStatus.attr('class', cssClass)
+  playerCount.text(players)
   playerCount.attr('class', cssClass)
 }
 
 module.exports = {
-  urls,
   changeServer,
   getServerStatus,
 }

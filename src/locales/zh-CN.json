@@ -32,7 +32,6 @@
     "cancel": "取消"
   },
   "serverStatus": {
-    "unknown": "未知",
     "online": "在线",
     "offline": "离线"
   }
