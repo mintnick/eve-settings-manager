@@ -1,4 +1,5 @@
-'use strict'
+'use strict';
+
 const $ = require('jquery')
 const AppConfig = require('../configuration')
 

@@ -1,3 +1,5 @@
+'use strict';
+
 const $ = require('jquery')
 const { shell, ipcRenderer } = require('electron')
 const { join } = require('path')

@@ -1,3 +1,5 @@
+'use strict';
+
 const phin = require('phin')
 const $ = require('jquery')
 const AppConfig = require('../configuration')

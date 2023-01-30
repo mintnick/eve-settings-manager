@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
     <link href="../css/style.css" rel="stylesheet" >
     <script src="../bootstrap/js/bootstrap.bundle.min.js"></script>
-    <title id="app-title"></title>
+    <title id="app-title">EVE Settings Manager</title>
   </head>
   <body>
     <div class="">
@@ -35,8 +35,6 @@
           <div class="btn-group">
             <img src="../assets/language.svg" class="server-icon me-2" id="lang-icon"/>
             <select id="language-select" class="form-select" aria-label="Default select example">
-              <option value="en">English</option>
-              <option value="zh-CN">简体中文</option>
             </select>
           </div>
         </div>
@@ -89,6 +87,8 @@
     </div>
   </body>
   <script>
+    'use strict';
+    
     const { init } = require('../js/utils')
     init();
   </script>

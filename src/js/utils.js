@@ -1,4 +1,6 @@
-// const { ipcRenderer } = require('electron')
+'use strict';
+
+const { ipcRenderer } = require('electron')
 const $ = require('jquery')
 const AppConfig = require('../configuration')
 const { changeLanguage } = require('./change-language')
@@ -7,7 +9,6 @@ const { openFolder, setSelectedFolder, readSettingFiles, overwrite, readDefaultF
 const { editDescription } = require('./edit-description')
 const { join } = require('path')
 const { readdir } = require('node:fs/promises')
-const { ipcRenderer } = require('electron')
 
 const localePath = join(__dirname, '../locales')
 

@@ -25,15 +25,16 @@
     "dist": "electron-builder"
   },
   "build": {
-    "appId": "EVE Settings Manager",
+    "appId": "eve-settings-manager",
     "productName": "EVE Settings Manager",
     "mac": {
       "icon": "src/assets/icon.png"
     },
     "win": {
-      "target": {
-        "target": "portable"
-      }
+      "target": ["portable"]
+    },
+    "portable": {
+        "artifactName": "EVE Settings Manager.exe"
     }
   }
 }
