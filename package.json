@@ -7,25 +7,37 @@
   "author": "Nick Ning",
   "license": "MIT",
   "devDependencies": {
-    "@electron-forge/cli": "^6.0.4",
-    "@electron-forge/maker-deb": "^6.0.4",
     "@electron-forge/maker-rpm": "^6.0.4",
-    "@electron-forge/maker-squirrel": "^6.0.4",
-    "@electron-forge/maker-zip": "^6.0.4",
     "electron": "^22.0.0",
-    "electron-prompt": "^1.7.0",
-    "electron-store": "^8.1.0",
-    "jquery": "^3.6.3",
-    "nconf": "^0.12.0",
-    "phin": "^3.7.0"
+    "electron-builder": "^23.6.0",
+    "nconf": "^0.12.0"
   },
   "dependencies": {
-    "electron-squirrel-startup": "^1.0.0"
+    "electron-prompt": "^1.7.0",
+    "electron-squirrel-startup": "^1.0.0",
+    "electron-store": "^8.1.0",
+    "jquery": "^3.6.3",
+    "phin": "^3.7.0"
   },
   "scripts": {
-    "dev": "electron-forge start",
-    "start": "electron-forge start",
-    "package": "electron-forge package",
-    "make": "electron-forge make"
+    "dev": "electron .",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder"
+  },
+  "build": {
+    "appId": "EVE Settings Manager",
+    "productName": "EVE Settings Manager",
+    "mac": {
+      "icon": "src/assets/icon.png"
+    },
+    "win": {
+      "target": {
+        "target": "nsis",
+        "arch": [
+          "x64",
+          "ia32"
+        ]
+      }
+    }
   }
 }

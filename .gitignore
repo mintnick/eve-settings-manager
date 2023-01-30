@@ -1,2 +1,4 @@
 node_modules
 out/
+dist/
+eve-settings-manager.code-workspace

@@ -53,7 +53,7 @@ async function initSelects() {
     AppConfig.saveSettings('server', 'tranquility')
     server = 'tranquility'
   }
-  serverSelect.val(server)
+  // serverSelect.val(server)
   await changeServer(server)
 }
 
