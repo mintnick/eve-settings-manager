@@ -23,9 +23,12 @@ function createWindow () {
   }
   win = new BrowserWindow(options)
 
-  // win.setResizable(false);
-  win.webContents.openDevTools()
-
+  if(app.isPackaged) {
+    win.setResizable(false);
+  } else {
+    win.webContents.openDevTools()
+  }
+  
   win.loadFile('./src/views/index.html')
 
   // save position when close
@@ -43,10 +46,11 @@ app.whenReady().then(() => {
   ipcMain.on('dialog:SelectTargets', (event, args) => openSelectWindow(args))
   ipcMain.on('returnSelected', async (event, args) => { 
     await selectWin.close()
-    await win.reload()
+    await reload()
     await overwrite(args)
   })
   ipcMain.on('cancelSelected', () => { selectWin.close() })
+  ipcMain.on('reload', () => reload() )
 
   createWindow()
 
@@ -60,6 +64,10 @@ app.whenReady().then(() => {
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') app.quit()
 })
+
+async function reload() {
+  await win.reload()
+}
 
 // open folder dialog
 async function openFolderDialog() {

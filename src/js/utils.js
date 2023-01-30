@@ -3,10 +3,11 @@ const $ = require('jquery')
 const AppConfig = require('../configuration')
 const { changeLanguage } = require('./change-language')
 const { changeServer } = require('./eve-server')
-const { openFolder, setSelectedFolder, readSettingFiles, overwrite } = require('./eve-folder')
+const { openFolder, setSelectedFolder, readSettingFiles, overwrite, readDefaultFolders } = require('./eve-folder')
 const { editDescription } = require('./edit-description')
 const { join } = require('path')
 const { readdir } = require('node:fs/promises')
+const { ipcRenderer } = require('electron')
 
 const localePath = join(__dirname, '../locales')
 
@@ -59,19 +60,15 @@ async function initSelects() {
 
 function bindEvents() {
   languageSelect.on('change', () => {
-    const selectedLang = languageSelect.val()
-    changeLanguage(selectedLang)
+    changeLanguage(languageSelect.val())
   })
 
   serverSelect.on('change', () => {
-    const selectedServer = serverSelect.val()
-    changeServer(selectedServer)
+    changeServer(serverSelect.val())
   })
 
   folderSelect.on('change', () => {
-    const selectedFolder = folderSelect.val()
-    const server = serverSelect.val()
-    AppConfig.saveSettings(`savedFolder.${server}`, selectedFolder)
+    AppConfig.saveSettings(`savedFolder.${serverSelect.val()}`, folderSelect.val())
     readSettingFiles()
   })
 
@@ -89,6 +86,7 @@ function bindEvents() {
   clearCacheBtn.on('click', (e) => {
     e.preventDefault()
     AppConfig.clear()
+    ipcRenderer.send('reload')
   })
 
   editDescriptionBtn.on('click', async (e) => {
@@ -96,7 +94,7 @@ function bindEvents() {
     const args = {}
 
     const id = e.target.id
-    const type = (id == "edit-char-description-btn") ? 'char' : 'user'
+    const type = id.includes('char') ? 'char' : 'user'
     args.type = type
     const file = $(`#${type}-select`).val()
     if (!file) return
@@ -119,8 +117,7 @@ function bindEvents() {
     const args = {}
 
     const btnId = e.target.id
-    if (btnId.includes('char')) args.type = 'char'
-    else args.type = 'user'
+    args.type = btnId.includes('char') ? 'char' : 'user'
     const select = $(`#${args.type}-select`).val()
     if (!select) return
     const folder = $('#folder-select').val()
@@ -128,11 +125,11 @@ function bindEvents() {
     args.selected = select + '.dat'
 
     let targets = $(`#${args.type}-select option`).not(':selected').toArray()
-    if (btnId.includes('selected')) {
+    if (btnId.includes('selected')) { //overwrite selected
       targets = targets.map(t => t.innerText)
       args.targets = targets
       window.electronAPI.openSelectWindow(args)
-    } else {
+    } else {  // overwrite all
       targets = targets.map(t => t.value + '.dat')
       args.targets = targets
       await overwrite(args)
