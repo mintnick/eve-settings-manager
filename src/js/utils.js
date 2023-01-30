@@ -43,7 +43,9 @@ async function initSelects() {
   // set language
   let language = AppConfig.readSettings('language')
   if (!language) {
-    language = 'zh-CN'
+    let locale_lang = Intl.DateTimeFormat().resolvedOptions().locale;
+    if (locale_lang.includes('zh')) language = 'zh-CN'
+    else language = 'en'
   }
   languageSelect.val(language)
   changeLanguage(language)
@@ -74,7 +76,7 @@ function bindEvents() {
 
   selectFolderBtn.on('click', async (e) => {
     e.preventDefault()
-    const folderPath = await window.electronAPI.openFolderDialog()
+    const folderPath = await ipcRenderer.invoke('dialog:SelectFolder')
     setSelectedFolder(folderPath)
   })
 
@@ -106,7 +108,7 @@ function bindEvents() {
     const savedDescription = AppConfig.readSettings(`descriptions.${server}.${file}`)
     if (savedDescription) args.savedDescription = savedDescription
 
-    const description = await window.electronAPI.openDescriptionDialog(args)
+    const description = await ipcRenderer.invoke('dialog:EditDescription', args)
     if (description === null || description == savedDescription) return
     args.savedDescription = description
     editDescription(args)
@@ -128,7 +130,7 @@ function bindEvents() {
     if (btnId.includes('selected')) { //overwrite selected
       targets = targets.map(t => t.innerText)
       args.targets = targets
-      window.electronAPI.openSelectWindow(args)
+      ipcRenderer.send('dialog:SelectTargets', args)
     } else {  // overwrite all
       targets = targets.map(t => t.value + '.dat')
       args.targets = targets

@@ -16,7 +16,7 @@
     "editLabel": "20 characters maximum",
     "success": "Success",
     "successMsg": "Overwrite Finished",
-    "selectOverwriteTargets": "Select Overwrite Targets"
+    "selectOverwriteTargets": "Select Overwrite Target(s)"
   },
   "buttons": {
     "selectFolder": "Select Folder",

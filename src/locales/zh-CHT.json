@@ -16,7 +16,7 @@
     "editLabel": "至多20個字",
     "success": "完成",
     "successMsg": "覆寫完成",
-    "selectOverwriteTargets": "選擇覆蓋目標"
+    "selectOverwriteTargets": "選擇覆蓋目標(多選)"
   },
   "buttons": {
     "selectFolder": "選擇資料夾",

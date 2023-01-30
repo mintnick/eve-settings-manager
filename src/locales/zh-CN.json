@@ -16,7 +16,7 @@
     "editLabel": "最多20个字符",
     "success": "完成",
     "successMsg": "覆盖完成",
-    "selectOverwriteTargets": "选择覆盖目标"
+    "selectOverwriteTargets": "选择覆盖目标(多选)"
   },
   "buttons": {
     "selectFolder": "选择文件夹",

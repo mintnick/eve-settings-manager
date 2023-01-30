@@ -1,3 +1,9 @@
+<style>
+  select > option {
+    font-size: 18px;
+  }
+</style>
+
 <!DOCTYPE html>
 <html>
   <head>
@@ -11,7 +17,9 @@
   <body>
     <div class="w-100">
       <h1 id="select-title">Title</h1>
-      <select id="target-select" class="form-select w-100 mb-3" size="20" multiple></select>
+      <div class="mb-3 mx-3 w-auto">
+        <select id="target-select" class="form-select w-100" size="18" multiple></select>
+      </div>
       <div class="d-flex justify-content-around">
         <button id="confirm-btn" type="button" class="btn btn-success w-25">overwrite accounts</button>
         <button id="cancel-btn" type="button" class="btn btn-outline-warning w-25">cancel</button>
@@ -39,6 +47,8 @@
   confirmBtn.text(locale.buttons.confirm)
   selectTitle.text(locale.titles.selectOverwriteTargets)
   cancelBtn.text(locale.buttons.cancel)
+
+  // render the other options as candidates
   ipcRenderer.on('loadSelect', (event, args) => {
     localArgs = args
     const options = args.targets
@@ -50,16 +60,18 @@
     }
   })
 
+  // confirm overwrite
   confirmBtn.on('click', (e) => {
     e.preventDefault()
     const prefix = localArgs.type == 'char' ? prefixes.char : prefixes.user
     const selected = select.find(':selected').toArray().map(x => prefix + x.value + '.dat')
     localArgs.targets = selected
-    window.electronAPI.returnSelected(localArgs)
+    ipcRenderer.send('returnSelected', localArgs)
   })
 
+  // cancel selection, close window
   cancelBtn.on('click', (e) => {
     e.preventDefault()
-    window.electronAPI.cancelSelected()
+    ipcRenderer.send('cancelSelected')
   })
 </script>

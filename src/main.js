@@ -16,7 +16,6 @@ function createWindow () {
     width: 1080,
     height: 700,
     webPreferences: {
-      preload: path.join(__dirname, 'preload.js'),
       nodeIntegration: true,
       contextIsolation: false,
     },
@@ -46,7 +45,7 @@ app.whenReady().then(() => {
   ipcMain.on('dialog:SelectTargets', (event, args) => openSelectWindow(args))
   ipcMain.on('returnSelected', async (event, args) => { 
     await selectWin.close()
-    await reload()
+    reload()
     await overwrite(args)
   })
   ipcMain.on('cancelSelected', () => { selectWin.close() })
@@ -65,11 +64,10 @@ app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') app.quit()
 })
 
-async function reload() {
-  await win.reload()
+function reload() {
+  win.reload()
 }
 
-// open folder dialog
 async function openFolderDialog() {
   const { canceled, filePaths } = await dialog.showOpenDialog({ properties: ['openDirectory'] })
   if (canceled) return 
@@ -116,15 +114,10 @@ function openNotificationWindow() {
 
 async function openSelectWindow(args) {
   const mainWinBounds = win.getBounds()
-  // const savedBounds = AppConfig.readSettings('selectWinBounds')
   const bounds = {
-    // ...savedBounds,
-    width: 500,
-    height: 500,
-    x: mainWinBounds.x + 100,
-    y: mainWinBounds.y + 100,
+    width: 700,
+    height: 600,
     webPreferences: {
-      preload: path.join(__dirname, 'preload.js'),
       nodeIntegration: true,
       contextIsolation: false,
     },
@@ -132,15 +125,8 @@ async function openSelectWindow(args) {
     modal: true
   }
   selectWin = new BrowserWindow(bounds)
-  win.setResizable(false);
-  // selectWin.webContents.openDevTools()
-  
-  // save position when close
-  // selectWin.on('close', () => {
-  //   const selectWinBounds = selectWin.getBounds();
-  //   AppConfig.saveSettings('selectWinBounds', selectWinBounds)
-  // })
+  selectWin.setResizable(false);
 
   await selectWin.loadFile('./src/views/select.html')
-  selectWin.webContents.send('loadSelect', args)
+  selectWin.webContents.send('loadSelect', args)  // passing the other options to sub window
 }

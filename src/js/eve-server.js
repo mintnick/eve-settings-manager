@@ -19,7 +19,7 @@ async function changeServer(server) {
   AppConfig.saveSettings('server', server)
   const locale = getLocale()
   const title = locale.servers[server]
-  // $('#server-title').text(title)
+  $('#server-title').text(title)
 
   await getServerStatus()
   await readDefaultFolders()

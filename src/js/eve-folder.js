@@ -1,5 +1,5 @@
 const $ = require('jquery')
-const { shell } = require('electron')
+const { shell, ipcRenderer } = require('electron')
 const { join } = require('path')
 const { statSync } = require('fs')
 const { readdir, readFile, writeFile } = require('node:fs/promises')
@@ -38,7 +38,7 @@ const urls = {
     "thunderdome": ""
   }
 }
-const folderName = 'settings_Default'
+const settingFolderName = 'settings_Default'
 
 // read default setting folders, render in folder select
 async function readDefaultFolders() {
@@ -95,8 +95,9 @@ async function setSelectedFolder(folderPath) {
 
 // open selected folder in OS
 function openFolder() {
-  const folderPath = join($('#folder-select').val(), folderName)
-  shell.showItemInFolder(folderPath)
+  const folderPath = join($('#folder-select').val(), settingFolderName)
+  // shell.showItemInFolder(folderPath)
+  shell.openPath(folderPath)
 }
 
 // read setting files in current folder
@@ -111,7 +112,7 @@ async function readSettingFiles() {
   // read files
   const selectedFolder = $('#folder-select').val()
   if (!selectedFolder) return
-  const folderPath = join(selectedFolder, folderName)
+  const folderPath = join(selectedFolder, settingFolderName)
   const server = $('#server-select').val()
   const files =
     (await readdir(folderPath, { withFileTypes: true }))
@@ -212,7 +213,7 @@ async function overwrite(args) {
     const filePath = join(args.folder, target)
     await writeFile(filePath, content)
   }
-  window.electronAPI.openNotificationDialog()
+  ipcRenderer.send('dialog:Notification')
   readSettingFiles()
 }
 
