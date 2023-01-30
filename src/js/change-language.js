@@ -17,6 +17,7 @@ function changeLanguage(lang) {
   const editAccountDescriptionBtn = $('#edit-account-description-btn')
   const overwriteAccountBtn = $('#overwrite-account-btn')
   const overwriteSelectedAccountBtn = $('#overwrite-selected-account-btn')
+  const appTitle = $('#app-title')
   const charTableTitle = $('#char-table-title')
   const accountTableTitle = $('#account-table-title')
   const serverStatusTitle = $('#server-status-title')
@@ -37,6 +38,7 @@ function changeLanguage(lang) {
   
   // titles
   const titles = locale.titles
+  appTitle.text(titles.appTitle)
   charTableTitle.text(titles.character)
   accountTableTitle.text(titles.account)
   serverStatusTitle.text(titles.serverStatus)

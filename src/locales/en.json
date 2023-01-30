@@ -8,6 +8,7 @@
     "dawn": "Dawn"
   },
   "titles":{
+    "appTitle": "EVE Settings Manager",
     "character": "Characters",
     "account": "Accounts",
     "serverStatus": "Status",

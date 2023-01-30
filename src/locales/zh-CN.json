@@ -8,6 +8,7 @@
     "dawn": "曙光"
   },
   "titles":{
+    "appTitle": "EVE设置管理",
     "character": "角色",
     "account": "帐号",
     "serverStatus": "状态",
