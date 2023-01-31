@@ -8,17 +8,17 @@ const { readdir, readFile, writeFile } = require('node:fs/promises')
 const AppConfig = require('../configuration')
 const phin = require('phin')
 
-const surfixes = {
-  "tranquility": "eve_sharedcache_tq_tranquility",
-  "serenity": "eve_sharedcache_serenity_serenity.evepc.163.com",
-  "singularity": "eve_sharedcache_sg_singularity",  // TODO install singularity
-  "dawn": "eve_sharedcache_dawn_dawn.evepc.163.com", // TODO install dawn server
-  "thunderdome": "eve_sharedcache_td_thunderdome", // TODO install thunderdome
-}
+// const surfixes = {
+//   "tranquility": "eve_sharedcache_tq_tranquility",
+//   "serenity": "eve_sharedcache_serenity_serenity.evepc.163.com",
+//   "singularity": "eve_sharedcache_sg_singularity",
+//   "dawn": "eve_sharedcache_dawn_dawn.evepc.163.com",
+//   "thunderdome": "eve_sharedcache_td_thunderdome",
+// }
 const paths = {
   "win32": join('AppData', 'Local', 'CCP', 'EVE'),
-  // "darwin": join('Library', 'Application Support', 'EVE Online') // FIXME install eve on mac
-  "darwin": join('Downloads') // TODO remove test
+  "darwin": join('Library', 'Application Support', 'CCP', 'EVE')
+  // "darwin": join('Downloads')
 }
 const prefixes = {
   "user": "core_user_",
@@ -52,7 +52,7 @@ async function readDefaultFolders() {
   const defaultDirs = 
     (await readdir(fullPath, { withFileTypes: true} ))
     .filter(dirent => dirent.isDirectory())
-    .filter(dirent => dirent.name.endsWith(surfixes[server]))
+    .filter(dirent => dirent.name.includes(server))
     .map(dirent => join(fullPath, dirent.name))
 
   if (defaultDirs.length == 0) return
@@ -113,13 +113,16 @@ async function readSettingFiles() {
 
   // read files
   const selectedFolder = $('#folder-select').val()
-  if (!selectedFolder) return
+  if (!selectedFolder) {
+    selects.find('option').remove()
+    return
+  }
   const folderPath = join(selectedFolder, settingFolderName)
   const server = $('#server-select').val()
   const files =
     (await readdir(folderPath, { withFileTypes: true }))
     .filter(dirent => dirent.isFile())
-    .filter(dirent => ( dirent.name.startsWith('core_') && dirent.name.endsWith('.dat')))
+    .filter(dirent => ( dirent.name.startsWith('core_') && dirent.name.endsWith('.dat') && !dirent.name.split('.')[0].endsWith('_')))
     .map(dirent => dirent.name.split('.')[0])
   const charFiles = files.filter(file => file.startsWith(prefixes.char))
   const userFiles = files.filter(file => file.startsWith(prefixes.user))
