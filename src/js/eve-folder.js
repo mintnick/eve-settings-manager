@@ -44,6 +44,9 @@ const settingFolderName = 'settings_Default'
 
 // read default setting folders, render in folder select
 async function readDefaultFolders() {
+  const folderSelect = $('#folder-select')
+  folderSelect.find('option').remove()
+
   const server = $('#server-select').val() ?? 'tranquility'
   const os = process.platform
   const homePath = process.env[(os == 'win32') ? 'USERPROFILE' : 'HOME']
@@ -54,12 +57,9 @@ async function readDefaultFolders() {
     .filter(dirent => dirent.isDirectory())
     .filter(dirent => dirent.name.includes(server))
     .map(dirent => join(fullPath, dirent.name))
-
+  
   if (defaultDirs.length == 0) return
-
   // render default dirs
-  const folderSelect = $('#folder-select')
-  folderSelect.find('option').remove()
   for (const dir of defaultDirs) {
     folderSelect.append($('<option>', {
       value: dir,
@@ -113,7 +113,10 @@ async function readSettingFiles() {
 
   // read files
   const selectedFolder = $('#folder-select').val()
-  if (!selectedFolder) return
+  if (!selectedFolder) {
+    selects.find('option').remove()
+    return
+  }
   const folderPath = join(selectedFolder, settingFolderName)
   if (!existsSync(folderPath)) {
     selects.find('option').remove()

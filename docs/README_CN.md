@@ -8,7 +8,6 @@
 
 ![Screen Shot 2023-02-04 at 16 32 53](https://user-images.githubusercontent.com/14357052/216757533-494e13b2-aafd-423a-954f-301d08b2236b.png)
 
-
 ## 使用方法
 
 1. 下载并解压缩

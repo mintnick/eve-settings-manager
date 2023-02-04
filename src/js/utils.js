@@ -63,7 +63,6 @@ async function initSelects() {
   // set file select size
   const selects = $('#table-section select')
   const os = process.platform
-  console.log(selects)
   if (os == 'darwin') selects.attr('size', 20)
 }
 
