@@ -23,7 +23,6 @@ function createWindow () {
   }
   win = new BrowserWindow(options)
 
-  win.setResizable(false);
   if(app.isPackaged) {
     win.setResizable(false);
   } else {
