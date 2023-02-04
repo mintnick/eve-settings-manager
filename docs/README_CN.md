@@ -10,15 +10,12 @@
 
 ## 使用方法
 
-:warning: 提前做好备份！
 1. 下载并解压缩
 2. 运行软件
-
-## :warning: 建议：先进行备份
-
-1. 点击“打开文件夹”
-2. 将文件夹中的设置文件复制粘贴到一个单独的文件夹中
-3. 如需恢复，把设置文件复制粘贴回文件夹内，进行覆盖
+3. :warning: 建议：先进行备份
+    1. 点击“打开文件夹”
+    2. 将文件夹中的设置文件复制粘贴到一个单独的文件夹中
+    3. 如需恢复，把备份的文件放回文件夹内
 
 ## 功能
 
@@ -34,5 +31,5 @@
 
 1. 删除软件
 2. (可选)删除缓存文件
-    - Windows: 删除 **C:\Users\\\<User>\AppData\Local\eve-settings-manager**
+    - Windows: 删除 **C:\用户\\\<User>\AppData\Local\eve-settings-manager**
     - Mac: 删除 **\<User>/Library/Application Support/eve-settings-manager**

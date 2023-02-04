@@ -14,12 +14,10 @@ Current status: public testing :test_tube:
 
 1. Download and unzip
 2. Run the executable file
-
-## :warning: Recommended: Backup
-
-1. Click "Open Folder"
-2. Copy and Paste the setting files to another folder
-3. Put it back to recover
+3. :warning: Recommended: prepare a backup
+    1. Click "Open Folder"
+    2. Copy and Paste the setting files to another folder
+    3. If needed, put it back to recover
 
 ## Features
 
