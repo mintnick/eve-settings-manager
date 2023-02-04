@@ -1,6 +1,6 @@
 {
   "name": "eve-settings-manager",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "EVE Online Settings Manager",
   "main": "src/main.js",
   "repository": "github.com/mintnick/eve-settings-manager",
@@ -31,10 +31,12 @@
       "icon": "src/assets/icon.png"
     },
     "win": {
-      "target": ["portable"]
+      "target": [
+        "portable"
+      ]
     },
     "portable": {
-        "artifactName": "EVE Settings Manager.exe"
+      "artifactName": "EVE Settings Manager.exe"
     }
   }
 }
