@@ -15,6 +15,7 @@ function createWindow () {
     ...bounds,
     width: 1080,
     height: 700,
+    autoHideMenuBar: true,
     webPreferences: {
       nodeIntegration: true,
       contextIsolation: false,
@@ -22,6 +23,7 @@ function createWindow () {
   }
   win = new BrowserWindow(options)
 
+  win.setResizable(false);
   if(app.isPackaged) {
     win.setResizable(false);
   } else {
@@ -117,6 +119,7 @@ async function openSelectWindow(args) {
   const bounds = {
     width: 700,
     height: 600,
+    autoHideMenuBar: true,
     webPreferences: {
       nodeIntegration: true,
       contextIsolation: false,

@@ -3,7 +3,7 @@
 const $ = require('jquery')
 const { shell, ipcRenderer } = require('electron')
 const { join } = require('path')
-const { statSync } = require('fs')
+const { statSync, existsSync } = require('fs')
 const { readdir, readFile, writeFile } = require('node:fs/promises')
 const AppConfig = require('../configuration')
 const phin = require('phin')
@@ -113,17 +113,29 @@ async function readSettingFiles() {
 
   // read files
   const selectedFolder = $('#folder-select').val()
-  if (!selectedFolder) {
+  if (!selectedFolder) return
+  const folderPath = join(selectedFolder, settingFolderName)
+  if (!existsSync(folderPath)) {
     selects.find('option').remove()
     return
   }
-  const folderPath = join(selectedFolder, settingFolderName)
+
   const server = $('#server-select').val()
   const files =
     (await readdir(folderPath, { withFileTypes: true }))
     .filter(dirent => dirent.isFile())
-    .filter(dirent => ( dirent.name.startsWith('core_') && dirent.name.endsWith('.dat') && !dirent.name.split('.')[0].endsWith('_')))
+    .filter(dirent => (
+      dirent.name.startsWith('core_')
+      && dirent.name.endsWith('.dat')
+      && !(dirent.name.split('.')[0].endsWith('_') || dirent.name.split('.')[0].endsWith(')'))
+      ))
     .map(dirent => dirent.name.split('.')[0])
+
+  if (files.length == 0) {
+    selects.find('option').remove()
+    return
+  }
+
   const charFiles = files.filter(file => file.startsWith(prefixes.char))
   const userFiles = files.filter(file => file.startsWith(prefixes.user))
 
