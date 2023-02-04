@@ -2,9 +2,9 @@
 
 [中文文档](/docs/README_CN.md)
 
-A third party tool that manages EVE Online local setting files.
+A third party tool which manages EVE Online local setting files.
 
-It is an upgrade of my old project [ESAM](https://github.com/mintnick/ESAM).
+Refactor and upgrade from my previous project [ESAM](https://github.com/mintnick/ESAM), inspired by [EANM](https://github.com/FontaineRiant/EANM).
 
 Current status: public testing :test_tube:
 
@@ -15,15 +15,21 @@ Current status: public testing :test_tube:
 1. Download and unzip
 2. Run the executable file
 
+## :warning: Recommended: Backup
+
+1. Click "Open Folder"
+2. Copy and Paste the setting files to another folder
+3. Put it back to recover
+
 ## Features
 
-- Select a profile as template
+- Choose a profile as template
   - overwrite all other profiles
   - overwrite selected profiles
 - Fetch and cache character names
 - Add description to characters and accounts
 - Support English and Simplified/Tranditional Chinese
-- Support Tranquility, Serenity and other servers(some are not tested yet)
+- Support Tranquility, Serenity and other servers(not tested yet)
 
 ## Uninstall
 

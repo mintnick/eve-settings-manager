@@ -2,7 +2,7 @@
 
 用于管理EVE Online本地设置文件的第三方工具
 
-从旧项目[ESAM](https://github.com/mintnick/ESAM)更新，用Electron重构并升级。
+从旧项目[ESAM](https://github.com/mintnick/ESAM)升级，用Electron重构并添加了一些新功能。
 
 当前状态：公开测试 :test_tube:
 
@@ -10,8 +10,15 @@
 
 ## 使用方法
 
+:warning: 提前做好备份！
 1. 下载并解压缩
 2. 运行软件
+
+## :warning: 建议：先进行备份
+
+1. 点击“打开文件夹”
+2. 将文件夹中的设置文件复制粘贴到一个单独的文件夹中
+3. 如需恢复，把设置文件复制粘贴回文件夹内，进行覆盖
 
 ## 功能
 

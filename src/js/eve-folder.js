@@ -57,8 +57,8 @@ async function readDefaultFolders() {
     .filter(dirent => dirent.isDirectory())
     .filter(dirent => dirent.name.includes(server))
     .map(dirent => join(fullPath, dirent.name))
-  
   if (defaultDirs.length == 0) return
+  
   // render default dirs
   for (const dir of defaultDirs) {
     folderSelect.append($('<option>', {
