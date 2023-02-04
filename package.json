@@ -22,7 +22,7 @@
   "scripts": {
     "dev": "electron .",
     "pack": "electron-builder --dir",
-    "dist": "electron-builder"
+    "dist": "electron-builder --win --mac"
   },
   "build": {
     "appId": "eve-settings-manager",
