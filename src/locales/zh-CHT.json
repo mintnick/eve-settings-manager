@@ -17,11 +17,14 @@
     "editLabel": "至多20個字",
     "success": "完成",
     "successMsg": "覆寫完成",
+    "backupSuccess": "備份完成： ",
     "selectOverwriteTargets": "選擇覆蓋目標(多選)"
   },
   "buttons": {
     "selectFolder": "選擇資料夾",
     "openFolder": "打開資料夾",
+    "backup": "備份",
+    "backupTooltip": "備份本地文件",
     "clearCache": "清除設定",
     "clearCacheTooltip": "清除本地設定、保存的角色名和備註",
     "editDescription": "編輯備註",

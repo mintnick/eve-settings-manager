@@ -17,11 +17,14 @@
     "editLabel": "最多20个字符",
     "success": "完成",
     "successMsg": "覆盖完成",
+    "backupSuccess": "备份完成： ",
     "selectOverwriteTargets": "选择覆盖目标(多选)"
   },
   "buttons": {
     "selectFolder": "选择文件夹",
     "openFolder": "打开文件夹",
+    "backup": "备份",
+    "backupTooltip": "备份设置文件",
     "clearCache": "清空缓存",
     "clearCacheTooltip": "清除本地设置、缓存的角色名和备注",
     "editDescription": "编辑备注",

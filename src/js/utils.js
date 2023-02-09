@@ -7,6 +7,7 @@ const { changeLanguage } = require('./change-language')
 const { changeServer } = require('./eve-server')
 const { openFolder, setSelectedFolder, readSettingFiles, overwrite, readDefaultFolders } = require('./eve-folder')
 const { editDescription } = require('./edit-description')
+const { backupFiles } = require('./backup')
 const { join } = require('path')
 const { readdir } = require('node:fs/promises')
 
@@ -17,6 +18,7 @@ const serverSelect = $('#server-select')
 const folderSelect = $('#folder-select')
 const selectFolderBtn = $('#select-folder-btn')
 const openFolderBtn = $('#open-folder-btn')
+const backupBtn = $('#backup-btn')
 const clearCacheBtn = $('#clear-cache-btn')
 const editDescriptionBtn = $('.edit-description-btn')
 const overwriteBtn = $('.overwrite-btn')
@@ -89,6 +91,11 @@ function bindEvents() {
   openFolderBtn.on('click', (e) => {
     e.preventDefault()
     openFolder()
+  })
+
+  backupBtn.on('click', (e) => {
+    e.preventDefault()
+    backupFiles()
   })
 
   clearCacheBtn.on('click', (e) => {

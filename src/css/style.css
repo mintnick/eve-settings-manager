@@ -59,7 +59,7 @@ tr {
 }
 
 #folder-section #folder-buttons > button{
-  width: 20vw;
+  width: 15vw;
 }
 
 #folder-section > #folder-selector > select{
@@ -67,11 +67,11 @@ tr {
 }
 
 /* Clear btn tooptip */
-#folder-section > #folder-buttons > button#clear-cache-btn {
+#folder-section > #folder-buttons > button.tooltip-btn {
   position: relative;
 }
 
-#folder-section > #folder-buttons > button#clear-cache-btn:hover::after {
+#folder-section > #folder-buttons > button.tooltip-btn:hover::after {
   position: absolute;
   content: attr(data-tooltip);
   bottom: 2.5rem;

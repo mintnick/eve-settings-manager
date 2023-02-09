@@ -42,7 +42,7 @@ function createWindow () {
 app.whenReady().then(() => {
   ipcMain.handle('dialog:SelectFolder', openFolderDialog)
   ipcMain.handle('dialog:EditDescription', (event, args) => openDescriptionDialog(args))
-  ipcMain.on('dialog:Notification', openNotificationWindow)
+  ipcMain.on('dialog:Notification', (event, msg) => openNotificationWindow(msg))
   ipcMain.on('dialog:SelectTargets', (event, args) => openSelectWindow(args))
   ipcMain.on('returnSelected', async (event, args) => { 
     await selectWin.close()
@@ -98,13 +98,13 @@ async function openDescriptionDialog(args) {
   return description
 }
 
-function openNotificationWindow() {
+function openNotificationWindow(msg) {
   const locale = getLocale()
 
   dialog.showMessageBoxSync(
     win,
     {
-      message: locale.titles.successMsg,
+      message: msg,
       type: "info",
       buttons: [locale.buttons.confirm],
       title: locale.titles.success,
@@ -114,7 +114,7 @@ function openNotificationWindow() {
 }
 
 async function openSelectWindow(args) {
-  const mainWinBounds = win.getBounds()
+  // const mainWinBounds = win.getBounds()
   const bounds = {
     width: 700,
     height: 600,

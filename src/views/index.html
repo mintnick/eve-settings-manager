@@ -45,9 +45,22 @@
           </select>
         </div>
         <div id="folder-buttons" class="d-flex justify-content-evenly mt-2">
-          <button id="select-folder-btn" type="button" class="btn btn-outline-primary">select folder</button>
-          <button id="open-folder-btn" type="button" class="btn btn-outline-primary">open folder</button>
-          <button id="clear-cache-btn" type="button" class="btn btn-outline-warning" data-tooltip="tooltip">clear cache</button>
+          <button id="select-folder-btn" type="button" class="btn btn-outline-dark">
+            <img src="../assets/check2-square.svg"/>
+            <span id="select-folder-btn-text">select folder</span>
+          </button>
+          <button id="open-folder-btn" type="button" class="btn btn-outline-dark">
+            <img src="../assets/folder2-open.svg"/>
+            <span id="open-folder-btn-text">open folder</span>
+          </button>
+          <button id="backup-btn" type="button" class="tooltip-btn btn btn-outline-dark" data-tooltip="tooltip">
+            <img src="../assets/file-copy-outline.svg"/>
+            <span id="backup-btn-text"></span>
+          </button>
+          <button id="clear-cache-btn" type="button" class="tooltip-btn btn btn-outline-dark" data-tooltip="tooltip">
+            <img src="../assets/cleaning-services.svg"/>
+            <span id="clear-cache-btn-text">clear cache</span>
+          </button>
         </div>
       </div>
       <div id="select-titles" class="row">
@@ -71,16 +84,34 @@
       <div id="select-buttons" class="row">
         <div class="col-7">
           <div id="char-table-btn-group">
-            <button id="edit-char-description-btn" type="button" class="edit-description-btn btn btn-warning">edit description</button>
-            <button id="overwrite-char-btn" type="button" class="overwrite-btn btn btn-success" data-tooltip="tooltip">overwrite all</button>
-            <button id="overwrite-selected-char-btn" type="button" class="overwrite-btn btn btn-outline-success" data-tooltip="tooltip">overwrite some</button>
+            <button id="edit-char-description-btn" type="button" class="edit-description-btn btn btn-outline-dark">
+              <img src="../assets/edit-note.svg"/>
+              <span id="edit-char-description-btn-text">edit description</span>
+            </button>
+            <button id="overwrite-char-btn" type="button" class="overwrite-btn btn btn-success" data-tooltip="tooltip">
+              <img src="../assets/content-duplicate.svg"/>
+              <span id="overwrite-char-btn-text">overwrite all</span>
+            </button>
+            <button id="overwrite-selected-char-btn" type="button" class="overwrite-btn btn btn-outline-success" data-tooltip="tooltip">
+              <img src="../assets/open-in-new-rounded.svg"/>
+              <span id="overwrite-selected-char-btn-text">overwrite some</span>
+            </button>
           </div>
         </div>
         <div class="col-5">
           <div id="account-table-btn-group d-flex justify-content-evenly">
-            <button id="edit-account-description-btn" type="button" class="edit-description-btn btn btn-warning">edit description</button>
-            <button id="overwrite-account-btn" type="button" class="overwrite-btn btn btn-success" data-tooltip="tooltip">overwrite accounts</button>
-            <button id="overwrite-selected-account-btn" type="button" class="overwrite-btn btn btn-outline-success" data-tooltip="tooltip">login</button>
+            <button id="edit-account-description-btn" type="button" class="edit-description-btn btn btn-outline-dark">
+              <img src="../assets/edit-note.svg"/>
+              <span id="edit-account-description-btn-text"></span>
+            </button>
+            <button id="overwrite-account-btn" type="button" class="overwrite-btn btn btn-success" data-tooltip="tooltip">
+              <img src="../assets/content-duplicate.svg"/>
+              <span id="overwrite-account-btn-text"></span>
+            </button>
+            <button id="overwrite-selected-account-btn" type="button" class="overwrite-btn btn btn-outline-success" data-tooltip="tooltip">
+              <img src="../assets/open-in-new-rounded.svg"/>
+              <span id="overwrite-selected-account-btn-text"></span>
+            </button>
           </div>
         </div>
       </div>

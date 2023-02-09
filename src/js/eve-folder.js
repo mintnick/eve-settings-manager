@@ -5,6 +5,7 @@ const { shell, ipcRenderer } = require('electron')
 const { join } = require('path')
 const { statSync, existsSync } = require('fs')
 const { readdir, readFile, writeFile } = require('node:fs/promises')
+const { getLocale } = require('./change-language')
 const AppConfig = require('../configuration')
 const phin = require('phin')
 
@@ -233,7 +234,8 @@ async function overwrite(args) {
     const filePath = join(args.folder, target)
     await writeFile(filePath, content)
   }
-  ipcRenderer.send('dialog:Notification')
+  const msg = getLocale().titles.successMsg
+  ipcRenderer.send('dialog:Notification', msg)
   readSettingFiles()
 }
 
