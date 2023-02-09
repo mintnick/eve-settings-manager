@@ -14,20 +14,17 @@ Current status: public testing :test_tube:
 
 1. Download and unzip
 2. Run the executable file
-3. :warning: Recommended: prepare a backup
-    1. Click "Open Folder"
-    2. Copy and Paste the setting files to another folder
-    3. If needed, put it back to recover
+3. :warning: Recommended: use "Backup" button to make a backup before overwritting
+4. Choose a profile as template
+    - overwrite all other profiles
+    - overwrite selected profiles
 
-## Features
+## Other Features
 
-- Choose a profile as template
-  - overwrite all other profiles
-  - overwrite selected profiles
-- Fetch and cache character names
-- Add description to characters and accounts
+- Fetch and save character names
+- Add notes to characters and accounts
 - Support English and Simplified/Tranditional Chinese
-- Support Tranquility, Serenity and other servers(not tested yet)
+- Support Tranquility, Serenity, Singularity, Infinity (new China server), Thunderdome
 
 ## Uninstall
 
