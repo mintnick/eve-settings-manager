@@ -28,7 +28,7 @@
 
 1. 删除软件
 2. (可选)删除缓存文件
-    - Windows: 删除 **C:\用户\\\<User>\AppData\Local\eve-settings-manager**
+    - Windows: 删除 **C:\用户\\\<User>\AppData\Roaming\eve-settings-manager**
     - Mac: 删除 **\<User>/Library/Application Support/eve-settings-manager**
 
 ## :warning: 关于带密码的聊天频道

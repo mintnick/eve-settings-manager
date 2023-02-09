@@ -30,7 +30,7 @@ Current status: stable version 1.0.0
 
 1. Delete the executable file
 2. (Optional) Delete the config file:
-    - Windows: Delete **C:\Users\\\<User>\AppData\Local\eve-settings-manager**
+    - Windows: Delete **C:\Users\\\<User>\AppData\Roaming\eve-settings-manager**
     - Mac: Delete **\<User>/Library/Application Support/eve-settings-manager**
 
 ## :warning: About Chat Channel Password
