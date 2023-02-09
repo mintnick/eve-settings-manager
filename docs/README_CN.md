@@ -4,7 +4,7 @@
 
 从旧项目[ESAM](https://github.com/mintnick/ESAM)升级，用Electron重构并添加了一些新功能。
 
-当前状态：公开测试 :test_tube:
+当前状态：1.0.0版本
 
 ![Screen Shot 2023-02-04 at 16 32 53](https://user-images.githubusercontent.com/14357052/216757533-494e13b2-aafd-423a-954f-301d08b2236b.png)
 

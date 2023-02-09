@@ -6,7 +6,7 @@ A third party tool which manages EVE Online local setting files.
 
 Refactor and upgrade from my previous project [ESAM](https://github.com/mintnick/ESAM), inspired by [EANM](https://github.com/FontaineRiant/EANM).
 
-Current status: public testing :test_tube:
+Current status: stable version 1.0.0
 
 ![Screen Shot](https://user-images.githubusercontent.com/14357052/216756436-06cf8cea-70ad-4256-b1c6-4759be1e3d2c.png)
 
