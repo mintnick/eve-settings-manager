@@ -14,7 +14,7 @@ Current status: public testing :test_tube:
 
 1. Download and unzip
 2. Run the executable file
-3. :warning: Recommended: use "Backup" button to make a backup before overwritting
+3. (Optional) Use "Backup" button to make a backup before overwritting
 4. Choose a profile as template
     - overwrite all other profiles
     - overwrite selected profiles
