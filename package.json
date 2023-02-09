@@ -33,7 +33,8 @@
     "win": {
       "target": [
         "portable"
-      ]
+      ],
+      "icon": "src/assets/icon.png"
     },
     "portable": {
       "artifactName": "EVE Settings Manager.exe"
