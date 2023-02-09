@@ -2,7 +2,7 @@
 
 [中文文档](/docs/README_CN.md)
 
-A third party tool which manages EVE Online local setting files.
+A third party tool that manages EVE Online local setting files.
 
 Refactor and upgrade from my previous project [ESAM](https://github.com/mintnick/ESAM), inspired by [EANM](https://github.com/FontaineRiant/EANM).
 
@@ -14,8 +14,8 @@ Current status: stable version 1.0.0
 
 1. Download and unzip
 2. Run the executable file
-3. (Optional) Use "Backup" button to make a backup before overwritting
-4. Choose a profile as template
+3. (Optional) Use "Backup" button to prepare a backup
+4. Select one as base profile
     - overwrite all other profiles
     - overwrite selected profiles
 
