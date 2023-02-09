@@ -6,7 +6,7 @@
 
 当前状态：1.0.0版本
 
-![Screen Shot 2023-02-04 at 16 32 53](https://user-images.githubusercontent.com/14357052/216757533-494e13b2-aafd-423a-954f-301d08b2236b.png)
+![Screen Shot 2023-02-09 at 15 30 17](https://user-images.githubusercontent.com/14357052/217746381-e0f74ca8-2377-417f-8030-6d751ed8788b.png)
 
 ## 使用方法
 

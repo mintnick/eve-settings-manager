@@ -8,7 +8,7 @@ Refactor and upgrade from my previous project [ESAM](https://github.com/mintnick
 
 Current status: stable version 1.0.0
 
-![Screen Shot](https://user-images.githubusercontent.com/14357052/216756436-06cf8cea-70ad-4256-b1c6-4759be1e3d2c.png)
+![Screen Shot 2023-02-09 at 15 30 01](https://user-images.githubusercontent.com/14357052/217746256-01f7b403-40b8-4a68-bccc-798913df51f3.png)
 
 ## Usage
 
