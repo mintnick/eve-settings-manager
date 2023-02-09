@@ -114,7 +114,6 @@ function openNotificationWindow(msg) {
 }
 
 async function openSelectWindow(args) {
-  // const mainWinBounds = win.getBounds()
   const bounds = {
     width: 700,
     height: 600,

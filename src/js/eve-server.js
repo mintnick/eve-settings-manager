@@ -23,7 +23,7 @@ async function changeServer(server) {
   const title = locale.servers[server]
   $('#server-title').text(title)
 
-  await getServerStatus()
+  // await getServerStatus()
   await readDefaultFolders()
   await readSettingFiles()
 }

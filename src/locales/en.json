@@ -17,7 +17,7 @@
     "editLabel": "20 characters maximum",
     "success": "Success",
     "successMsg": "Overwrite Finished",
-    "backupSuccess": "Backup up finished: ",
+    "backupSuccess": "Backup finished: ",
     "selectOverwriteTargets": "Select Overwrite Target(s)"
   },
   "buttons": {
