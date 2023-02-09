@@ -32,3 +32,7 @@ Current status: stable version 1.0.0
 2. (Optional) Delete the config file:
     - Windows: Delete **C:\Users\\\<User>\AppData\Local\eve-settings-manager**
     - Mac: Delete **\<User>/Library/Application Support/eve-settings-manager**
+
+## :warning: About Chat Channel Password
+
+If the base character is in a password-protected chat channel, the other characters won't grant permission automatically, but require entering password.

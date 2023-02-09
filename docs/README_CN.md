@@ -30,3 +30,7 @@
 2. (可选)删除缓存文件
     - Windows: 删除 **C:\用户\\\<User>\AppData\Local\eve-settings-manager**
     - Mac: 删除 **\<User>/Library/Application Support/eve-settings-manager**
+
+## :warning: 关于带密码的聊天频道
+
+如果用于覆盖的模版角色，在一个有密码保护的聊天频道中，其他角色**不会**自动获得进入权限，而是会显示需要输入密码。
