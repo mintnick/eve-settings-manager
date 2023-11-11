@@ -21,11 +21,11 @@ async function backupFiles() {
     ))
   .map(dirent => dirent.name)
 
-  const date = (new Date().toLocaleString('zh-CN', { month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit"}))
-                .replace(/\s/, "")
-                .replace(/:/, "")
-                .replace(/\//, "")
-  const backupName = 'Backup-' + date
+  const date = (new Date().toLocaleString('zh-CN', { year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit"}))
+                .replaceAll(/\s/gi, "-")
+                .replaceAll(/:/gi, "-")
+                .replaceAll(/\//gi, "-");
+  const backupName = 'Backup_' + date
   const backupPath = join(folderPath, backupName)
   mkdir(backupPath, { recursive: true }).then(() => {
     for (const file of files) {

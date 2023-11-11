@@ -9,9 +9,9 @@ const { readDefaultFolders, readSettingFiles } = require('./eve-folder.js')
 const urls = {
   "status": {
     "tranquility": "https://esi.evetech.net/latest/status/",
-    "serenity": "https://esi.evepc.163.com/latest/status/?datasource=serenity",
+    "serenity": "https:/ali-esi.evepc.163.com/latest/status/?datasource=serenity",
     "singularity": "",
-    "dawn": "",
+    "infinity": "https://ali-esi.evepc.163.com/latest/status/?datasource=infinity",
     "thunderdome": ""
   },
 }
@@ -41,7 +41,7 @@ async function getServerStatus() {
   players = 'N/A',
   cssClass = 'text-warning fw-bold';
 
-  if (['tranquility', 'serenity'].includes(server)) {
+  if (['tranquility', 'serenity', 'infinity'].includes(server)) {
     const res = await phin({
       'url': urls.status[server],
       'parse': 'json'
@@ -60,6 +60,7 @@ async function getServerStatus() {
   serverStatus.attr('class', cssClass)
   playerCount.text(players)
   playerCount.attr('class', cssClass)
+  console.log(1)
 }
 
 module.exports = {

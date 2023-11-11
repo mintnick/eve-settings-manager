@@ -28,16 +28,16 @@ const prefixes = {
 const urls = {
   "charName": {
     "tranquility": "https://esi.evetech.net/latest/characters/",
-    "serenity": "https://esi.evepc.163.com/latest/characters/",
+    "serenity": "https://ali-esi.evepc.163.com/latest/characters/",
     "singularity": "",
-    "dawn": "",
+    "dawn": "https://ali-esi.evepc.163.com/latest/characters/",
     "thunderdome": ""
   },
   "surfix": {
     "tranquility": "/?datasource=tranquility",
     "serenity": "/?datasource=serenity",
     "singularity": "",
-    "dawn": "",
+    "dawn": "/?datasource=infinity",
     "thunderdome": ""
   }
 }
