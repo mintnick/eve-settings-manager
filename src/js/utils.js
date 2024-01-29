@@ -61,11 +61,6 @@ async function initSelects() {
   }
   // serverSelect.val(server)
   await changeServer(server)
-
-  // set file select size
-  const selects = $('#table-section select')
-  const os = process.platform
-  if (os == 'darwin') selects.attr('size', 20)
 }
 
 function bindEvents() {
