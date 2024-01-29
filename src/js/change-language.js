@@ -47,13 +47,23 @@ function changeLanguage(lang) {
   playerCountTitle.text(titles.players)
 
   // buttons
+  const setTooltip = (selector, tooltip) => {
+    const button = $(selector)
+    button.attr('data-tooltip', tooltip)
+    button.removeClass('tooltip-btn')
+    if (tooltip) {
+      button.addClass('tooltip-btn')
+    }
+  }
   const buttons = locale.buttons;
   selectFolderBtn.text(buttons.selectFolder)
+  setTooltip('#select-folder-btn', buttons.selectFolderTooltip)
   openFolderBtn.text(buttons.openFolder)
+  setTooltip('#open-folder-btn', buttons.openFolderTooltip)
   backupBtn.text(buttons.backup)
-  $('#backup-btn').attr('data-tooltip', buttons.backupTooltip)
+  setTooltip('#backup-btn', buttons.backupTooltip)
   clearCacheBtn.text(buttons.clearCache)
-  $('#clear-cache-btn').attr('data-tooltip', buttons.clearCacheTooltip)
+  setTooltip('#clear-cache-btn', buttons.clearCacheTooltip)
   overwriteCharBtn.text(buttons.overwriteChar)
   overwriteSelectedCharBtn.text(buttons.overwriteSelectedChar)
   overwriteAccountBtn.text(buttons.overwriteAccount)

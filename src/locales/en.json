@@ -22,7 +22,9 @@
   },
   "buttons": {
     "selectFolder": "Select Folder",
+    "selectFolderTooltip": "Allows selecting a custom profile directory",
     "openFolder": "Open Folder",
+    "openFolderTooltip": "Opens the folder for the selected profile in the system file manager",
     "backup": "Backup",
     "backupTooltip": "Backup setting files",
     "clearCache": "Clear Cache",
