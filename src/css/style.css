@@ -104,6 +104,7 @@ tr {
   position: absolute;
   width: 100%;
   top: 175px;
+  padding-left: 1.5rem;
 }
 
 #table-section select > option{
