@@ -13,8 +13,8 @@ function createWindow () {
   const bounds = savedBounds
   const options = {
     ...bounds,
-    width: 1280,
-    height: 600,
+    width: 1300,
+    height: 700,
     autoHideMenuBar: true,
     webPreferences: {
       nodeIntegration: true,
