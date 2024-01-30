@@ -42,7 +42,7 @@ const urls = {
     "thunderdome": ""
   }
 }
-const settingFolderName = 'settings_Default'
+const defaultSettingFolderName = 'settings_Default'
 
 // read default setting folders, render in folder select
 async function readDefaultFolders() {
@@ -85,9 +85,13 @@ async function setSelectedFolder(folderPath) {
   readSettingFiles()
 }
 
+function getSelectedProfile() {
+  return $('#profile-select').val() ?? defaultSettingFolderName
+}
+
 // open selected folder in OS
 function openFolder() {
-  const folderPath = join($('#folder-select').val(), settingFolderName)
+  const folderPath = join($('#folder-select').val(), getSelectedProfile())
   // shell.showItemInFolder(folderPath)
   shell.openPath(folderPath)
 }
@@ -106,6 +110,8 @@ async function readSettingFiles() {
     setSelectOptions(selects, [])
     return
   }
+
+  const settingFolderName = getSelectedProfile()
   const folderPath = join(selectedFolder, settingFolderName)
   if (!existsSync(folderPath)) {
     setSelectOptions(selects, [])
@@ -222,6 +228,7 @@ async function overwrite(args) {
 }
 
 module.exports = {
+  getSelectedProfile,
   readDefaultFolders,
   setSelectedFolder,
   openFolder,

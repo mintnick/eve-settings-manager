@@ -5,12 +5,14 @@ const { getLocale } = require('./change-language')
 const { readdir, mkdir, copyFile } = require('node:fs/promises')
 const { join } = require('path')
 const { ipcRenderer } = require('electron')
+const { getSelectedProfile } = require('./eve-folder')
 
 async function backupFiles() {
   let folderPath = $('#folder-select').val()
   if (!folderPath) return
 
-  folderPath = join(folderPath, 'settings_Default')
+  const profile = getSelectedProfile()
+  folderPath = join(folderPath, profile)
   const files =
   (await readdir(folderPath, { withFileTypes: true }))
   .filter(dirent => dirent.isFile())

@@ -5,7 +5,7 @@ const $ = require('jquery')
 const AppConfig = require('../configuration')
 const { changeLanguage } = require('./change-language')
 const { changeServer } = require('./eve-server')
-const { openFolder, setSelectedFolder, readSettingFiles, overwrite, readDefaultFolders } = require('./eve-folder')
+const { openFolder, getSelectedProfile, setSelectedFolder, readSettingFiles, overwrite, readDefaultFolders } = require('./eve-folder')
 const { editDescription } = require('./edit-description')
 const { backupFiles } = require('./backup')
 const { join } = require('path')
@@ -124,7 +124,8 @@ function bindEvents() {
     const select = $(`#${args.type}-select`).val()
     if (!select) return
     const folder = $('#folder-select').val()
-    args.folder = join(folder, 'settings_Default')
+    const profile = getSelectedProfile()
+    args.folder = join(folder, profile)
     args.selected = select + '.dat'
 
     let targets = $(`#${args.type}-select option`).not(':selected').toArray()
