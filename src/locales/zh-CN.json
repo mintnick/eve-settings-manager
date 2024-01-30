@@ -9,6 +9,7 @@
   },
   "titles":{
     "appTitle": "EVE设置管理",
+    "profile": "档案",
     "character": "角色",
     "account": "帐号",
     "serverStatus": "状态",
