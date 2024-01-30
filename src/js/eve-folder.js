@@ -5,6 +5,7 @@ const { shell, ipcRenderer } = require('electron')
 const { join } = require('path')
 const { statSync, existsSync } = require('fs')
 const { readdir, readFile, writeFile } = require('node:fs/promises')
+const { appendSelectOption, setSelectLoading, setSelectOptions } = require('./select-options')
 const { getLocale } = require('./change-language')
 const AppConfig = require('../configuration')
 const phin = require('phin')
@@ -41,12 +42,41 @@ const urls = {
     "thunderdome": ""
   }
 }
-const settingFolderName = 'settings_Default'
+const defaultSettingFolderName = 'settings_Default'
+
+/**
+ * Finds all profiles from the current server’s settings directory and
+ * populates the profile selection table.
+ *
+ * @returns {Promise<void>}
+ */
+async function findProfiles() {
+  await readDefaultFolders()
+
+  // clear table
+  const profileSelect = $('#profile-select')
+  setSelectLoading(profileSelect)
+
+  const selectedFolder = $('#folder-select').val()
+  if (!selectedFolder) {
+    setSelectOptions(profileSelect, [])
+    return;
+  }
+
+  const profileDirectories = (await readdir(selectedFolder, {withFileTypes: true}))
+      .filter(entry => entry.isDirectory())
+      .filter(entry => entry.name.startsWith('settings_'))
+      .map(entry => entry.name)
+
+  // add profiles to profile table
+  const profileDirectoryToOption = profileDirectory => ({ value: profileDirectory, text: profileDirectory.replace(/^settings_/, '').replaceAll(/_/g, ' ') })
+  setSelectOptions(profileSelect, profileDirectories.map(profileDirectoryToOption))
+}
 
 // read default setting folders, render in folder select
 async function readDefaultFolders() {
   const folderSelect = $('#folder-select')
-  folderSelect.find('option').remove()
+  setSelectOptions(folderSelect, [])
 
   const server = $('#server-select').val() ?? 'tranquility'
   const os = process.platform
@@ -61,21 +91,13 @@ async function readDefaultFolders() {
   if (defaultDirs.length == 0) return
   
   // render default dirs
-  for (const dir of defaultDirs) {
-    folderSelect.append($('<option>', {
-      value: dir,
-      text: dir
-    }))
-  }
+  setSelectOptions(folderSelect, defaultDirs.map(dir => ({ value: dir, text: dir })))
   // load saved folder
   let savedFolder = AppConfig.readSettings(`savedFolder.${server}`)
   if (!savedFolder) {
     savedFolder = defaultDirs[0]
   } else if (!defaultDirs.includes(savedFolder)) {
-    folderSelect.append($('<option>', {
-      value: savedFolder,
-      text: savedFolder,
-    }))
+    appendSelectOption(folderSelect, savedFolder, savedFolder)
   }
   folderSelect.find('option[value="' + savedFolder + '"]').prop("selected", true)
 }
@@ -86,19 +108,19 @@ async function setSelectedFolder(folderPath) {
   const server = $('#server-select').val()
   AppConfig.saveSettings(`savedFolder.${server}`, folderPath)
   const folderSelect = $('#folder-select')
-  folderSelect.append($('<option>', {
-    value: folderPath,
-    text: folderPath,
-    selected: true
-  }))
+  appendSelectOption(folderSelect, folderPath, folderPath, true)
   // wait 0.1s to read the correct folder
   await new Promise(r => setTimeout(r, 100));
   readSettingFiles()
 }
 
+function getSelectedProfile() {
+  return $('#profile-select').val() ?? defaultSettingFolderName
+}
+
 // open selected folder in OS
 function openFolder() {
-  const folderPath = join($('#folder-select').val(), settingFolderName)
+  const folderPath = join($('#folder-select').val(), getSelectedProfile())
   // shell.showItemInFolder(folderPath)
   shell.openPath(folderPath)
 }
@@ -107,20 +129,21 @@ function openFolder() {
 async function readSettingFiles() {
   // get both char and user selects
   const selects = $('.select-list')
-  selects.find('option').remove()
 
   // set loading text
-  selects.append($('<option>', { val: 0, text: 'loading...' }))
+  setSelectLoading(selects)
 
   // read files
   const selectedFolder = $('#folder-select').val()
   if (!selectedFolder) {
-    selects.find('option').remove()
+    setSelectOptions(selects, [])
     return
   }
+
+  const settingFolderName = getSelectedProfile()
   const folderPath = join(selectedFolder, settingFolderName)
   if (!existsSync(folderPath)) {
-    selects.find('option').remove()
+    setSelectOptions(selects, [])
     return
   }
 
@@ -136,7 +159,7 @@ async function readSettingFiles() {
     .map(dirent => dirent.name.split('.')[0])
 
   if (files.length == 0) {
-    selects.find('option').remove()
+    setSelectOptions(selects, [])
     return
   }
 
@@ -199,24 +222,18 @@ async function readSettingFiles() {
   
   // render selects
   const charSelect = $('#char-select')
-  charSelect.find('option').remove()
-  for (const [filename, values] of Object.entries(chars)) {
-    const opt_text = `${values.id} - ${values.name} - ${values.mtime}` + (values.description ? ` - [${values.description}]` : '')
-    charSelect.append($('<option>', {
-      value: filename,
-      text: opt_text
-    }))
-  }
+  const characterToOption = ([filename, values]) => ({
+    value: filename,
+    text: `${values.id} - ${values.name} - ${values.mtime}` + (values.description ? ` - [${values.description}]` : '')
+  })
+  setSelectOptions(charSelect, Object.entries(chars).map(characterToOption))
 
   const userSelect = $('#user-select')
-  userSelect.find('option').remove()
-  for (const [filename, values] of Object.entries(users)) {
-    const opt_text = `${values.id} - ${values.mtime}` + (values.description ? ` - [${values.description}]` : '')
-    userSelect.append($('<option>', {
-      value: filename,
-      text: opt_text
-    }))
-  }
+  const userToOption = ([filename, values]) => ({
+    value: filename,
+    text: `${values.id} - ${values.mtime}` + (values.description ? ` - [${values.description}]` : '')
+  })
+  setSelectOptions(userSelect, Object.entries(users).map(userToOption))
 }
 
 // @params
@@ -240,6 +257,8 @@ async function overwrite(args) {
 }
 
 module.exports = {
+  findProfiles,
+  getSelectedProfile,
   readDefaultFolders,
   setSelectedFolder,
   openFolder,

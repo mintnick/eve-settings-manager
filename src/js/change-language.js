@@ -2,6 +2,7 @@
 
 const $ = require('jquery')
 const AppConfig = require('../configuration')
+const { setSelectOptions } = require('./select-options')
 
 function changeLanguage(lang) {
   AppConfig.saveSettings('language', lang);
@@ -28,14 +29,7 @@ function changeLanguage(lang) {
   // server select
   const servers = locale.servers;
   const server = AppConfig.readSettings('server') ?? 'tranquility'
-  serverSelect.find('option').remove();
-  for (const [key, value] of Object.entries(servers)) {
-    serverSelect.append($('<option>', {
-      value: key,
-      text: value,
-    }))
-  }
-  serverSelect.find('option[value="' + server + '"]').prop("selected", true)
+  setSelectOptions(serverSelect, Object.entries(servers).map(([key, value]) => ({ value: key, text: value, selected: key === server })))
   serverTitle.text(serverSelect.find(":selected").text())
   
   // titles

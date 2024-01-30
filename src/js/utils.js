@@ -5,17 +5,19 @@ const $ = require('jquery')
 const AppConfig = require('../configuration')
 const { changeLanguage } = require('./change-language')
 const { changeServer } = require('./eve-server')
-const { openFolder, setSelectedFolder, readSettingFiles, overwrite, readDefaultFolders } = require('./eve-folder')
+const { openFolder, getSelectedProfile, setSelectedFolder, readSettingFiles, overwrite, readDefaultFolders } = require('./eve-folder')
 const { editDescription } = require('./edit-description')
 const { backupFiles } = require('./backup')
 const { join } = require('path')
 const { readdir } = require('node:fs/promises')
+const { setSelectOptions } = require('./select-options')
 
 const localePath = join(__dirname, '../locales')
 
 const languageSelect = $('#language-select')
 const serverSelect = $('#server-select')
 const folderSelect = $('#folder-select')
+const profileSelect = $('#profile-select')
 const selectFolderBtn = $('#select-folder-btn')
 const openFolderBtn = $('#open-folder-btn')
 const backupBtn = $('#backup-btn')
@@ -33,15 +35,7 @@ async function initSelects() {
   const locales = (await readdir(localePath, { withFileTypes: true }))
     .filter(dirent => dirent.isFile() && dirent.name.endsWith('.json'))
     .map(dirent => join(localePath, dirent.name))
-  languageSelect.find('option').remove()
-  for (const locale of locales) {
-    const localeFile = require(locale)
-    const langValue = locale.replace(/^.*[\\\/]/, '').split('.')[0]
-    languageSelect.append($('<option>', {
-      value: langValue,
-      text: localeFile.language
-    }))
-  }
+  setSelectOptions(languageSelect, locales.map(locale => ({ value: locale.replace(/^.*[\\\/]/, '').split('.')[0], text: require(locale).language })))
 
   // set language
   let language = AppConfig.readSettings('language')
@@ -76,6 +70,8 @@ function bindEvents() {
     AppConfig.saveSettings(`savedFolder.${serverSelect.val()}`, folderSelect.val())
     readSettingFiles()
   })
+
+  profileSelect.on('change', readSettingFiles)
 
   selectFolderBtn.on('click', async (e) => {
     e.preventDefault()
@@ -131,7 +127,8 @@ function bindEvents() {
     const select = $(`#${args.type}-select`).val()
     if (!select) return
     const folder = $('#folder-select').val()
-    args.folder = join(folder, 'settings_Default')
+    const profile = getSelectedProfile()
+    args.folder = join(folder, profile)
     args.selected = select + '.dat'
 
     let targets = $(`#${args.type}-select option`).not(':selected').toArray()
