@@ -9,6 +9,7 @@
   },
   "titles":{
     "appTitle": "EVE Settings Manager",
+    "profile": "Profiles",
     "character": "Characters",
     "account": "Accounts",
     "serverStatus": "Status",
