@@ -17,6 +17,7 @@ const localePath = join(__dirname, '../locales')
 const languageSelect = $('#language-select')
 const serverSelect = $('#server-select')
 const folderSelect = $('#folder-select')
+const profileSelect = $('#profile-select')
 const selectFolderBtn = $('#select-folder-btn')
 const openFolderBtn = $('#open-folder-btn')
 const backupBtn = $('#backup-btn')
@@ -69,6 +70,8 @@ function bindEvents() {
     AppConfig.saveSettings(`savedFolder.${serverSelect.val()}`, folderSelect.val())
     readSettingFiles()
   })
+
+  profileSelect.on('change', readSettingFiles)
 
   selectFolderBtn.on('click', async (e) => {
     e.preventDefault()

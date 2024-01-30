@@ -3,8 +3,9 @@
 const phin = require('phin')
 const $ = require('jquery')
 const AppConfig = require('../configuration')
+const { setSelectOptions } = require('./select-options')
 const { getLocale } = require('./change-language')
-const { readDefaultFolders, readSettingFiles } = require('./eve-folder.js')
+const { findProfiles } = require('./eve-folder.js')
 
 const urls = {
   "status": {
@@ -24,8 +25,9 @@ async function changeServer(server) {
   $('#server-title').text(title)
 
   // await getServerStatus()
-  await readDefaultFolders()
-  await readSettingFiles()
+  setSelectOptions($('#user-select'), [])
+  setSelectOptions($('#char-select'), [])
+  await findProfiles()
 }
 
 // update server status and player count

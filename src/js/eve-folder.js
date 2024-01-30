@@ -44,6 +44,35 @@ const urls = {
 }
 const defaultSettingFolderName = 'settings_Default'
 
+/**
+ * Finds all profiles from the current server’s settings directory and
+ * populates the profile selection table.
+ *
+ * @returns {Promise<void>}
+ */
+async function findProfiles() {
+  await readDefaultFolders()
+
+  // clear table
+  const profileSelect = $('#profile-select')
+  setSelectLoading(profileSelect)
+
+  const selectedFolder = $('#folder-select').val()
+  if (!selectedFolder) {
+    setSelectOptions(profileSelect, [])
+    return;
+  }
+
+  const profileDirectories = (await readdir(selectedFolder, {withFileTypes: true}))
+      .filter(entry => entry.isDirectory())
+      .filter(entry => entry.name.startsWith('settings_'))
+      .map(entry => entry.name)
+
+  // add profiles to profile table
+  const profileDirectoryToOption = profileDirectory => ({ value: profileDirectory, text: profileDirectory.replace(/^settings_/, '').replaceAll(/_/g, ' ') })
+  setSelectOptions(profileSelect, profileDirectories.map(profileDirectoryToOption))
+}
+
 // read default setting folders, render in folder select
 async function readDefaultFolders() {
   const folderSelect = $('#folder-select')
@@ -228,6 +257,7 @@ async function overwrite(args) {
 }
 
 module.exports = {
+  findProfiles,
   getSelectedProfile,
   readDefaultFolders,
   setSelectedFolder,
