@@ -34,6 +34,7 @@
   const $ = require('jquery')
   const { ipcRenderer, remote } = require('electron')
   const { getLocale } = require('../js/change-language')
+  const { setSelectOptions } = require('../js/select-options')
 
   const prefixes = {
     "user": "core_user_",
@@ -53,13 +54,7 @@
   // render the other options as candidates
   ipcRenderer.on('loadSelect', (event, args) => {
     localArgs = args
-    const options = args.targets
-    for (const option of options) {
-      select.append($('<option>', {
-        value: option.split(' - ')[0],
-        text: option
-      }))
-    }
+    setSelectOptions(select, args.targets.map(option => ({ value: option.split(' - ')[0], text: option })))
   })
 
   // confirm overwrite
