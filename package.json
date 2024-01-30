@@ -26,7 +26,7 @@
   },
   "build": {
     "appId": "eve-settings-manager",
-    "productName": "EVE Settings Manager v1.0.1",
+    "productName": "EVE Settings Manager v1.1.0",
     "mac": {
       "icon": "src/assets/icon.png"
     },
@@ -37,7 +37,7 @@
       "icon": "src/assets/icon.png"
     },
     "portable": {
-      "artifactName": "EVE Settings Manager v1.0.1.exe"
+      "artifactName": "EVE Settings Manager v1.1.0.exe"
     }
   }
 }
