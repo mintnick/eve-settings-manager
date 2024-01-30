@@ -22,7 +22,9 @@
   },
   "buttons": {
     "selectFolder": "選擇資料夾",
+    "selectFolderTooltip": "選擇一個設定資料夾",
     "openFolder": "打開資料夾",
+    "openFolderTooltip": "在資源管理器中打開當前資料夾",
     "backup": "備份",
     "backupTooltip": "備份本地文件",
     "clearCache": "清除設定",

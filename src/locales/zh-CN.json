@@ -22,7 +22,9 @@
   },
   "buttons": {
     "selectFolder": "选择文件夹",
+    "selectFolderTooltip": "手动选择设置文件夹",
     "openFolder": "打开文件夹",
+    "openFolderTooltip": "在资源管理器中打开设置文件夹",
     "backup": "备份",
     "backupTooltip": "备份设置文件",
     "clearCache": "清空缓存",
