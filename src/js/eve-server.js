@@ -6,6 +6,7 @@ const AppConfig = require('../configuration')
 const { setSelectOptions } = require('./select-options')
 const { getLocale } = require('./change-language')
 const { findProfiles } = require('./eve-folder.js')
+const { readDefaultFolders } = require('./eve-folder')
 
 const urls = {
   "status": {
@@ -25,8 +26,7 @@ async function changeServer(server) {
   $('#server-title').text(title)
 
   // await getServerStatus()
-  setSelectOptions($('#user-select'), [])
-  setSelectOptions($('#char-select'), [])
+  await readDefaultFolders()
   await findProfiles()
 }
 

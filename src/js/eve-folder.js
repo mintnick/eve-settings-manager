@@ -51,9 +51,8 @@ const defaultSettingFolderName = 'settings_Default'
  * @returns {Promise<void>}
  */
 async function findProfiles() {
-  await readDefaultFolders()
-
   // clear table
+  clearCharacterAndUserList()
   const profileSelect = $('#profile-select')
   setSelectLoading(profileSelect)
 
@@ -111,7 +110,13 @@ async function setSelectedFolder(folderPath) {
   appendSelectOption(folderSelect, folderPath, folderPath, true)
   // wait 0.1s to read the correct folder
   await new Promise(r => setTimeout(r, 100));
-  readSettingFiles()
+  await findProfiles()
+  await readSettingFiles()
+}
+
+function clearCharacterAndUserList() {
+  setSelectOptions($('#user-select'), [])
+  setSelectOptions($('#char-select'), [])
 }
 
 function getSelectedProfile() {
