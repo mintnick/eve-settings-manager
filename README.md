@@ -8,12 +8,13 @@ Refactor and upgrade from my previous project [ESAM](https://github.com/mintnick
 
 Current status: stable version 1.0.0
 
-![Screen Shot 2023-02-09 at 15 30 01](https://user-images.githubusercontent.com/14357052/217746256-01f7b403-40b8-4a68-bccc-798913df51f3.png)
+![Screenshot 2024-01-31 at 07 48 24](https://github.com/mintnick/eve-settings-manager/assets/14357052/291cff8b-4b5b-4ffe-b65a-297afb0768aa)
 
 ## Usage
 
 1. Download and unzip
-2. Run the executable file
+    - for MacOS: you can either run the .app file directly, or install it with .dmg file
+2. Run the program, select the setting folder and profile you are using
 3. (Optional) Use "Backup" button to prepare a backup
 4. Select one as base profile
     - overwrite all other profiles
