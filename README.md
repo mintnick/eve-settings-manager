@@ -10,18 +10,7 @@ Newest version: v1.1.2
 
 ## Contributors
 
-<style>
-.photos {
-  display: inline-block;
-  position: relative;
-  width: 100px;
-  height: 100px;
-  overflow: hidden;
-  border-radius: 50%;
-}
-</style>
-
-<div class="photos">
+<div class="photos" style="height: 80px;">
     <a href="https://github.com/Bombe"> 
         <img src="https://avatars.githubusercontent.com/u/81599?v=4" />
     </a>
