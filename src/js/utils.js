@@ -5,7 +5,7 @@ const $ = require('jquery')
 const AppConfig = require('../configuration')
 const { changeLanguage } = require('./change-language')
 const { changeServer } = require('./eve-server')
-const { openFolder, getSelectedProfile, setSelectedFolder, readSettingFiles, overwrite, readDefaultFolders } = require('./eve-folder')
+const { openFolder, getSelectedProfile, setSelectedFolder, readSettingFiles, overwrite, findProfiles } = require('./eve-folder')
 const { editDescription } = require('./edit-description')
 const { backupFiles } = require('./backup')
 const { join } = require('path')
@@ -68,7 +68,7 @@ function bindEvents() {
 
   folderSelect.on('change', () => {
     AppConfig.saveSettings(`savedFolder.${serverSelect.val()}`, folderSelect.val())
-    readSettingFiles()
+    findProfiles()
   })
 
   profileSelect.on('change', readSettingFiles)
