@@ -10,11 +10,9 @@ Newest version: v1.1.2
 
 ## Contributors
 
-<div class="photos" style="height: 80px;">
-    <a href="https://github.com/Bombe"> 
-        <img src="https://avatars.githubusercontent.com/u/81599?v=4" />
-    </a>
-</div>
+<a href="https://github.com/Bombe"> 
+    <img src="https://avatars.githubusercontent.com/u/81599?v=4" width="80px" height="80px"/>
+</a>
 
 ## Screenshot
 
