@@ -3,7 +3,7 @@
 const phin = require('phin')
 const $ = require('jquery')
 const AppConfig = require('../configuration')
-const { setSelectOptions } = require('./select-options')
+// const { setSelectOptions } = require('./select-options')
 const { getLocale } = require('./change-language')
 const { findProfiles } = require('./eve-folder.js')
 const { readDefaultFolders } = require('./eve-folder')
@@ -62,7 +62,6 @@ async function getServerStatus() {
   serverStatus.attr('class', cssClass)
   playerCount.text(players)
   playerCount.attr('class', cssClass)
-  console.log(1)
 }
 
 module.exports = {

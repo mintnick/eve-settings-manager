@@ -126,7 +126,6 @@ function getSelectedProfile() {
 // open selected folder in OS
 function openFolder() {
   const folderPath = join($('#folder-select').val(), getSelectedProfile())
-  // shell.showItemInFolder(folderPath)
   shell.openPath(folderPath)
 }
 
@@ -223,7 +222,6 @@ async function readSettingFiles() {
       users[file].description = savedDescription
     }
   }
-  // console.log(chars, users)
   
   // render selects
   const charSelect = $('#char-select')
