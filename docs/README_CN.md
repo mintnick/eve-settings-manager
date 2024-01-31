@@ -4,14 +4,21 @@
 
 从旧项目[ESAM](https://github.com/mintnick/ESAM)升级，用Electron重构并添加了一些新功能。
 
-当前状态：1.0.0版本
+最新版本：v1.1.1
+
+## 贡献者
+
+<a href="https://kentcdodds.com"><img src="https://avatars.githubusercontent.com/u/81599?v=4?s=100" width="80px;" alt="David Roden"/><br /><sub><b>David Roden</b></sub></a>
+
+## 截图
 
 ![Screen Shot 2023-02-09 at 15 30 17](https://user-images.githubusercontent.com/14357052/217746381-e0f74ca8-2377-417f-8030-6d751ed8788b.png)
 
 ## 使用方法
 
 1. 下载并解压缩
-2. 运行软件
+    - Mac 用户可以直接运行 .app 文件，或使用 .dmg 文件安装
+2. 运行软件，选择你正在使用的设置文件夹和设置档案
 3. (可选)在覆盖操作前使用“备份”按钮创建备份
 4. 选择一个设置文件作为模版
     - 覆盖其它所有文件

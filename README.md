@@ -6,7 +6,13 @@ A third party tool that manages EVE Online local setting files.
 
 Refactor and upgrade from my previous project [ESAM](https://github.com/mintnick/ESAM), inspired by [EANM](https://github.com/FontaineRiant/EANM).
 
-Current status: stable version 1.0.0
+Newest version: v1.1.1
+
+## Contributors
+
+<a href="https://kentcdodds.com"><img src="https://avatars.githubusercontent.com/u/81599?v=4?s=100" width="80px;" alt="David Roden"/><br /><sub><b>David Roden</b></sub></a>
+
+## Screenshot
 
 ![Screenshot 2024-01-31 at 07 48 24](https://github.com/mintnick/eve-settings-manager/assets/14357052/291cff8b-4b5b-4ffe-b65a-297afb0768aa)
 
@@ -25,7 +31,7 @@ Current status: stable version 1.0.0
 - Fetch and save character names
 - Add notes to characters and accounts
 - Support English and Simplified/Tranditional Chinese
-- Support Tranquility, Serenity, Singularity, Infinity (new China server), Thunderdome
+- Support Tranquility, Serenity, Singularity, Infinity (aka Dawn/曙光, new China server), Thunderdome
 
 ## Uninstall
 
