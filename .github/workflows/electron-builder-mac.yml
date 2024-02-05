@@ -1,0 +1,40 @@
+name: electron-builder
+
+on: 
+  push:
+    tags:
+      - 'draft-release'
+
+jobs:
+  build_on_mac:
+    runs-on: macos-latest
+    steps:
+    - name: Check out Git repo
+      uses: actions/checkout@v2
+    
+    - uses: actions/setup-node@master
+      with:
+        node-version: 20
+    - name: Install dependencies
+      run: yarn
+    - name: Build for MacOS
+      run: yarn electron-builder --mac
+  
+    - name: Create draft release
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: v0.0.0
+        release_name: draft-release
+        draft: true
+        prerelease: false
+    - uses: actions/upload-release-asset@v1.0.1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./dist/EVE Settings Manager v1.1.2-1.1.2.dmg
+        asset_name: dist/EVE Settings Manager v1.1.2-1.1.2.dmg
+        asset_content_type: application/octet-stream
