@@ -22,7 +22,7 @@
   "scripts": {
     "dev": "electron .",
     "pack": "electron-builder --dir",
-    "dist": "electron-builder --win --mac"
+    "dist": "electron-builder --win --mac --linux"
   },
   "build": {
     "appId": "eve-settings-manager",
@@ -38,6 +38,11 @@
     },
     "portable": {
       "artifactName": "EVE Settings Manager v1.1.2.exe"
+    },
+    "linux": {
+      "target": ["AppImage"],
+      "icon": "src/assets/icon.png",
+      "category": "Utility"
     }
   }
 }
