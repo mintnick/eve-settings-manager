@@ -4,6 +4,8 @@ interface StoreSchema {
   descriptions: Record<string, string>   // filename → user label
   serverFolders: Record<string, string>  // serverDirName → custom folder path
   serverProfiles: Record<string, string> // serverDirName → last used profile name
+  charNames: Record<string, string>      // characterId → character name (ESI cache)
+  lastActiveServer: string               // last-selected server dir name
   language: string
 }
 
@@ -11,6 +13,8 @@ const defaults: StoreSchema = {
   descriptions: {},
   serverFolders: {},
   serverProfiles: {},
+  charNames: {},
+  lastActiveServer: '',
   language: 'en',
 }
 
@@ -54,6 +58,26 @@ export function getServerProfile(serverName: string): string | undefined {
 
 export function setServerProfile(serverName: string, profileName: string): void {
   store().set('serverProfiles', { ...store().get('serverProfiles'), [serverName]: profileName })
+}
+
+// ── Last active server ────────────────────────────────────────────────────────
+
+export function getLastActiveServer(): string {
+  return store().get('lastActiveServer')
+}
+
+export function setLastActiveServer(serverName: string): void {
+  store().set('lastActiveServer', serverName)
+}
+
+// ── Character name cache ──────────────────────────────────────────────────────
+
+export function getCachedCharNames(): Record<string, string> {
+  return store().get('charNames')
+}
+
+export function setCachedCharNames(names: Record<string, string>): void {
+  store().set('charNames', { ...store().get('charNames'), ...names })
 }
 
 // ── App config ────────────────────────────────────────────────────────────────

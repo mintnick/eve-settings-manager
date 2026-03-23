@@ -40,6 +40,7 @@
   },
   "dependencies": {
     "electron-store": "^11.0.2",
+    "pinia": "^3.0.4",
     "vuetify": "^3.7.5"
   }
 }

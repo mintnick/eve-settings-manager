@@ -3,6 +3,7 @@ import { createRequire } from 'node:module'
 import { fileURLToPath } from 'node:url'
 import path from 'node:path'
 import os from 'node:os'
+import ElectronStore from 'electron-store'
 import { registerIpcHandlers } from './ipc/index.js'
 
 const { app, BrowserWindow, shell, ipcMain } = electron
@@ -44,40 +45,41 @@ let win: BrowserWindow | null = null
 const preload = path.join(__dirname, '../preload/index.mjs')
 const indexHtml = path.join(RENDERER_DIST, 'index.html')
 
-async function createWindow() {
-  win = new BrowserWindow({
-    title: 'Main window',
-    icon: path.join(process.env.VITE_PUBLIC, 'favicon.ico'),
-    webPreferences: {
-      preload,
-      // Warning: Enable nodeIntegration and disable contextIsolation is not secure in production
-      // nodeIntegration: true,
+interface WindowBounds { x: number; y: number; width: number; height: number }
+const windowStore = new ElectronStore<{ bounds: WindowBounds }>({
+  name: 'window-state',
+  defaults: { bounds: { x: 0, y: 0, width: 1000, height: 700 } },
+})
 
-      // Consider using contextBridge.exposeInMainWorld
-      // Read more on https://www.electronjs.org/docs/latest/tutorial/context-isolation
-      // contextIsolation: false,
-    },
+async function createWindow() {
+  const bounds = windowStore.get('bounds')
+
+  win = new BrowserWindow({
+    ...bounds,
+    title: 'EVE Settings Manager',
+    icon: path.join(process.env.VITE_PUBLIC, 'favicon.ico'),
+    webPreferences: { preload },
   })
 
-  if (VITE_DEV_SERVER_URL) { // #298
+  win.on('close', () => {
+    if (!win) return
+    // Persist bounds only when not maximized/minimized so we restore a sensible size
+    if (!win.isMaximized() && !win.isMinimized()) {
+      windowStore.set('bounds', win.getBounds())
+    }
+  })
+
+  if (VITE_DEV_SERVER_URL) {
     win.loadURL(VITE_DEV_SERVER_URL)
-    // Open devTool if the app is not packaged
-    win.webContents.openDevTools()
   } else {
     win.loadFile(indexHtml)
   }
-
-  // Test actively push message to the Electron-Renderer
-  win.webContents.on('did-finish-load', () => {
-    win?.webContents.send('main-process-message', new Date().toLocaleString())
-  })
 
   // Make all links open with the browser, not with the application
   win.webContents.setWindowOpenHandler(({ url }) => {
     if (url.startsWith('https:')) shell.openExternal(url)
     return { action: 'deny' }
   })
-  // win.webContents.on('will-navigate', (event, url) => { }) #344
 }
 
 app.whenReady().then(() => {

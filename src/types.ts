@@ -1,20 +1,23 @@
+// Shared types mirroring electron/main/ipc/types.ts
+// The renderer can't import from the main process, so we keep these in sync manually.
+
 export interface ServerDir {
-  name: string   // directory name, e.g. '_c_tranquility'
-  path: string   // absolute path
+  name: string   // e.g. '_c_tranquility'
+  path: string
 }
 
 export interface Profile {
-  name: string   // e.g. 'Default', 'Custom'
-  path: string   // absolute path to settings_<name> dir
+  name: string   // e.g. 'Default'
+  path: string
 }
 
 export interface CharFile {
   type: 'char'
-  id: string         // e.g. '2113229062'
-  filename: string   // e.g. 'core_char_2113229062.dat'
+  id: string
+  filename: string
   path: string
-  modifiedAt: number // ms timestamp
-  charName?: string  // resolved via ESI
+  modifiedAt: number
+  charName?: string
 }
 
 export interface UserFile {

@@ -1,32 +1,263 @@
 <script setup lang="ts">
+import { onMounted, watch } from 'vue'
+import { useServerStore } from './stores/useServerStore'
+import { useProfileStore } from './stores/useProfileStore'
+import { useSettingsStore } from './stores/useSettingsStore'
+import { useBackupStore } from './stores/useBackupStore'
+import type { ServerDir, Profile, CharFile, UserFile } from './types'
+
+const serverStore = useServerStore()
+const profileStore = useProfileStore()
+const settingsStore = useSettingsStore()
+const backupStore = useBackupStore()
+
+onMounted(() => {
+  const fixturePath = import.meta.env.VITE_FIXTURE_PATH as string | undefined
+  serverStore.detectFolder(fixturePath)
+})
+
+// When active server changes, load profiles + status
+watch(() => serverStore.activeServer, async (server) => {
+  if (!server) return
+  await profileStore.loadProfiles()
+  await serverStore.refreshStatus()
+})
+
+// When active profile changes, load settings + backups
+watch(() => profileStore.activeProfile, async (profile) => {
+  if (!profile) return
+  await settingsStore.loadSettings()
+  await backupStore.loadBackups()
+})
+
+function statusColor(online: boolean | undefined) {
+  if (online === undefined) return 'grey'
+  return online ? 'success' : 'error'
+}
+
+function statusLabel(online: boolean | undefined) {
+  if (online === undefined) return 'Unknown'
+  return online ? 'Online' : 'Offline'
+}
+
+function formatDate(ms: number) {
+  return new Date(ms).toLocaleString()
+}
 </script>
 
 <template>
+  <v-app>
+    <!-- ── Top bar ───────────────────────────────────────────────── -->
+    <v-app-bar elevation="1" density="compact">
+      <v-app-bar-title>
+        <span class="text-body-1 font-weight-bold">EVE Settings Manager</span>
+      </v-app-bar-title>
+
+      <!-- Server selector -->
+      <template v-if="serverStore.servers.length">
+        <v-select
+          :model-value="serverStore.activeServer"
+          :items="serverStore.servers"
+          item-title="name"
+          item-value="path"
+          return-object
+          density="compact"
+          hide-details
+          variant="outlined"
+          style="max-width: 220px"
+          class="mr-3"
+          @update:model-value="(s: ServerDir) => serverStore.selectServer(s)"
+        />
+        <v-chip
+          v-if="serverStore.serverStatus"
+          :color="statusColor(serverStore.serverStatus?.online)"
+          size="small"
+          class="mr-3"
+          :loading="serverStore.loadingStatus"
+        >
+          {{ statusLabel(serverStore.serverStatus?.online) }}
+        </v-chip>
+        <v-progress-circular v-else-if="serverStore.loadingStatus" size="18" indeterminate class="mr-3" />
+      </template>
+
+      <v-btn
+        variant="text"
+        size="small"
+        prepend-icon="mdi-folder-open"
+        @click="serverStore.openFolderDialog()"
+      >
+        {{ serverStore.eveFolder ? 'Change folder' : 'Set EVE folder' }}
+      </v-btn>
+    </v-app-bar>
+
+    <!-- ── Body ─────────────────────────────────────────────────── -->
+    <v-main>
+
+      <!-- No folder found yet -->
+      <div v-if="!serverStore.hasFolder && !serverStore.loadingFolder" class="d-flex flex-column align-center justify-center fill-height">
+        <v-icon size="64" color="grey-darken-1" class="mb-4">mdi-folder-alert</v-icon>
+        <p class="text-h6 mb-2">EVE settings folder not found</p>
+        <p class="text-body-2 text-grey mb-6">Make sure EVE Online is installed, or set the folder manually.</p>
+        <v-btn color="primary" @click="serverStore.openFolderDialog()">Select folder</v-btn>
+      </div>
+
+      <!-- Loading -->
+      <div v-else-if="serverStore.loadingFolder" class="d-flex align-center justify-center fill-height">
+        <v-progress-circular indeterminate />
+      </div>
+
+      <!-- Main layout -->
+      <div v-else class="d-flex fill-height" style="overflow: hidden">
+
+        <!-- ── Sidebar ─────────────────────────────────────────── -->
+        <v-navigation-drawer permanent width="200">
+          <v-list nav density="compact" class="mt-1">
+            <v-list-subheader>Servers</v-list-subheader>
+            <v-list-item
+              v-for="server in serverStore.servers"
+              :key="server.path"
+              :value="server"
+              :active="serverStore.activeServer?.path === server.path"
+              active-color="primary"
+              rounded="lg"
+              @click="serverStore.selectServer(server)"
+            >
+              <v-list-item-title class="text-body-2">{{ server.name }}</v-list-item-title>
+            </v-list-item>
+
+            <v-divider class="my-2" />
+
+            <v-list-subheader>Backups</v-list-subheader>
+            <v-list-item
+              v-for="backup in backupStore.backups"
+              :key="backup.name"
+              rounded="lg"
+            >
+              <v-list-item-title class="text-body-2">{{ backup.name }}</v-list-item-title>
+              <v-list-item-subtitle class="text-caption">{{ backup.fileCount }} files</v-list-item-subtitle>
+            </v-list-item>
+            <v-list-item v-if="!backupStore.backups.length && profileStore.activeProfile" rounded="lg" disabled>
+              <v-list-item-title class="text-caption text-grey">No backups yet</v-list-item-title>
+            </v-list-item>
+          </v-list>
+        </v-navigation-drawer>
+
+        <!-- ── Right panel ─────────────────────────────────────── -->
+        <div class="flex-1-1 d-flex flex-column" style="overflow: hidden; min-width: 0">
+
+          <!-- Profile tabs -->
+          <v-tabs
+            v-if="profileStore.profiles.length"
+            :model-value="profileStore.activeProfile?.name"
+            density="compact"
+            color="primary"
+            bg-color="surface-variant"
+            @update:model-value="(name: string) => {
+              const p = profileStore.profiles.find(x => x.name === name)
+              if (p) profileStore.selectProfile(p)
+            }"
+          >
+            <v-tab v-for="p in profileStore.profiles" :key="p.name" :value="p.name">
+              {{ p.name }}
+            </v-tab>
+          </v-tabs>
+
+          <!-- Settings tables -->
+          <div v-if="settingsStore.loading" class="d-flex align-center justify-center flex-1-1">
+            <v-progress-circular indeterminate />
+          </div>
+
+          <div v-else class="d-flex flex-1-1" style="overflow: auto; min-height: 0; gap: 0">
+
+            <!-- Characters -->
+            <div class="flex-1-1 pa-3" style="min-width: 0">
+              <p class="text-overline text-grey mb-2">Characters</p>
+              <v-data-table
+                :headers="[
+                  { title: 'Character', key: 'charName', sortable: true },
+                  { title: 'ID', key: 'id' },
+                  { title: 'Modified', key: 'modifiedAt', sortable: true },
+                ]"
+                :items="settingsStore.charFiles"
+                density="compact"
+                hover
+                :no-data-text="profileStore.activeProfile ? 'No character files found' : 'Select a profile'"
+              >
+                <template #item.charName="{ item }: { item: CharFile }">
+                  {{ item.charName ?? item.id }}
+                </template>
+                <template #item.modifiedAt="{ item }: { item: CharFile }">
+                  {{ formatDate(item.modifiedAt) }}
+                </template>
+              </v-data-table>
+            </div>
+
+            <v-divider vertical />
+
+            <!-- Accounts -->
+            <div class="flex-1-1 pa-3" style="min-width: 0">
+              <p class="text-overline text-grey mb-2">Accounts</p>
+              <v-data-table
+                :headers="[
+                  { title: 'Account ID', key: 'id', sortable: true },
+                  { title: 'Modified', key: 'modifiedAt', sortable: true },
+                ]"
+                :items="settingsStore.userFiles"
+                density="compact"
+                hover
+                :no-data-text="profileStore.activeProfile ? 'No account files found' : 'Select a profile'"
+              >
+                <template #item.modifiedAt="{ item }: { item: UserFile }">
+                  {{ formatDate(item.modifiedAt) }}
+                </template>
+              </v-data-table>
+            </div>
+          </div>
+
+          <!-- Action bar -->
+          <v-toolbar density="compact" color="surface-variant" elevation="1">
+            <v-btn
+              variant="tonal"
+              size="small"
+              prepend-icon="mdi-content-copy"
+              class="ml-3"
+              :disabled="!profileStore.activeProfile"
+            >
+              Copy settings
+            </v-btn>
+            <v-btn
+              variant="tonal"
+              size="small"
+              prepend-icon="mdi-archive-arrow-down"
+              class="ml-2"
+              :disabled="!profileStore.activeProfile"
+              @click="backupStore.createBackup(new Date().toISOString().slice(0, 16).replace('T', ' '))"
+            >
+              Backup
+            </v-btn>
+            <v-btn
+              variant="tonal"
+              size="small"
+              prepend-icon="mdi-folder-open-outline"
+              class="ml-2"
+              :disabled="!serverStore.activeServer"
+            >
+              Open folder
+            </v-btn>
+          </v-toolbar>
+
+        </div>
+      </div>
+    </v-main>
+  </v-app>
 </template>
 
 <style>
-/* .flex-center {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-} */
-
-/* .logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
+html, body, #app {
+  height: 100%;
+  margin: 0;
 }
-
-.logo.electron:hover {
-  filter: drop-shadow(0 0 2em #9FEAF9);
+.fill-height {
+  height: 100%;
 }
-
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
-} */
 </style>

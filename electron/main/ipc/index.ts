@@ -8,6 +8,7 @@ import {
   getDescription, setDescription, deleteDescription,
   getServerFolder, setServerFolder,
   getServerProfile, setServerProfile,
+  getLastActiveServer, setLastActiveServer,
   getLanguage, setLanguage,
 } from './store.js'
 
@@ -47,6 +48,8 @@ export function registerIpcHandlers(): void {
   ipcMain.handle('store:set-server-folder', (_e, serverName: string, path: string) => setServerFolder(serverName, path))
   ipcMain.handle('store:get-server-profile', (_e, serverName: string) => getServerProfile(serverName))
   ipcMain.handle('store:set-server-profile', (_e, serverName: string, profileName: string) => setServerProfile(serverName, profileName))
+  ipcMain.handle('store:get-last-server', () => getLastActiveServer())
+  ipcMain.handle('store:set-last-server', (_e, name: string) => setLastActiveServer(name))
   ipcMain.handle('store:get-language', () => getLanguage())
   ipcMain.handle('store:set-language', (_e, lang: string) => setLanguage(lang))
 }
