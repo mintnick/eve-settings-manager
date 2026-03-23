@@ -1,9 +1,11 @@
-import { app, BrowserWindow, shell, ipcMain } from 'electron'
+import electron from 'electron'
 import { createRequire } from 'node:module'
 import { fileURLToPath } from 'node:url'
 import path from 'node:path'
 import os from 'node:os'
+import { registerIpcHandlers } from './ipc/index.js'
 
+const { app, BrowserWindow, shell, ipcMain } = electron
 const require = createRequire(import.meta.url)
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
@@ -78,7 +80,10 @@ async function createWindow() {
   // win.webContents.on('will-navigate', (event, url) => { }) #344
 }
 
-app.whenReady().then(createWindow)
+app.whenReady().then(() => {
+  registerIpcHandlers()
+  createWindow()
+})
 
 app.on('window-all-closed', () => {
   win = null
@@ -102,19 +107,3 @@ app.on('activate', () => {
   }
 })
 
-// New window example arg: new windows url
-ipcMain.handle('open-win', (_, arg) => {
-  const childWindow = new BrowserWindow({
-    webPreferences: {
-      preload,
-      nodeIntegration: true,
-      contextIsolation: false,
-    },
-  })
-
-  if (VITE_DEV_SERVER_URL) {
-    childWindow.loadURL(`${VITE_DEV_SERVER_URL}#${arg}`)
-  } else {
-    childWindow.loadFile(indexHtml, { hash: arg })
-  }
-})

@@ -1,0 +1,67 @@
+import ElectronStore from 'electron-store'
+
+interface StoreSchema {
+  descriptions: Record<string, string>   // filename → user label
+  serverFolders: Record<string, string>  // serverDirName → custom folder path
+  serverProfiles: Record<string, string> // serverDirName → last used profile name
+  language: string
+}
+
+const defaults: StoreSchema = {
+  descriptions: {},
+  serverFolders: {},
+  serverProfiles: {},
+  language: 'en',
+}
+
+let _store: ElectronStore<StoreSchema> | null = null
+
+function store(): ElectronStore<StoreSchema> {
+  if (!_store) _store = new ElectronStore<StoreSchema>({ defaults })
+  return _store
+}
+
+// ── Descriptions ─────────────────────────────────────────────────────────────
+
+export function getDescription(filename: string): string {
+  return store().get('descriptions')[filename] ?? ''
+}
+
+export function setDescription(filename: string, value: string): void {
+  const descriptions = { ...store().get('descriptions'), [filename]: value }
+  store().set('descriptions', descriptions)
+}
+
+export function deleteDescription(filename: string): void {
+  const descriptions = { ...store().get('descriptions') }
+  delete descriptions[filename]
+  store().set('descriptions', descriptions)
+}
+
+// ── Per-server memory ─────────────────────────────────────────────────────────
+
+export function getServerFolder(serverName: string): string | undefined {
+  return store().get('serverFolders')[serverName]
+}
+
+export function setServerFolder(serverName: string, folderPath: string): void {
+  store().set('serverFolders', { ...store().get('serverFolders'), [serverName]: folderPath })
+}
+
+export function getServerProfile(serverName: string): string | undefined {
+  return store().get('serverProfiles')[serverName]
+}
+
+export function setServerProfile(serverName: string, profileName: string): void {
+  store().set('serverProfiles', { ...store().get('serverProfiles'), [serverName]: profileName })
+}
+
+// ── App config ────────────────────────────────────────────────────────────────
+
+export function getLanguage(): string {
+  return store().get('language')
+}
+
+export function setLanguage(lang: string): void {
+  store().set('language', lang)
+}
