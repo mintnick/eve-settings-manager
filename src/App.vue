@@ -4,7 +4,7 @@ import { useServerStore } from './stores/useServerStore'
 import { useProfileStore } from './stores/useProfileStore'
 import { useSettingsStore } from './stores/useSettingsStore'
 import { useBackupStore } from './stores/useBackupStore'
-import type { CharFile, UserFile } from './types'
+import type { CharFile, UserFile, SettingsFile } from './types'
 
 const serverStore = useServerStore()
 const profileStore = useProfileStore()
@@ -53,6 +53,28 @@ async function confirmBackup() {
   if (!name) return
   backupDialog.value = false
   await backupStore.createBackup(name)
+}
+
+// ── Single file backup ───────────────────────────────────────────
+const fileBackupDialog = ref(false)
+const fileBackupName = ref('')
+const fileBackupPending = ref<SettingsFile | null>(null)
+
+function openFileBackupDialog(file: SettingsFile) {
+  fileBackupPending.value = file
+  const label = file.type === 'char'
+    ? ((file as CharFile).charName ?? file.id)
+    : `account_${file.id}`
+  fileBackupName.value = `${label}_${new Date().toISOString().slice(0, 10)}`
+  fileBackupDialog.value = true
+}
+
+async function confirmFileBackup() {
+  const name = fileBackupName.value.trim()
+  if (!name || !fileBackupPending.value) return
+  fileBackupDialog.value = false
+  await backupStore.createFileBackup(fileBackupPending.value.path, name)
+  fileBackupPending.value = null
 }
 </script>
 
@@ -115,8 +137,15 @@ async function confirmBackup() {
               :key="backup.name"
               rounded="lg"
             >
+              <template #prepend>
+                <v-icon size="14" class="mr-1" color="grey">
+                  {{ backup.type === 'file' ? 'mdi-file-outline' : 'mdi-folder-outline' }}
+                </v-icon>
+              </template>
               <v-list-item-title class="text-body-2">{{ backup.name }}</v-list-item-title>
-              <v-list-item-subtitle class="text-caption">{{ backup.fileCount }} files</v-list-item-subtitle>
+              <v-list-item-subtitle class="text-caption">
+                {{ backup.type === 'file' ? 'single file' : `${backup.fileCount} files` }}
+              </v-list-item-subtitle>
             </v-list-item>
             <v-list-item v-if="!backupStore.backups.length && profileStore.activeProfile" rounded="lg" disabled>
               <v-list-item-title class="text-caption text-grey">No backups yet</v-list-item-title>
@@ -159,17 +188,27 @@ async function confirmBackup() {
                   { title: 'Character', key: 'charName', sortable: true },
                   { title: 'ID', key: 'id' },
                   { title: 'Modified', key: 'modifiedAt', sortable: true },
+                  { title: '', key: 'backup', sortable: false, width: 40 },
                 ]"
                 :items="settingsStore.charFiles"
                 density="compact"
                 hover
                 :no-data-text="profileStore.activeProfile ? 'No character files found' : 'Select a profile'"
               >
-                <template #item.charName="{ item }: { item: CharFile }">
+                <template #item.charName="{ item }">
                   {{ item.charName ?? item.id }}
                 </template>
-                <template #item.modifiedAt="{ item }: { item: CharFile }">
+                <template #item.modifiedAt="{ item }">
                   {{ formatDate(item.modifiedAt) }}
+                </template>
+                <template #item.backup="{ item }">
+                  <v-tooltip text="Backup file" location="top">
+                    <template #activator="{ props }">
+                      <svg v-bind="props" viewBox="0 0 24 24" width="16" height="16" class="backup-icon" @click.stop="openFileBackupDialog(item)">
+                        <path d="M15,9H5V5H15M12,19A3,3 0 0,1 9,16A3,3 0 0,1 12,13A3,3 0 0,1 15,16A3,3 0 0,1 12,19M17,3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V7L17,3Z"/>
+                      </svg>
+                    </template>
+                  </v-tooltip>
                 </template>
               </v-data-table>
             </div>
@@ -183,14 +222,24 @@ async function confirmBackup() {
                 :headers="[
                   { title: 'Account ID', key: 'id', sortable: true },
                   { title: 'Modified', key: 'modifiedAt', sortable: true },
+                  { title: '', key: 'backup', sortable: false, width: 40 },
                 ]"
                 :items="settingsStore.userFiles"
                 density="compact"
                 hover
                 :no-data-text="profileStore.activeProfile ? 'No account files found' : 'Select a profile'"
               >
-                <template #item.modifiedAt="{ item }: { item: UserFile }">
+                <template #item.modifiedAt="{ item }">
                   {{ formatDate(item.modifiedAt) }}
+                </template>
+                <template #item.backup="{ item }">
+                  <v-tooltip text="Backup file" location="top">
+                    <template #activator="{ props }">
+                      <svg v-bind="props" viewBox="0 0 24 24" width="16" height="16" class="backup-icon" @click.stop="openFileBackupDialog(item)">
+                        <path d="M15,9H5V5H15M12,19A3,3 0 0,1 9,16A3,3 0 0,1 12,13A3,3 0 0,1 15,16A3,3 0 0,1 12,19M17,3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V7L17,3Z"/>
+                      </svg>
+                    </template>
+                  </v-tooltip>
                 </template>
               </v-data-table>
             </div>
@@ -253,6 +302,27 @@ async function confirmBackup() {
         </v-card-actions>
       </v-card>
     </v-dialog>
+
+    <!-- ── Single file backup dialog ────────────────────────────── -->
+    <v-dialog v-model="fileBackupDialog" max-width="400" @keydown.enter="confirmFileBackup">
+      <v-card title="Backup file">
+        <v-card-text>
+          <v-text-field
+            v-model="fileBackupName"
+            label="Backup name"
+            autofocus
+            variant="outlined"
+            density="compact"
+            hide-details
+          />
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer />
+          <v-btn variant="text" @click="fileBackupDialog = false">Cancel</v-btn>
+          <v-btn color="primary" variant="tonal" :disabled="!fileBackupName.trim()" @click="confirmFileBackup">Save</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </v-app>
 </template>
 
@@ -263,5 +333,15 @@ html, body, #app {
 }
 .fill-height {
   height: 100%;
+}
+.backup-icon {
+  fill: #90caf9;
+  cursor: pointer;
+  opacity: 0.7;
+  vertical-align: middle;
+}
+.backup-icon:hover {
+  fill: #ffffff;
+  opacity: 1;
 }
 </style>
