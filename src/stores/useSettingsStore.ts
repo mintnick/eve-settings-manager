@@ -20,14 +20,6 @@ export const useSettingsStore = defineStore('settings', () => {
       charFiles.value = files.filter((f: CharFile | UserFile) => f.type === 'char')
       userFiles.value = files.filter((f: CharFile | UserFile) => f.type === 'user')
 
-      // Resolve char names (returns Record<id, name>, cached locally in main process)
-      if (charFiles.value.length && serverStore.activeServer) {
-        const esiServer: EsiServer = await window.ipcRenderer.invoke('server:infer-esi', serverStore.activeServer.name)
-        const ids = charFiles.value.map(f => f.id)
-        const nameMap: Record<string, string> = await window.ipcRenderer.invoke('settings:resolve-names', ids, esiServer)
-        charFiles.value = charFiles.value.map(f => ({ ...f, charName: nameMap[f.id] ?? f.charName }))
-      }
-
       // Load descriptions
       const allFiles = [...charFiles.value, ...userFiles.value]
       for (const f of allFiles) {
@@ -36,6 +28,18 @@ export const useSettingsStore = defineStore('settings', () => {
       }
     } finally {
       loading.value = false
+    }
+
+    // Resolve char names in the background — patch charFiles reactively when done
+    if (charFiles.value.length && serverStore.activeServer) {
+      const snapshot = charFiles.value
+      const esiServer: EsiServer = await window.ipcRenderer.invoke('server:infer-esi', serverStore.activeServer.name)
+      const ids = snapshot.map(f => f.id)
+      const nameMap: Record<string, string> = await window.ipcRenderer.invoke('settings:resolve-names', ids, esiServer)
+      // Only apply if charFiles still matches this load (profile hasn't changed)
+      if (charFiles.value === snapshot) {
+        charFiles.value = snapshot.map(f => ({ ...f, charName: nameMap[f.id] ?? f.charName }))
+      }
     }
   }
 

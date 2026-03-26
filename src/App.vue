@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, watch } from 'vue'
+import { onMounted, watch, ref } from 'vue'
 import { useServerStore } from './stores/useServerStore'
 import { useProfileStore } from './stores/useProfileStore'
 import { useSettingsStore } from './stores/useSettingsStore'
@@ -30,18 +30,28 @@ watch(() => profileStore.activeProfile, async (profile) => {
   await backupStore.loadBackups()
 })
 
-function statusColor(online: boolean | undefined) {
-  if (online === undefined) return 'grey'
-  return online ? 'success' : 'error'
-}
-
-function statusLabel(online: boolean | undefined) {
-  if (online === undefined) return 'Unknown'
-  return online ? 'Online' : 'Offline'
-}
-
 function formatDate(ms: number) {
   return new Date(ms).toLocaleString()
+}
+
+const backupDialog = ref(false)
+const backupName = ref('')
+
+function openBackupDialog() {
+  backupName.value = `backup_${new Date().toISOString().slice(0, 10)}`
+  backupDialog.value = true
+}
+
+function openServerFolder() {
+  if (serverStore.activeServer)
+    window.ipcRenderer.invoke('folder:open-in-shell', serverStore.activeServer.path)
+}
+
+async function confirmBackup() {
+  const name = backupName.value.trim()
+  if (!name) return
+  backupDialog.value = false
+  await backupStore.createBackup(name)
 }
 </script>
 
@@ -68,16 +78,6 @@ function formatDate(ms: number) {
           class="mr-3"
           @update:model-value="(s: ServerDir) => serverStore.selectServer(s)"
         />
-        <v-chip
-          v-if="serverStore.serverStatus"
-          :color="statusColor(serverStore.serverStatus?.online)"
-          size="small"
-          class="mr-3"
-          :loading="serverStore.loadingStatus"
-        >
-          {{ statusLabel(serverStore.serverStatus?.online) }}
-        </v-chip>
-        <v-progress-circular v-else-if="serverStore.loadingStatus" size="18" indeterminate class="mr-3" />
       </template>
 
       <v-btn
@@ -231,7 +231,7 @@ function formatDate(ms: number) {
               prepend-icon="mdi-archive-arrow-down"
               class="ml-2"
               :disabled="!profileStore.activeProfile"
-              @click="backupStore.createBackup(new Date().toISOString().slice(0, 16).replace('T', ' '))"
+              @click="openBackupDialog()"
             >
               Backup
             </v-btn>
@@ -241,6 +241,7 @@ function formatDate(ms: number) {
               prepend-icon="mdi-folder-open-outline"
               class="ml-2"
               :disabled="!serverStore.activeServer"
+              @click="openServerFolder()"
             >
               Open folder
             </v-btn>
@@ -249,6 +250,27 @@ function formatDate(ms: number) {
         </div>
       </div>
     </v-main>
+
+    <!-- ── Backup name dialog ───────────────────────────────────── -->
+    <v-dialog v-model="backupDialog" max-width="400" @keydown.enter="confirmBackup">
+      <v-card title="Save backup">
+        <v-card-text>
+          <v-text-field
+            v-model="backupName"
+            label="Backup name"
+            autofocus
+            variant="outlined"
+            density="compact"
+            hide-details
+          />
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer />
+          <v-btn variant="text" @click="backupDialog = false">Cancel</v-btn>
+          <v-btn color="primary" variant="tonal" :disabled="!backupName.trim()" @click="confirmBackup">Save</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </v-app>
 </template>
 
