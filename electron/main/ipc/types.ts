@@ -1,6 +1,7 @@
 export interface ServerDir {
-  name: string   // directory name, e.g. '_c_tranquility'
-  path: string   // absolute path
+  name: string          // directory name, e.g. '_c_tranquility'
+  path: string          // absolute path
+  displayName: string   // friendly name, e.g. 'Tranquility'
 }
 
 export interface Profile {

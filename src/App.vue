@@ -4,7 +4,7 @@ import { useServerStore } from './stores/useServerStore'
 import { useProfileStore } from './stores/useProfileStore'
 import { useSettingsStore } from './stores/useSettingsStore'
 import { useBackupStore } from './stores/useBackupStore'
-import type { ServerDir, Profile, CharFile, UserFile } from './types'
+import type { CharFile, UserFile } from './types'
 
 const serverStore = useServerStore()
 const profileStore = useProfileStore()
@@ -38,7 +38,8 @@ const backupDialog = ref(false)
 const backupName = ref('')
 
 function openBackupDialog() {
-  backupName.value = `backup_${new Date().toISOString().slice(0, 10)}`
+  const profile = profileStore.activeProfile?.name ?? 'profile'
+  backupName.value = `${profile}_backup_${new Date().toISOString().slice(0, 10)}`
   backupDialog.value = true
 }
 
@@ -57,39 +58,6 @@ async function confirmBackup() {
 
 <template>
   <v-app>
-    <!-- ── Top bar ───────────────────────────────────────────────── -->
-    <v-app-bar elevation="1" density="compact">
-      <v-app-bar-title>
-        <span class="text-body-1 font-weight-bold">EVE Settings Manager</span>
-      </v-app-bar-title>
-
-      <!-- Server selector -->
-      <template v-if="serverStore.servers.length">
-        <v-select
-          :model-value="serverStore.activeServer"
-          :items="serverStore.servers"
-          item-title="name"
-          item-value="path"
-          return-object
-          density="compact"
-          hide-details
-          variant="outlined"
-          style="max-width: 220px"
-          class="mr-3"
-          @update:model-value="(s: ServerDir) => serverStore.selectServer(s)"
-        />
-      </template>
-
-      <v-btn
-        variant="text"
-        size="small"
-        prepend-icon="mdi-folder-open"
-        @click="serverStore.openFolderDialog()"
-      >
-        {{ serverStore.eveFolder ? 'Change folder' : 'Set EVE folder' }}
-      </v-btn>
-    </v-app-bar>
-
     <!-- ── Body ─────────────────────────────────────────────────── -->
     <v-main>
 
@@ -122,7 +90,21 @@ async function confirmBackup() {
               rounded="lg"
               @click="serverStore.selectServer(server)"
             >
-              <v-list-item-title class="text-body-2">{{ server.name }}</v-list-item-title>
+              <v-list-item-title class="text-body-2">{{ server.displayName }}</v-list-item-title>
+            </v-list-item>
+
+            <v-list-item
+              rounded="lg"
+              density="compact"
+              class="mt-1"
+              @click="serverStore.openFolderDialog()"
+            >
+              <template #prepend>
+                <v-icon size="16" class="mr-1">mdi-folder-open-outline</v-icon>
+              </template>
+              <v-list-item-title class="text-caption text-medium-emphasis">
+                {{ serverStore.eveFolder ? 'Change folder' : 'Set EVE folder' }}
+              </v-list-item-title>
             </v-list-item>
 
             <v-divider class="my-2" />

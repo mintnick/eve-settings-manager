@@ -2,8 +2,9 @@
 // The renderer can't import from the main process, so we keep these in sync manually.
 
 export interface ServerDir {
-  name: string   // e.g. '_c_tranquility'
+  name: string          // e.g. '_c_tranquility'
   path: string
+  displayName: string   // e.g. 'Tranquility'
 }
 
 export interface Profile {
