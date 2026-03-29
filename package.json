@@ -39,8 +39,9 @@
     "vue-tsc": "^2.1.10"
   },
   "dependencies": {
+    "@element-plus/icons-vue": "^2.3.2",
     "electron-store": "^11.0.2",
-    "pinia": "^3.0.4",
-    "vuetify": "^3.7.5"
+    "element-plus": "^2.13.6",
+    "pinia": "^3.0.4"
   }
 }
