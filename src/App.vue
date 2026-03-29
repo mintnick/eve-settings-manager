@@ -245,15 +245,15 @@ const accountColumns = [
 
         <!-- Action bar -->
         <div class="action-bar">
-          <el-button size="small" :disabled="!profileStore.activeProfile">
+          <el-button :disabled="!profileStore.activeProfile">
             <el-icon class="mr-1"><CopyDocument /></el-icon>
             Copy settings
           </el-button>
-          <el-button size="small" :disabled="!profileStore.activeProfile" @click="openBackupDialog()">
+          <el-button :disabled="!profileStore.activeProfile" @click="openBackupDialog()">
             <el-icon class="mr-1"><Box /></el-icon>
             Backup
           </el-button>
-          <el-button size="small" :disabled="!serverStore.activeServer" @click="openServerFolder()">
+          <el-button :disabled="!serverStore.activeServer" @click="openServerFolder()">
             <el-icon class="mr-1"><FolderOpened /></el-icon>
             Open folder
           </el-button>
@@ -328,7 +328,7 @@ html, body, #app {
 }
 .sidebar-section { padding: 0 4px; }
 .sidebar-label {
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 600;
   color: var(--el-text-color-secondary);
   text-transform: uppercase;
@@ -336,7 +336,7 @@ html, body, #app {
   padding: 6px 10px 2px;
 }
 .sidebar-item {
-  font-size: 13px;
+  font-size: 15px;
   padding: 5px 10px;
   border-radius: 4px;
   cursor: pointer;
@@ -347,15 +347,15 @@ html, body, #app {
 }
 .sidebar-item:hover { background: var(--el-fill-color-light); }
 .sidebar-item.active { background: var(--el-color-primary-light-9); color: var(--el-color-primary); }
-.sidebar-action { color: var(--el-text-color-secondary); font-size: 12px; }
-.sidebar-item-icon { font-size: 13px; }
-.sidebar-empty { color: var(--el-text-color-placeholder); font-size: 12px; cursor: default; }
+.sidebar-action { color: var(--el-text-color-secondary); font-size: 14px; }
+.sidebar-item-icon { font-size: 15px; }
+.sidebar-empty { color: var(--el-text-color-placeholder); font-size: 14px; cursor: default; }
 .sidebar-empty:hover { background: none; }
 .sidebar-divider { margin: 8px 0; border-top: 1px solid var(--el-border-color-lighter); }
 .backup-item { align-items: flex-start; }
 .backup-item-text { display: flex; flex-direction: column; }
-.backup-name { font-size: 12px; line-height: 1.4; }
-.backup-meta { font-size: 11px; color: var(--el-text-color-placeholder); }
+.backup-name { font-size: 14px; line-height: 1.4; }
+.backup-meta { font-size: 13px; color: var(--el-text-color-placeholder); }
 
 /* Right panel */
 .right-panel {
@@ -383,7 +383,7 @@ html, body, #app {
 }
 .table-col { flex: 1; padding: 12px; min-width: 0; display: flex; flex-direction: column; }
 .table-label {
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.05em;
