@@ -14,6 +14,7 @@ export async function listProfiles(serverPath: string): Promise<Profile[]> {
   return entries
     .filter(e => e.isDirectory() && e.name.startsWith('settings_'))
     .map(e => ({ name: e.name.slice('settings_'.length), path: join(serverPath, e.name) }))
+    .sort((a, b) => a.name.localeCompare(b.name))
 }
 
 export async function createProfile(serverPath: string, name: string): Promise<Profile> {

@@ -12,6 +12,8 @@ import {
   CopyDocument,
   Box,
   Warning,
+  DocumentCopy,
+  RefreshLeft,
 } from '@element-plus/icons-vue'
 
 const serverStore = useServerStore()
@@ -19,8 +21,9 @@ const profileStore = useProfileStore()
 const settingsStore = useSettingsStore()
 const backupStore = useBackupStore()
 
+const fixturePath = import.meta.env.VITE_FIXTURE_PATH as string | undefined
+
 onMounted(() => {
-  const fixturePath = import.meta.env.VITE_FIXTURE_PATH as string | undefined
   serverStore.detectFolder(fixturePath)
 })
 
@@ -128,9 +131,13 @@ const accountColumns = [
           >
             {{ server.displayName }}
           </div>
-          <div class="sidebar-item sidebar-action" @click="serverStore.openFolderDialog()">
-            <el-icon class="sidebar-item-icon"><FolderOpened /></el-icon>
-            {{ serverStore.eveFolder ? 'Change folder' : 'Set EVE folder' }}
+          <div class="sidebar-folder-btn-wrap">
+            <button class="sidebar-folder-btn" @click="serverStore.openFolderDialog()">
+              <el-icon><FolderOpened /></el-icon> Set Folder
+            </button>
+            <button class="sidebar-folder-btn" @click="serverStore.resetFolder(fixturePath)">
+              <el-icon><RefreshLeft /></el-icon> Default Path
+            </button>
           </div>
         </div>
 
@@ -206,9 +213,7 @@ const accountColumns = [
               <el-table-column width="40">
                 <template #default="{ row }">
                   <el-tooltip content="Backup file" placement="top">
-                    <svg viewBox="0 0 24 24" width="16" height="16" class="backup-icon" @click.stop="openFileBackupDialog(row)">
-                      <path d="M15,9H5V5H15M12,19A3,3 0 0,1 9,16A3,3 0 0,1 12,13A3,3 0 0,1 15,16A3,3 0 0,1 12,19M17,3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V7L17,3Z"/>
-                    </svg>
+                    <el-icon class="backup-icon" @click.stop="openFileBackupDialog(row)"><DocumentCopy /></el-icon>
                   </el-tooltip>
                 </template>
               </el-table-column>
@@ -233,9 +238,7 @@ const accountColumns = [
               <el-table-column width="40">
                 <template #default="{ row }">
                   <el-tooltip content="Backup file" placement="top">
-                    <svg viewBox="0 0 24 24" width="16" height="16" class="backup-icon" @click.stop="openFileBackupDialog(row)">
-                      <path d="M15,9H5V5H15M12,19A3,3 0 0,1 9,16A3,3 0 0,1 12,13A3,3 0 0,1 15,16A3,3 0 0,1 12,19M17,3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V7L17,3Z"/>
-                    </svg>
+                    <el-icon class="backup-icon" @click.stop="openFileBackupDialog(row)"><DocumentCopy /></el-icon>
                   </el-tooltip>
                 </template>
               </el-table-column>
@@ -328,12 +331,12 @@ html, body, #app {
 }
 .sidebar-section { padding: 0 4px; }
 .sidebar-label {
-  font-size: 13px;
+  font-size: 15px;
   font-weight: 600;
-  color: var(--el-text-color-secondary);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  padding: 6px 10px 2px;
+  color: var(--el-color-success);
+  letter-spacing: 0.02em;
+  padding: 10px 10px 4px;
+  text-align: center;
 }
 .sidebar-item {
   font-size: 15px;
@@ -347,7 +350,26 @@ html, body, #app {
 }
 .sidebar-item:hover { background: var(--el-fill-color-light); }
 .sidebar-item.active { background: var(--el-color-primary-light-9); color: var(--el-color-primary); }
-.sidebar-action { color: var(--el-text-color-secondary); font-size: 14px; }
+.sidebar-folder-btn-wrap { padding: 6px 10px; display: flex; flex-direction: column; gap: 6px; }
+.sidebar-folder-btn {
+  width: 100%;
+  padding: 6px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  font-size: 14px;
+  color: var(--el-text-color-regular);
+  background: transparent;
+  border: 1px solid var(--el-border-color);
+  border-radius: var(--el-border-radius-base);
+  cursor: pointer;
+}
+.sidebar-folder-btn:hover {
+  color: var(--el-color-primary);
+  border-color: var(--el-color-primary);
+  background: var(--el-color-primary-light-9);
+}
 .sidebar-item-icon { font-size: 15px; }
 .sidebar-empty { color: var(--el-text-color-placeholder); font-size: 14px; cursor: default; }
 .sidebar-empty:hover { background: none; }
@@ -406,13 +428,12 @@ html, body, #app {
 
 /* Backup icon */
 .backup-icon {
-  fill: var(--el-color-primary-light-3);
+  color: var(--el-color-primary-light-3);
   cursor: pointer;
   opacity: 0.7;
-  vertical-align: middle;
-  display: block;
+  font-size: 16px !important;
 }
-.backup-icon:hover { fill: var(--el-text-color-primary); opacity: 1; }
+.backup-icon:hover { color: var(--el-text-color-primary); opacity: 1; }
 
 /* Misc */
 .loading-spin { animation: spin 1s linear infinite; }

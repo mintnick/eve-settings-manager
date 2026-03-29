@@ -16,7 +16,9 @@ export const useServerStore = defineStore('server', () => {
   async function detectFolder(customPath?: string) {
     loadingFolder.value = true
     try {
-      const folder = await window.ipcRenderer.invoke('folder:find', customPath)
+      // Use explicit custom path (e.g. dev fixture), then stored user override, then OS default
+      const savedFolder: string = await window.ipcRenderer.invoke('store:get-custom-folder')
+      const folder = await window.ipcRenderer.invoke('folder:find', savedFolder || customPath || undefined)
       eveFolder.value = folder ?? null
       if (folder) await detectServers()
     } finally {
@@ -28,8 +30,16 @@ export const useServerStore = defineStore('server', () => {
     const folder = await window.ipcRenderer.invoke('folder:open-dialog')
     if (folder) {
       eveFolder.value = folder
+      activeServer.value = null
+      await window.ipcRenderer.invoke('store:set-custom-folder', folder)
       await detectServers()
     }
+  }
+
+  async function resetFolder(fallbackPath?: string) {
+    activeServer.value = null
+    await window.ipcRenderer.invoke('store:set-custom-folder', '')
+    await detectFolder(fallbackPath)
   }
 
   async function detectServers() {
@@ -65,6 +75,6 @@ export const useServerStore = defineStore('server', () => {
   return {
     eveFolder, servers, activeServer, serverStatus,
     loadingFolder, loadingStatus, hasFolder, activeServerName,
-    detectFolder, openFolderDialog, detectServers, selectServer, refreshStatus,
+    detectFolder, openFolderDialog, resetFolder, detectServers, selectServer, refreshStatus,
   }
 })

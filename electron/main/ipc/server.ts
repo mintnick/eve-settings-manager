@@ -40,8 +40,9 @@ function serverDisplayName(dirName: string): string {
 export async function detectServers(eveFolder: string): Promise<ServerDir[]> {
   const entries = await readdir(eveFolder, { withFileTypes: true })
   return entries
-    .filter(e => e.isDirectory())
+    .filter(e => e.isDirectory() && SERVER_KEYWORDS.some(([kw]) => e.name.toLowerCase().includes(kw)))
     .map(e => ({ name: e.name, path: join(eveFolder, e.name), displayName: serverDisplayName(e.name) }))
+    .sort((a, b) => a.name.localeCompare(b.name))
 }
 
 /**

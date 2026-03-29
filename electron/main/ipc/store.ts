@@ -6,6 +6,7 @@ interface StoreSchema {
   serverProfiles: Record<string, string> // serverDirName → last used profile name
   charNames: Record<string, string>      // characterId → character name (ESI cache)
   lastActiveServer: string               // last-selected server dir name
+  customEveFolder: string                // user-selected EVE folder override
   language: string
 }
 
@@ -15,6 +16,7 @@ const defaults: StoreSchema = {
   serverProfiles: {},
   charNames: {},
   lastActiveServer: '',
+  customEveFolder: '',
   language: 'en',
 }
 
@@ -78,6 +80,16 @@ export function getCachedCharNames(): Record<string, string> {
 
 export function setCachedCharNames(names: Record<string, string>): void {
   store().set('charNames', { ...store().get('charNames'), ...names })
+}
+
+// ── Custom EVE folder ─────────────────────────────────────────────────────────
+
+export function getCustomEveFolder(): string {
+  return store().get('customEveFolder')
+}
+
+export function setCustomEveFolder(path: string): void {
+  store().set('customEveFolder', path)
 }
 
 // ── App config ────────────────────────────────────────────────────────────────

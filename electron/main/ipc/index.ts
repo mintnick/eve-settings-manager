@@ -9,6 +9,7 @@ import {
   getServerFolder, setServerFolder,
   getServerProfile, setServerProfile,
   getLastActiveServer, setLastActiveServer,
+  getCustomEveFolder, setCustomEveFolder,
   getLanguage, setLanguage,
 } from './store.js'
 
@@ -53,6 +54,8 @@ export function registerIpcHandlers(): void {
   ipcMain.handle('store:set-server-profile', (_e, serverName: string, profileName: string) => setServerProfile(serverName, profileName))
   ipcMain.handle('store:get-last-server', () => getLastActiveServer())
   ipcMain.handle('store:set-last-server', (_e, name: string) => setLastActiveServer(name))
+  ipcMain.handle('store:get-custom-folder', () => getCustomEveFolder())
+  ipcMain.handle('store:set-custom-folder', (_e, path: string) => setCustomEveFolder(path))
   ipcMain.handle('store:get-language', () => getLanguage())
   ipcMain.handle('store:set-language', (_e, lang: string) => setLanguage(lang))
 }

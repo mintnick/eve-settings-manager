@@ -41,15 +41,13 @@ Use **Pinia** (lightweight, Vue 3-native) with one store per domain:
 - `useBackupStore` — list of named backups
 - `useSavedSettingsStore` — list of named per-file snapshots
 
-### Phase 3 — UI (Vuetify)
+### Phase 3 — UI (Element Plus)
 
-3-panel layout:
+No top bar. 2-panel layout with sidebar + main content area:
 
 ```
-┌──────────────────────────────────────────────────────┐
-│  [Server selector + status badge]    [Settings gear] │
-├───────────┬──────────────────────────────────────────┤
-│           │  [Profile tabs/dropdown]                  │
+┌───────────┬──────────────────────────────────────────┐
+│           │  [Profile tabs]                           │
 │  Sidebar  ├──────────────────┬───────────────────────┤
 │           │   Characters     │   Accounts            │
 │  Servers  │   (data table)   │   (data table)        │
@@ -58,6 +56,15 @@ Use **Pinia** (lightweight, Vue 3-native) with one store per domain:
 │           │  [Action bar: Copy · Backup · Open]      │
 └───────────┴──────────────────────────────────────────┘
 ```
+
+**UI parts to detail and refine:**
+- [ ] Sidebar — servers section, backups section, saved settings section
+- [ ] Profile tabs — tab style, active state, add/rename/delete actions
+- [ ] Characters table — columns, row actions, empty state
+- [ ] Accounts table — columns, row actions, empty state
+- [ ] Action bar — button layout, disabled states
+- [ ] Dialogs — backup name, file backup name, copy settings
+- [ ] Empty / no-folder state
 
 ---
 
