@@ -1,0 +1,40 @@
+export default {
+  sidebar: {
+    servers: '伺服器',
+    backups: '備份',
+    setFolder: '選擇資料夾',
+    defaultPath: '預設路徑',
+    noBackups: '尚無備份',
+    singleFile: '單一檔案',
+    files: '{n} 個檔案',
+  },
+  emptyState: {
+    title: '找不到 EVE 設定資料夾',
+    sub: '請確認已安裝 EVE Online，或手動指定資料夾。',
+    selectFolder: '選擇資料夾',
+  },
+  table: {
+    characters: '角色',
+    accounts: '帳號',
+    colCharacter: '角色名稱',
+    colId: 'ID',
+    colAccountId: '帳號 ID',
+    colModified: '修改時間',
+    noCharFiles: '找不到角色檔案',
+    noAccountFiles: '找不到帳號檔案',
+    selectProfile: '請選擇設定檔',
+    backupFile: '備份檔案',
+  },
+  actions: {
+    copySettings: '複製設定',
+    backup: '備份',
+    openFolder: '開啟資料夾',
+  },
+  dialog: {
+    saveBackup: '儲存備份',
+    backupFile: '備份檔案',
+    backupName: '備份名稱',
+    cancel: '取消',
+    save: '儲存',
+  },
+}

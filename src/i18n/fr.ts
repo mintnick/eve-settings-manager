@@ -1,0 +1,40 @@
+export default {
+  sidebar: {
+    servers: 'Serveurs',
+    backups: 'Sauvegardes',
+    setFolder: 'Choisir le dossier',
+    defaultPath: 'Chemin par défaut',
+    noBackups: 'Aucune sauvegarde',
+    singleFile: 'fichier unique',
+    files: '{n} fichiers',
+  },
+  emptyState: {
+    title: 'Dossier EVE introuvable',
+    sub: 'Assurez-vous qu\'EVE Online est installé ou sélectionnez le dossier manuellement.',
+    selectFolder: 'Sélectionner le dossier',
+  },
+  table: {
+    characters: 'Personnages',
+    accounts: 'Comptes',
+    colCharacter: 'Personnage',
+    colId: 'ID',
+    colAccountId: 'ID de compte',
+    colModified: 'Modifié',
+    noCharFiles: 'Aucun fichier de personnage',
+    noAccountFiles: 'Aucun fichier de compte',
+    selectProfile: 'Sélectionnez un profil',
+    backupFile: 'Sauvegarder le fichier',
+  },
+  actions: {
+    copySettings: 'Copier les paramètres',
+    backup: 'Sauvegarder',
+    openFolder: 'Ouvrir le dossier',
+  },
+  dialog: {
+    saveBackup: 'Enregistrer la sauvegarde',
+    backupFile: 'Sauvegarder le fichier',
+    backupName: 'Nom de la sauvegarde',
+    cancel: 'Annuler',
+    save: 'Enregistrer',
+  },
+}

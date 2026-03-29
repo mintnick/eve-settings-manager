@@ -1,0 +1,40 @@
+export default {
+  sidebar: {
+    servers: '服务器',
+    backups: '备份',
+    setFolder: '选择文件夹',
+    defaultPath: '默认路径',
+    noBackups: '暂无备份',
+    singleFile: '单个文件',
+    files: '{n} 个文件',
+  },
+  emptyState: {
+    title: '未找到 EVE 设置文件夹',
+    sub: '请确认已安装 EVE Online，或手动指定文件夹。',
+    selectFolder: '选择文件夹',
+  },
+  table: {
+    characters: '角色',
+    accounts: '账户',
+    colCharacter: '角色名',
+    colId: 'ID',
+    colAccountId: '账户 ID',
+    colModified: '修改时间',
+    noCharFiles: '未找到角色文件',
+    noAccountFiles: '未找到账户文件',
+    selectProfile: '请选择配置文件',
+    backupFile: '备份文件',
+  },
+  actions: {
+    copySettings: '复制设置',
+    backup: '备份',
+    openFolder: '打开文件夹',
+  },
+  dialog: {
+    saveBackup: '保存备份',
+    backupFile: '备份文件',
+    backupName: '备份名称',
+    cancel: '取消',
+    save: '保存',
+  },
+}

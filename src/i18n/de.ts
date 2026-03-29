@@ -1,0 +1,40 @@
+export default {
+  sidebar: {
+    servers: 'Server',
+    backups: 'Sicherungen',
+    setFolder: 'Ordner auswählen',
+    defaultPath: 'Standardpfad',
+    noBackups: 'Keine Sicherungen',
+    singleFile: 'Einzeldatei',
+    files: '{n} Dateien',
+  },
+  emptyState: {
+    title: 'EVE-Einstellungsordner nicht gefunden',
+    sub: 'Stellen Sie sicher, dass EVE Online installiert ist, oder wählen Sie den Ordner manuell aus.',
+    selectFolder: 'Ordner auswählen',
+  },
+  table: {
+    characters: 'Charaktere',
+    accounts: 'Konten',
+    colCharacter: 'Charakter',
+    colId: 'ID',
+    colAccountId: 'Konto-ID',
+    colModified: 'Geändert',
+    noCharFiles: 'Keine Charakterdateien gefunden',
+    noAccountFiles: 'Keine Kontodateien gefunden',
+    selectProfile: 'Profil auswählen',
+    backupFile: 'Datei sichern',
+  },
+  actions: {
+    copySettings: 'Einstellungen kopieren',
+    backup: 'Sichern',
+    openFolder: 'Ordner öffnen',
+  },
+  dialog: {
+    saveBackup: 'Sicherung speichern',
+    backupFile: 'Datei sichern',
+    backupName: 'Sicherungsname',
+    cancel: 'Abbrechen',
+    save: 'Speichern',
+  },
+}

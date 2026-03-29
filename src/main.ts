@@ -7,10 +7,12 @@ import './style.css'
 import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
 import 'element-plus/theme-chalk/dark/css-vars.css'
+import { i18n } from './i18n'
 
 createApp(App)
   .use(createPinia())
   .use(ElementPlus)
+  .use(i18n)
   .mount('#app')
   .$nextTick(() => {
     document.documentElement.style.setProperty('--el-font-size-extra-large', '22px')

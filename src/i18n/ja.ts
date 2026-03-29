@@ -1,0 +1,40 @@
+export default {
+  sidebar: {
+    servers: 'サーバー',
+    backups: 'バックアップ',
+    setFolder: 'フォルダを選択',
+    defaultPath: 'デフォルトパス',
+    noBackups: 'バックアップなし',
+    singleFile: '単一ファイル',
+    files: '{n} ファイル',
+  },
+  emptyState: {
+    title: 'EVE 設定フォルダが見つかりません',
+    sub: 'EVE Online がインストールされているか確認するか、フォルダを手動で指定してください。',
+    selectFolder: 'フォルダを選択',
+  },
+  table: {
+    characters: 'キャラクター',
+    accounts: 'アカウント',
+    colCharacter: 'キャラクター名',
+    colId: 'ID',
+    colAccountId: 'アカウント ID',
+    colModified: '更新日時',
+    noCharFiles: 'キャラクターファイルが見つかりません',
+    noAccountFiles: 'アカウントファイルが見つかりません',
+    selectProfile: 'プロファイルを選択してください',
+    backupFile: 'ファイルをバックアップ',
+  },
+  actions: {
+    copySettings: '設定をコピー',
+    backup: 'バックアップ',
+    openFolder: 'フォルダを開く',
+  },
+  dialog: {
+    saveBackup: 'バックアップを保存',
+    backupFile: 'ファイルをバックアップ',
+    backupName: 'バックアップ名',
+    cancel: 'キャンセル',
+    save: '保存',
+  },
+}

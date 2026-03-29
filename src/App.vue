@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { onMounted, watch, ref } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { useServerStore } from './stores/useServerStore'
 import { useProfileStore } from './stores/useProfileStore'
 import { useSettingsStore } from './stores/useSettingsStore'
@@ -15,6 +16,8 @@ import {
   DocumentCopy,
   RefreshLeft,
 } from '@element-plus/icons-vue'
+
+const { t, locale } = useI18n()
 
 const serverStore = useServerStore()
 const profileStore = useProfileStore()
@@ -85,6 +88,31 @@ async function confirmFileBackup() {
   fileBackupPending.value = null
 }
 
+const LANGUAGES = [
+  { value: 'en',     label: 'English' },
+  { value: 'zh-CN',  label: '简体中文' },
+  { value: 'zh-CHT', label: '繁體中文' },
+  { value: 'ja',     label: '日本語' },
+  { value: 'ko',     label: '한국어' },
+  { value: 'fr',     label: 'Français' },
+  { value: 'de',     label: 'Deutsch' },
+  { value: 'es',     label: 'Español' },
+]
+
+const language = ref('en')
+
+onMounted(async () => {
+  const saved = await window.ipcRenderer.invoke('store:get-language') || 'en'
+  language.value = saved
+  locale.value = saved
+})
+
+async function setLanguage(lang: string) {
+  language.value = lang
+  locale.value = lang
+  await window.ipcRenderer.invoke('store:set-language', lang)
+}
+
 const charColumns = [
   { prop: 'charName', label: 'Character', sortable: true },
   { prop: 'id', label: 'ID' },
@@ -105,9 +133,9 @@ const accountColumns = [
     <!-- No folder found -->
     <div v-if="!serverStore.hasFolder && !serverStore.loadingFolder" class="empty-state">
       <el-icon :size="56" color="#606266"><Warning /></el-icon>
-      <p class="empty-title">EVE settings folder not found</p>
-      <p class="empty-sub">Make sure EVE Online is installed, or set the folder manually.</p>
-      <el-button type="primary" @click="serverStore.openFolderDialog()">Select folder</el-button>
+      <p class="empty-title">{{ t('emptyState.title') }}</p>
+      <p class="empty-sub">{{ t('emptyState.sub') }}</p>
+      <el-button type="primary" @click="serverStore.openFolderDialog()">{{ t('emptyState.selectFolder') }}</el-button>
     </div>
 
     <!-- Loading -->
@@ -121,7 +149,7 @@ const accountColumns = [
       <!-- Sidebar -->
       <aside class="sidebar">
         <div class="sidebar-section">
-          <div class="sidebar-label">Servers</div>
+          <div class="sidebar-label">{{ t('sidebar.servers') }}</div>
           <div
             v-for="server in serverStore.servers"
             :key="server.path"
@@ -133,10 +161,10 @@ const accountColumns = [
           </div>
           <div class="sidebar-folder-btn-wrap">
             <button class="sidebar-folder-btn" @click="serverStore.openFolderDialog()">
-              <el-icon><FolderOpened /></el-icon> Set Folder
+              <el-icon><FolderOpened /></el-icon> {{ t('sidebar.setFolder') }}
             </button>
             <button class="sidebar-folder-btn" @click="serverStore.resetFolder(fixturePath)">
-              <el-icon><RefreshLeft /></el-icon> Default Path
+              <el-icon><RefreshLeft /></el-icon> {{ t('sidebar.defaultPath') }}
             </button>
           </div>
         </div>
@@ -144,7 +172,7 @@ const accountColumns = [
         <div class="sidebar-divider" />
 
         <div class="sidebar-section">
-          <div class="sidebar-label">Backups</div>
+          <div class="sidebar-label">{{ t('sidebar.backups') }}</div>
           <div
             v-for="backup in backupStore.backups"
             :key="backup.name"
@@ -156,12 +184,28 @@ const accountColumns = [
             </el-icon>
             <div class="backup-item-text">
               <span class="backup-name">{{ backup.name }}</span>
-              <span class="backup-meta">{{ backup.type === 'file' ? 'single file' : `${backup.fileCount} files` }}</span>
+              <span class="backup-meta">{{ backup.type === 'file' ? t('sidebar.singleFile') : t('sidebar.files', { n: backup.fileCount }) }}</span>
             </div>
           </div>
           <div v-if="!backupStore.backups.length && profileStore.activeProfile" class="sidebar-item sidebar-empty">
-            No backups yet
+            {{ t('sidebar.noBackups') }}
           </div>
+        </div>
+
+        <!-- Language selector -->
+        <div class="sidebar-lang">
+          <el-select
+            :model-value="language"
+            size="small"
+            @change="setLanguage"
+          >
+            <el-option
+              v-for="lang in LANGUAGES"
+              :key="lang.value"
+              :value="lang.value"
+              :label="lang.label"
+            />
+          </el-select>
         </div>
       </aside>
 
@@ -196,23 +240,23 @@ const accountColumns = [
 
           <!-- Characters -->
           <div class="table-col">
-            <div class="table-label">Characters</div>
+            <div class="table-label">{{ t('table.characters') }}</div>
             <el-table
               :data="settingsStore.charFiles"
               size="small"
-              :empty-text="profileStore.activeProfile ? 'No character files found' : 'Select a profile'"
+              :empty-text="profileStore.activeProfile ? t('table.noCharFiles') : t('table.selectProfile')"
               class="settings-table"
             >
-              <el-table-column prop="charName" label="Character" sortable>
+              <el-table-column prop="charName" :label="t('table.colCharacter')" sortable>
                 <template #default="{ row }">{{ row.charName ?? row.id }}</template>
               </el-table-column>
-              <el-table-column prop="id" label="ID" />
-              <el-table-column prop="modifiedAt" label="Modified" sortable>
+              <el-table-column prop="id" :label="t('table.colId')" />
+              <el-table-column prop="modifiedAt" :label="t('table.colModified')" sortable>
                 <template #default="{ row }">{{ formatDate(row.modifiedAt) }}</template>
               </el-table-column>
               <el-table-column width="40">
                 <template #default="{ row }">
-                  <el-tooltip content="Backup file" placement="top">
+                  <el-tooltip :content="t('table.backupFile')" placement="top">
                     <el-icon class="backup-icon" @click.stop="openFileBackupDialog(row)"><DocumentCopy /></el-icon>
                   </el-tooltip>
                 </template>
@@ -224,20 +268,20 @@ const accountColumns = [
 
           <!-- Accounts -->
           <div class="table-col">
-            <div class="table-label">Accounts</div>
+            <div class="table-label">{{ t('table.accounts') }}</div>
             <el-table
               :data="settingsStore.userFiles"
               size="small"
-              :empty-text="profileStore.activeProfile ? 'No account files found' : 'Select a profile'"
+              :empty-text="profileStore.activeProfile ? t('table.noAccountFiles') : t('table.selectProfile')"
               class="settings-table"
             >
-              <el-table-column prop="id" label="Account ID" sortable />
-              <el-table-column prop="modifiedAt" label="Modified" sortable>
+              <el-table-column prop="id" :label="t('table.colAccountId')" sortable />
+              <el-table-column prop="modifiedAt" :label="t('table.colModified')" sortable>
                 <template #default="{ row }">{{ formatDate(row.modifiedAt) }}</template>
               </el-table-column>
               <el-table-column width="40">
                 <template #default="{ row }">
-                  <el-tooltip content="Backup file" placement="top">
+                  <el-tooltip :content="t('table.backupFile')" placement="top">
                     <el-icon class="backup-icon" @click.stop="openFileBackupDialog(row)"><DocumentCopy /></el-icon>
                   </el-tooltip>
                 </template>
@@ -250,15 +294,15 @@ const accountColumns = [
         <div class="action-bar">
           <el-button :disabled="!profileStore.activeProfile">
             <el-icon class="mr-1"><CopyDocument /></el-icon>
-            Copy settings
+            {{ t('actions.copySettings') }}
           </el-button>
           <el-button :disabled="!profileStore.activeProfile" @click="openBackupDialog()">
             <el-icon class="mr-1"><Box /></el-icon>
-            Backup
+            {{ t('actions.backup') }}
           </el-button>
           <el-button :disabled="!serverStore.activeServer" @click="openServerFolder()">
             <el-icon class="mr-1"><FolderOpened /></el-icon>
-            Open folder
+            {{ t('actions.openFolder') }}
           </el-button>
         </div>
 
@@ -266,20 +310,20 @@ const accountColumns = [
     </div>
 
     <!-- Backup name dialog -->
-    <el-dialog v-model="backupDialog" title="Save backup" width="400px" @keydown.enter="confirmBackup">
-      <el-input v-model="backupName" placeholder="Backup name" autofocus />
+    <el-dialog v-model="backupDialog" :title="t('dialog.saveBackup')" width="400px" @keydown.enter="confirmBackup">
+      <el-input v-model="backupName" :placeholder="t('dialog.backupName')" autofocus />
       <template #footer>
-        <el-button @click="backupDialog = false">Cancel</el-button>
-        <el-button type="primary" :disabled="!backupName.trim()" @click="confirmBackup">Save</el-button>
+        <el-button @click="backupDialog = false">{{ t('dialog.cancel') }}</el-button>
+        <el-button type="primary" :disabled="!backupName.trim()" @click="confirmBackup">{{ t('dialog.save') }}</el-button>
       </template>
     </el-dialog>
 
     <!-- Single file backup dialog -->
-    <el-dialog v-model="fileBackupDialog" title="Backup file" width="400px" @keydown.enter="confirmFileBackup">
-      <el-input v-model="fileBackupName" placeholder="Backup name" autofocus />
+    <el-dialog v-model="fileBackupDialog" :title="t('dialog.backupFile')" width="400px" @keydown.enter="confirmFileBackup">
+      <el-input v-model="fileBackupName" :placeholder="t('dialog.backupName')" autofocus />
       <template #footer>
-        <el-button @click="fileBackupDialog = false">Cancel</el-button>
-        <el-button type="primary" :disabled="!fileBackupName.trim()" @click="confirmFileBackup">Save</el-button>
+        <el-button @click="fileBackupDialog = false">{{ t('dialog.cancel') }}</el-button>
+        <el-button type="primary" :disabled="!fileBackupName.trim()" @click="confirmFileBackup">{{ t('dialog.save') }}</el-button>
       </template>
     </el-dialog>
 
@@ -328,7 +372,15 @@ html, body, #app {
   overflow-y: auto;
   padding: 8px 0;
   background: var(--el-bg-color-page);
+  display: flex;
+  flex-direction: column;
 }
+.sidebar-lang {
+  margin-top: auto;
+  padding: 10px 10px;
+  border-top: 1px solid var(--el-border-color-lighter);
+}
+.sidebar-lang .el-select { width: 100%; }
 .sidebar-section { padding: 0 4px; }
 .sidebar-label {
   font-size: 15px;

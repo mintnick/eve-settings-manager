@@ -1,0 +1,40 @@
+export default {
+  sidebar: {
+    servers: 'Servers',
+    backups: 'Backups',
+    setFolder: 'Set Folder',
+    defaultPath: 'Default Path',
+    noBackups: 'No backups yet',
+    singleFile: 'single file',
+    files: '{n} files',
+  },
+  emptyState: {
+    title: 'EVE settings folder not found',
+    sub: 'Make sure EVE Online is installed, or set the folder manually.',
+    selectFolder: 'Select folder',
+  },
+  table: {
+    characters: 'Characters',
+    accounts: 'Accounts',
+    colCharacter: 'Character',
+    colId: 'ID',
+    colAccountId: 'Account ID',
+    colModified: 'Modified',
+    noCharFiles: 'No character files found',
+    noAccountFiles: 'No account files found',
+    selectProfile: 'Select a profile',
+    backupFile: 'Backup file',
+  },
+  actions: {
+    copySettings: 'Copy settings',
+    backup: 'Backup',
+    openFolder: 'Open folder',
+  },
+  dialog: {
+    saveBackup: 'Save backup',
+    backupFile: 'Backup file',
+    backupName: 'Backup name',
+    cancel: 'Cancel',
+    save: 'Save',
+  },
+}

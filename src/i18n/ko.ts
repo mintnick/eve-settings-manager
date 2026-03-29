@@ -1,0 +1,40 @@
+export default {
+  sidebar: {
+    servers: '서버',
+    backups: '백업',
+    setFolder: '폴더 선택',
+    defaultPath: '기본 경로',
+    noBackups: '백업 없음',
+    singleFile: '단일 파일',
+    files: '{n}개 파일',
+  },
+  emptyState: {
+    title: 'EVE 설정 폴더를 찾을 수 없습니다',
+    sub: 'EVE Online이 설치되어 있는지 확인하거나 폴더를 수동으로 지정하세요.',
+    selectFolder: '폴더 선택',
+  },
+  table: {
+    characters: '캐릭터',
+    accounts: '계정',
+    colCharacter: '캐릭터 이름',
+    colId: 'ID',
+    colAccountId: '계정 ID',
+    colModified: '수정 날짜',
+    noCharFiles: '캐릭터 파일을 찾을 수 없습니다',
+    noAccountFiles: '계정 파일을 찾을 수 없습니다',
+    selectProfile: '프로필을 선택하세요',
+    backupFile: '파일 백업',
+  },
+  actions: {
+    copySettings: '설정 복사',
+    backup: '백업',
+    openFolder: '폴더 열기',
+  },
+  dialog: {
+    saveBackup: '백업 저장',
+    backupFile: '파일 백업',
+    backupName: '백업 이름',
+    cancel: '취소',
+    save: '저장',
+  },
+}

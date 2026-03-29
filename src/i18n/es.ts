@@ -1,0 +1,40 @@
+export default {
+  sidebar: {
+    servers: 'Servidores',
+    backups: 'Copias de seguridad',
+    setFolder: 'Seleccionar carpeta',
+    defaultPath: 'Ruta predeterminada',
+    noBackups: 'Sin copias de seguridad',
+    singleFile: 'archivo único',
+    files: '{n} archivos',
+  },
+  emptyState: {
+    title: 'Carpeta de EVE no encontrada',
+    sub: 'Asegúrese de que EVE Online esté instalado o seleccione la carpeta manualmente.',
+    selectFolder: 'Seleccionar carpeta',
+  },
+  table: {
+    characters: 'Personajes',
+    accounts: 'Cuentas',
+    colCharacter: 'Personaje',
+    colId: 'ID',
+    colAccountId: 'ID de cuenta',
+    colModified: 'Modificado',
+    noCharFiles: 'No se encontraron archivos de personaje',
+    noAccountFiles: 'No se encontraron archivos de cuenta',
+    selectProfile: 'Seleccione un perfil',
+    backupFile: 'Hacer copia del archivo',
+  },
+  actions: {
+    copySettings: 'Copiar configuración',
+    backup: 'Copia de seguridad',
+    openFolder: 'Abrir carpeta',
+  },
+  dialog: {
+    saveBackup: 'Guardar copia de seguridad',
+    backupFile: 'Hacer copia del archivo',
+    backupName: 'Nombre de la copia',
+    cancel: 'Cancelar',
+    save: 'Guardar',
+  },
+}
