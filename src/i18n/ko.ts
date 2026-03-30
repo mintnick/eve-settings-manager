@@ -5,6 +5,7 @@ export default {
     setFolder: '폴더 선택',
     defaultPath: '기본 경로',
     noBackups: '백업 없음',
+    showInFolder: '폴더에서 보기',
     singleFile: '단일 파일',
     files: '{n}개 파일',
   },
@@ -14,6 +15,7 @@ export default {
     selectFolder: '폴더 선택',
   },
   table: {
+    profilesLabel: '프로필',
     characters: '캐릭터',
     accounts: '계정',
     colCharacter: '캐릭터 이름',

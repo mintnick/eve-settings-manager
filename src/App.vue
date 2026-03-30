@@ -60,6 +60,10 @@ function openServerFolder() {
     window.ipcRenderer.invoke('folder:open-in-shell', serverStore.activeServer.path)
 }
 
+function revealBackup(path: string) {
+  window.ipcRenderer.invoke('folder:show-in-shell', path)
+}
+
 async function confirmBackup() {
   const name = backupName.value.trim()
   if (!name) return
@@ -186,6 +190,9 @@ const accountColumns = [
               <span class="backup-name">{{ backup.name }}</span>
               <span class="backup-meta">{{ backup.type === 'file' ? t('sidebar.singleFile') : t('sidebar.files', { n: backup.fileCount }) }}</span>
             </div>
+            <el-icon class="backup-reveal-btn" @click.stop="revealBackup(backup.path)">
+              <FolderOpened />
+            </el-icon>
           </div>
           <div v-if="!backupStore.backups.length && profileStore.activeProfile" class="sidebar-item sidebar-empty">
             {{ t('sidebar.noBackups') }}
@@ -213,22 +220,24 @@ const accountColumns = [
       <div class="right-panel">
 
         <!-- Profile tabs -->
-        <el-tabs
-          v-if="profileStore.profiles.length"
-          :model-value="profileStore.activeProfile?.name"
-          class="profile-tabs"
-          @tab-click="(tab: any) => {
-            const p = profileStore.profiles.find(x => x.name === tab.paneName)
-            if (p) profileStore.selectProfile(p)
-          }"
-        >
-          <el-tab-pane
-            v-for="p in profileStore.profiles"
-            :key="p.name"
-            :label="p.name"
-            :name="p.name"
-          />
-        </el-tabs>
+        <div v-if="profileStore.profiles.length" class="profile-tabs-row">
+          <span class="profile-tabs-label">{{ t('table.profilesLabel') }}</span>
+          <el-tabs
+            :model-value="profileStore.activeProfile?.name"
+            class="profile-tabs"
+            @tab-click="(tab: any) => {
+              const p = profileStore.profiles.find(x => x.name === tab.paneName)
+              if (p) profileStore.selectProfile(p)
+            }"
+          >
+            <el-tab-pane
+              v-for="p in profileStore.profiles"
+              :key="p.name"
+              :label="p.name"
+              :name="p.name"
+            />
+          </el-tabs>
+        </div>
 
         <!-- Loading -->
         <div v-if="settingsStore.loading" class="empty-state flex-1">
@@ -405,7 +414,8 @@ html, body, #app {
 .sidebar-folder-btn-wrap { padding: 6px 10px; display: flex; flex-direction: column; gap: 6px; }
 .sidebar-folder-btn {
   width: 100%;
-  padding: 6px 0;
+  height: 32px;
+  padding: 0;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -427,6 +437,17 @@ html, body, #app {
 .sidebar-empty:hover { background: none; }
 .sidebar-divider { margin: 8px 0; border-top: 1px solid var(--el-border-color-lighter); }
 .backup-item { align-items: flex-start; }
+.backup-reveal-btn {
+  margin-left: auto;
+  flex-shrink: 0;
+  color: var(--el-text-color-placeholder);
+  opacity: 0;
+  cursor: pointer;
+  font-size: 14px !important;
+  padding-top: 2px;
+}
+.backup-item:hover .backup-reveal-btn { opacity: 1; }
+.backup-reveal-btn:hover { color: var(--el-color-primary); }
 .backup-item-text { display: flex; flex-direction: column; }
 .backup-name { font-size: 14px; line-height: 1.4; }
 .backup-meta { font-size: 13px; color: var(--el-text-color-placeholder); }
@@ -439,11 +460,26 @@ html, body, #app {
   overflow: hidden;
   min-width: 0;
 }
-.profile-tabs {
+.profile-tabs-row {
   flex-shrink: 0;
+  display: flex;
+  align-items: center;
   padding: 0 12px;
   background: var(--el-bg-color-page);
   border-bottom: 1px solid var(--el-border-color);
+}
+.profile-tabs-label {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--el-text-color-placeholder);
+  margin-right: 10px;
+  white-space: nowrap;
+}
+.profile-tabs {
+  flex: 1;
+  min-width: 0;
 }
 .profile-tabs .el-tabs__header { margin: 0; }
 .profile-tabs .el-tabs__nav-wrap::after { display: none; }
@@ -476,6 +512,10 @@ html, body, #app {
   border-top: 1px solid var(--el-border-color);
   background: var(--el-bg-color-page);
   flex-shrink: 0;
+}
+.action-bar .el-button {
+  min-width: 130px;
+  white-space: nowrap;
 }
 
 /* Backup icon */

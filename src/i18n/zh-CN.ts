@@ -5,6 +5,7 @@ export default {
     setFolder: '选择文件夹',
     defaultPath: '默认路径',
     noBackups: '暂无备份',
+    showInFolder: '在文件夹中显示',
     singleFile: '单个文件',
     files: '{n} 个文件',
   },
@@ -14,6 +15,7 @@ export default {
     selectFolder: '选择文件夹',
   },
   table: {
+    profilesLabel: '配置文件',
     characters: '角色',
     accounts: '账户',
     colCharacter: '角色名',

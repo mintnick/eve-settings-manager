@@ -5,6 +5,7 @@ export default {
     setFolder: 'Ordner auswählen',
     defaultPath: 'Standardpfad',
     noBackups: 'Keine Sicherungen',
+    showInFolder: 'Im Ordner anzeigen',
     singleFile: 'Einzeldatei',
     files: '{n} Dateien',
   },
@@ -14,6 +15,7 @@ export default {
     selectFolder: 'Ordner auswählen',
   },
   table: {
+    profilesLabel: 'Profile',
     characters: 'Charaktere',
     accounts: 'Konten',
     colCharacter: 'Charakter',

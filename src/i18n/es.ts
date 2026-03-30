@@ -5,6 +5,7 @@ export default {
     setFolder: 'Seleccionar carpeta',
     defaultPath: 'Ruta predeterminada',
     noBackups: 'Sin copias de seguridad',
+    showInFolder: 'Mostrar en carpeta',
     singleFile: 'archivo único',
     files: '{n} archivos',
   },
@@ -14,6 +15,7 @@ export default {
     selectFolder: 'Seleccionar carpeta',
   },
   table: {
+    profilesLabel: 'Perfiles',
     characters: 'Personajes',
     accounts: 'Cuentas',
     colCharacter: 'Personaje',

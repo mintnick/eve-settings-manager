@@ -5,6 +5,7 @@ export default {
     setFolder: 'フォルダを選択',
     defaultPath: 'デフォルトパス',
     noBackups: 'バックアップなし',
+    showInFolder: 'フォルダで表示',
     singleFile: '単一ファイル',
     files: '{n} ファイル',
   },
@@ -14,6 +15,7 @@ export default {
     selectFolder: 'フォルダを選択',
   },
   table: {
+    profilesLabel: 'プロファイル',
     characters: 'キャラクター',
     accounts: 'アカウント',
     colCharacter: 'キャラクター名',
