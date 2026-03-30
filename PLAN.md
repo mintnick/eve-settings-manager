@@ -58,13 +58,17 @@ No top bar. 2-panel layout with sidebar + main content area:
 ```
 
 **UI parts to detail and refine:**
-- [ ] Sidebar — servers section, backups section, saved settings section
-- [ ] Profile tabs — tab style, active state, add/rename/delete actions
-- [ ] Characters table — columns, row actions, empty state
-- [ ] Accounts table — columns, row actions, empty state
-- [ ] Action bar — button layout, disabled states
-- [ ] Dialogs — backup name, file backup name, copy settings
-- [ ] Empty / no-folder state
+- [x] Sidebar — servers section, folder buttons, backups section, language selector
+- [x] Sidebar polish — translate icon, bottom bar alignment, backup reveal button, tooltip fade-out
+- [x] Characters table — columns, row actions, empty state
+- [x] Accounts table — columns, row actions, empty state
+- [x] Action bar — centered buttons, stable min-width across languages
+- [x] Dialogs — backup name, file backup name
+- [x] Empty / no-folder state
+- [x] i18n — vue-i18n, 8 languages (en, zh-CN, zh-CHT, ja, ko, fr, de, es)
+- [ ] Profile tabs — add/rename/delete actions
+- [ ] Copy settings dialog
+- [ ] Named per-file snapshots (Saved Settings)
 
 ---
 
