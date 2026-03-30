@@ -201,9 +201,11 @@ const accountColumns = [
 
         <!-- Language selector -->
         <div class="sidebar-lang">
+          <svg class="lang-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M12.87 15.07l-2.54-2.51.03-.03c1.74-1.94 2.98-4.17 3.71-6.53H17V4h-7V2H8v2H1v1.99h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11.76-2.04zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2l-4.5-12zm-2.62 7l1.62-4.33L19.12 17h-3.24z"/>
+          </svg>
           <el-select
             :model-value="language"
-            size="small"
             @change="setLanguage"
           >
             <el-option
@@ -379,17 +381,27 @@ html, body, #app {
   flex-shrink: 0;
   border-right: 1px solid var(--el-border-color);
   overflow-y: auto;
-  padding: 8px 0;
+  overflow-x: hidden;
+  padding: 8px 0 0;
   background: var(--el-bg-color-page);
   display: flex;
   flex-direction: column;
 }
 .sidebar-lang {
   margin-top: auto;
-  padding: 10px 10px;
+  padding: 6px 10px;
   border-top: 1px solid var(--el-border-color-lighter);
+  display: flex;
+  align-items: center;
+  gap: 7px;
 }
-.sidebar-lang .el-select { width: 100%; }
+.sidebar-lang .el-select { flex: 1; }
+.lang-icon {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  color: var(--el-text-color-secondary);
+}
 .sidebar-section { padding: 0 4px; }
 .sidebar-label {
   font-size: 15px;
