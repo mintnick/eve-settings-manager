@@ -450,17 +450,16 @@ html, body, #app {
 .sidebar-divider { margin: 8px 0; border-top: 1px solid var(--el-border-color-lighter); }
 .backup-item { align-items: flex-start; }
 .backup-reveal-btn {
-  margin-left: auto;
+  align-self: flex-end;
   flex-shrink: 0;
   color: var(--el-text-color-placeholder);
   opacity: 0;
   cursor: pointer;
-  font-size: 14px !important;
-  padding-top: 2px;
+  font-size: 18px !important;
 }
 .backup-item:hover .backup-reveal-btn { opacity: 1; }
 .backup-reveal-btn:hover { color: var(--el-color-primary); }
-.backup-item-text { display: flex; flex-direction: column; }
+.backup-item-text { display: flex; flex-direction: column; flex: 1; min-width: 0; }
 .backup-name { font-size: 14px; line-height: 1.4; }
 .backup-meta { font-size: 13px; color: var(--el-text-color-placeholder); }
 
