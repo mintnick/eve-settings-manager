@@ -29,7 +29,7 @@ export default {
   },
   actions: {
     copySettings: 'Copier les paramètres',
-    backup: 'Sauvegarder',
+    backup: 'Sauvegarder le dossier',
     openFolder: 'Ouvrir le dossier',
   },
   dialog: {

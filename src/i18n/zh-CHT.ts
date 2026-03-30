@@ -29,7 +29,7 @@ export default {
   },
   actions: {
     copySettings: '複製設定',
-    backup: '備份',
+    backup: '備份資料夾',
     openFolder: '開啟資料夾',
   },
   dialog: {

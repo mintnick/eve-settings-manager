@@ -29,7 +29,7 @@ export default {
   },
   actions: {
     copySettings: '設定をコピー',
-    backup: 'バックアップ',
+    backup: 'フォルダをバックアップ',
     openFolder: 'フォルダを開く',
   },
   dialog: {

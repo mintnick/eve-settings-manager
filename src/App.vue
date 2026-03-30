@@ -190,9 +190,11 @@ const accountColumns = [
               <span class="backup-name">{{ backup.name }}</span>
               <span class="backup-meta">{{ backup.type === 'file' ? t('sidebar.singleFile') : t('sidebar.files', { n: backup.fileCount }) }}</span>
             </div>
-            <el-icon class="backup-reveal-btn" @click.stop="revealBackup(backup.path)">
-              <FolderOpened />
-            </el-icon>
+            <el-tooltip :content="t('sidebar.showInFolder')" placement="right">
+              <el-icon class="backup-reveal-btn" @click.stop="revealBackup(backup.path)">
+                <FolderOpened />
+              </el-icon>
+            </el-tooltip>
           </div>
           <div v-if="!backupStore.backups.length && profileStore.activeProfile" class="sidebar-item sidebar-empty">
             {{ t('sidebar.noBackups') }}
@@ -518,6 +520,7 @@ html, body, #app {
 .action-bar {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 6px;
   padding: 6px 12px;
   border-top: 1px solid var(--el-border-color);
@@ -543,4 +546,8 @@ html, body, #app {
 @keyframes spin { to { transform: rotate(360deg); } }
 .mr-1 { margin-right: 4px; }
 .flex-1 { flex: 1; }
+
+/* Tooltip fade-out (EP only ships the enter half by default) */
+.el-fade-in-linear-leave-active { transition: opacity 0.15s linear !important; }
+.el-fade-in-linear-leave-to { opacity: 0 !important; }
 </style>
