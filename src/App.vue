@@ -14,6 +14,7 @@ import {
   Warning,
   DocumentCopy,
   RefreshLeft,
+  Share,
 } from '@element-plus/icons-vue'
 
 const { t, locale } = useI18n()
@@ -109,16 +110,18 @@ function syncTargetLabel(file: SettingsFile): string {
     : `Account ${file.id}`
 }
 
-async function syncAll(file: SettingsFile) {
-  const pool = file.type === 'char' ? settingsStore.charFiles : settingsStore.userFiles
-  const targets = pool.filter(f => f.path !== file.path).map(f => f.path)
-  if (targets.length) await settingsStore.syncSettings(file.path, targets)
-}
+const syncAllChecked = computed(() =>
+  syncTargets.value.length > 0 && syncSelected.value.length === syncTargets.value.length
+)
 
 function openSyncDialog(file: SettingsFile) {
   syncSource.value = file
-  syncSelected.value = []
+  syncSelected.value = syncTargets.value.map(f => f.path)
   syncDialog.value = true
+}
+
+function setSyncAll(val: boolean) {
+  syncSelected.value = val ? syncTargets.value.map(f => f.path) : []
 }
 
 async function confirmSync() {
@@ -304,16 +307,15 @@ const accountColumns = [
               <el-table-column prop="modifiedAt" :label="t('table.colModified')" sortable>
                 <template #default="{ row }">{{ formatDate(row.modifiedAt) }}</template>
               </el-table-column>
-              <el-table-column width="160" class-name="row-actions">
+              <el-table-column width="64" class-name="row-actions">
                 <template #default="{ row }">
                   <div class="row-actions-cell">
                     <el-tooltip :content="t('table.backupFile')" placement="top">
-                      <el-icon class="backup-icon" @click.stop="openFileBackupDialog(row)"><DocumentCopy /></el-icon>
+                      <el-icon class="row-icon backup-icon" @click.stop="openFileBackupDialog(row)"><DocumentCopy /></el-icon>
                     </el-tooltip>
-                    <el-tooltip :content="t('table.syncAllTip')" placement="top">
-                      <el-button size="small" link class="row-action-btn" @click.stop="syncAll(row)">{{ t('table.syncAll') }}</el-button>
+                    <el-tooltip :content="t('table.syncTip')" placement="top">
+                      <el-icon class="row-icon sync-icon" @click.stop="openSyncDialog(row)"><Share /></el-icon>
                     </el-tooltip>
-                    <el-button size="small" link class="row-action-btn" @click.stop="openSyncDialog(row)">{{ t('table.syncPick') }}</el-button>
                   </div>
                 </template>
               </el-table-column>
@@ -335,16 +337,15 @@ const accountColumns = [
               <el-table-column prop="modifiedAt" :label="t('table.colModified')" sortable>
                 <template #default="{ row }">{{ formatDate(row.modifiedAt) }}</template>
               </el-table-column>
-              <el-table-column width="160" class-name="row-actions">
+              <el-table-column width="64" class-name="row-actions">
                 <template #default="{ row }">
                   <div class="row-actions-cell">
                     <el-tooltip :content="t('table.backupFile')" placement="top">
-                      <el-icon class="backup-icon" @click.stop="openFileBackupDialog(row)"><DocumentCopy /></el-icon>
+                      <el-icon class="row-icon backup-icon" @click.stop="openFileBackupDialog(row)"><DocumentCopy /></el-icon>
                     </el-tooltip>
-                    <el-tooltip :content="t('table.syncAllTip')" placement="top">
-                      <el-button size="small" link class="row-action-btn" @click.stop="syncAll(row)">{{ t('table.syncAll') }}</el-button>
+                    <el-tooltip :content="t('table.syncTipAccount')" placement="top">
+                      <el-icon class="row-icon sync-icon" @click.stop="openSyncDialog(row)"><Share /></el-icon>
                     </el-tooltip>
-                    <el-button size="small" link class="row-action-btn" @click.stop="openSyncDialog(row)">{{ t('table.syncPick') }}</el-button>
                   </div>
                 </template>
               </el-table-column>
@@ -377,18 +378,19 @@ const accountColumns = [
     </el-dialog>
 
     <!-- Sync picker dialog -->
-    <el-dialog v-model="syncDialog" :title="t('dialog.syncTitle')" width="420px">
-      <p v-if="syncSource" class="sync-source-label">
-        {{ t('dialog.syncSource') }}: <strong>{{ syncTargetLabel(syncSource) }}</strong>
-      </p>
-      <div v-if="syncTargets.length" class="sync-target-list">
-        <el-checkbox
-          v-for="file in syncTargets"
-          :key="file.path"
-          :label="file.path"
-          v-model="syncSelected"
-          class="sync-target-item"
-        >{{ syncTargetLabel(file) }}</el-checkbox>
+    <el-dialog v-model="syncDialog" :title="t('dialog.syncTitle')" width="360px">
+      <div v-if="syncTargets.length" class="sync-dialog-body">
+        <div class="sync-select-all">
+          <el-checkbox :model-value="syncAllChecked" @change="setSyncAll">{{ t('dialog.selectAll') }}</el-checkbox>
+        </div>
+        <div class="sync-target-list">
+          <el-checkbox
+            v-for="file in syncTargets"
+            :key="file.path"
+            :label="file.path"
+            v-model="syncSelected"
+          >{{ syncTargetLabel(file) }}</el-checkbox>
+        </div>
       </div>
       <p v-else class="sync-no-targets">{{ t('dialog.syncNoTargets') }}</p>
       <template #footer>
@@ -602,28 +604,23 @@ html, body, #app {
 .row-actions-cell {
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 8px;
 }
-.row-action-btn {
-  padding: 0 4px !important;
-  font-size: 12px !important;
-  opacity: 0.6;
-}
-.row-action-btn:hover { opacity: 1; }
-
-/* Backup icon */
-.backup-icon {
-  color: var(--el-color-primary-light-3);
+.row-icon {
   cursor: pointer;
-  opacity: 0.7;
-  font-size: 16px !important;
+  font-size: 15px !important;
+  transition: opacity 0.15s, color 0.15s;
 }
-.backup-icon:hover { color: var(--el-text-color-primary); opacity: 1; }
+.backup-icon { color: var(--el-color-primary-light-3) !important; opacity: 0.5; }
+.backup-icon:hover { color: var(--el-color-primary) !important; opacity: 1; }
+.sync-icon { color: #4caf6e !important; opacity: 1; }
+.sync-icon:hover { color: #3d9e5f !important; }
 
 /* Sync dialog */
-.sync-source-label { margin: 0 0 12px; font-size: 13px; color: var(--el-text-color-secondary); }
-.sync-target-list { display: flex; flex-direction: column; gap: 8px; max-height: 280px; overflow-y: auto; }
-.sync-target-item { margin: 0 !important; }
+.sync-dialog-body { display: flex; flex-direction: column; gap: 6px; }
+.sync-select-all { padding-bottom: 4px; border-bottom: 1px solid var(--el-border-color-lighter); }
+.sync-target-list { display: flex; flex-direction: column; gap: 2px; max-height: 240px; overflow-y: auto; padding: 2px 0; }
+.sync-target-list .el-checkbox { margin: 0 !important; height: 26px; font-size: 12px; }
 .sync-no-targets { margin: 0; font-size: 13px; color: var(--el-text-color-placeholder); }
 
 /* Misc */

@@ -65,9 +65,9 @@ No top bar. 2-panel layout with sidebar + main content area:
 - [x] Action bar — centered buttons, stable min-width across languages
 - [x] Dialogs — backup name, file backup name
 - [x] Empty / no-folder state
-- [x] i18n — vue-i18n, 8 languages (en, zh-CN, zh-CHT, ja, ko, fr, de, es)
+- [x] i18n — vue-i18n, 8 languages (en, zh-CN, zh-CHT, ja, ko, fr, de, es); all sync keys fully translated
 - [ ] Profile tabs — add/rename/delete actions
-- [x] Sync settings — per-row "Sync All" + "Sync..." picker dialog (replaces action bar Copy button)
+- [x] Sync settings — icon (Share, green) + backup icon (DocumentCopy, muted blue); picker dialog pre-checks all, select-all toggle; char/account tooltips distinct
 - [ ] Named per-file snapshots (Saved Settings)
 
 ---
