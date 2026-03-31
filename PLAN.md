@@ -67,7 +67,7 @@ No top bar. 2-panel layout with sidebar + main content area:
 - [x] Empty / no-folder state
 - [x] i18n — vue-i18n, 8 languages (en, zh-CN, zh-CHT, ja, ko, fr, de, es)
 - [ ] Profile tabs — add/rename/delete actions
-- [ ] Copy settings dialog
+- [x] Sync settings — per-row "Sync All" + "Sync..." picker dialog (replaces action bar Copy button)
 - [ ] Named per-file snapshots (Saved Settings)
 
 ---

@@ -26,9 +26,11 @@ export default {
     noAccountFiles: 'アカウントファイルが見つかりません',
     selectProfile: 'プロファイルを選択してください',
     backupFile: 'ファイルをバックアップ',
+    syncAll: 'Sync All',
+    syncAllTip: 'Overwrite all other files of this type with these settings',
+    syncPick: 'Sync...',
   },
   actions: {
-    copySettings: '設定をコピー',
     backup: 'フォルダをバックアップ',
     openFolder: 'フォルダを開く',
   },
@@ -38,5 +40,9 @@ export default {
     backupName: 'バックアップ名',
     cancel: 'キャンセル',
     save: '保存',
+    syncTitle: 'Sync to...',
+    syncSource: 'Source',
+    syncNoTargets: 'No other files to sync to.',
+    sync: 'Sync',
   },
 }

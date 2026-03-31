@@ -36,7 +36,6 @@ export function registerIpcHandlers(): void {
   ipcMain.handle('settings:list', (_e, profilePath: string) => listSettings(profilePath))
   ipcMain.handle('settings:resolve-names', (_e, ids: string[], server: 'tq' | 'serenity' | 'infinity') => resolveCharNames(ids, server))
   ipcMain.handle('settings:copy', (_e, srcPath: string, destPaths: string[]) => copySettings(srcPath, destPaths))
-
   // ── Backup ─────────────────────────────────────────────────────────────────
   ipcMain.handle('backup:create', (_e, profilePath: string, name: string) => createBackup(profilePath, name))
   ipcMain.handle('backup:create-file', (_e, profilePath: string, sourcePath: string, name: string) => createFileBackup(profilePath, sourcePath, name))

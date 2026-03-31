@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, watch, ref } from 'vue'
+import { onMounted, watch, ref, computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useServerStore } from './stores/useServerStore'
 import { useProfileStore } from './stores/useProfileStore'
@@ -10,7 +10,6 @@ import {
   FolderOpened,
   Files,
   Folder,
-  CopyDocument,
   Box,
   Warning,
   DocumentCopy,
@@ -90,6 +89,44 @@ async function confirmFileBackup() {
   fileBackupDialog.value = false
   await backupStore.createFileBackup(fileBackupPending.value.path, name)
   fileBackupPending.value = null
+}
+
+// ── Sync ──────────────────────────────────────────────────────────────────────
+const syncDialog = ref(false)
+const syncSource = ref<SettingsFile | null>(null)
+const syncSelected = ref<string[]>([])
+
+const syncTargets = computed(() => {
+  if (!syncSource.value) return []
+  const src = syncSource.value
+  const pool = src.type === 'char' ? settingsStore.charFiles : settingsStore.userFiles
+  return pool.filter(f => f.path !== src.path)
+})
+
+function syncTargetLabel(file: SettingsFile): string {
+  return file.type === 'char'
+    ? ((file as import('./types').CharFile).charName ?? file.id)
+    : `Account ${file.id}`
+}
+
+async function syncAll(file: SettingsFile) {
+  const pool = file.type === 'char' ? settingsStore.charFiles : settingsStore.userFiles
+  const targets = pool.filter(f => f.path !== file.path).map(f => f.path)
+  if (targets.length) await settingsStore.syncSettings(file.path, targets)
+}
+
+function openSyncDialog(file: SettingsFile) {
+  syncSource.value = file
+  syncSelected.value = []
+  syncDialog.value = true
+}
+
+async function confirmSync() {
+  if (!syncSource.value || !syncSelected.value.length) return
+  syncDialog.value = false
+  await settingsStore.syncSettings(syncSource.value.path, [...syncSelected.value])
+  syncSource.value = null
+  syncSelected.value = []
 }
 
 const LANGUAGES = [
@@ -267,11 +304,17 @@ const accountColumns = [
               <el-table-column prop="modifiedAt" :label="t('table.colModified')" sortable>
                 <template #default="{ row }">{{ formatDate(row.modifiedAt) }}</template>
               </el-table-column>
-              <el-table-column width="40">
+              <el-table-column width="160" class-name="row-actions">
                 <template #default="{ row }">
-                  <el-tooltip :content="t('table.backupFile')" placement="top">
-                    <el-icon class="backup-icon" @click.stop="openFileBackupDialog(row)"><DocumentCopy /></el-icon>
-                  </el-tooltip>
+                  <div class="row-actions-cell">
+                    <el-tooltip :content="t('table.backupFile')" placement="top">
+                      <el-icon class="backup-icon" @click.stop="openFileBackupDialog(row)"><DocumentCopy /></el-icon>
+                    </el-tooltip>
+                    <el-tooltip :content="t('table.syncAllTip')" placement="top">
+                      <el-button size="small" link class="row-action-btn" @click.stop="syncAll(row)">{{ t('table.syncAll') }}</el-button>
+                    </el-tooltip>
+                    <el-button size="small" link class="row-action-btn" @click.stop="openSyncDialog(row)">{{ t('table.syncPick') }}</el-button>
+                  </div>
                 </template>
               </el-table-column>
             </el-table>
@@ -292,11 +335,17 @@ const accountColumns = [
               <el-table-column prop="modifiedAt" :label="t('table.colModified')" sortable>
                 <template #default="{ row }">{{ formatDate(row.modifiedAt) }}</template>
               </el-table-column>
-              <el-table-column width="40">
+              <el-table-column width="160" class-name="row-actions">
                 <template #default="{ row }">
-                  <el-tooltip :content="t('table.backupFile')" placement="top">
-                    <el-icon class="backup-icon" @click.stop="openFileBackupDialog(row)"><DocumentCopy /></el-icon>
-                  </el-tooltip>
+                  <div class="row-actions-cell">
+                    <el-tooltip :content="t('table.backupFile')" placement="top">
+                      <el-icon class="backup-icon" @click.stop="openFileBackupDialog(row)"><DocumentCopy /></el-icon>
+                    </el-tooltip>
+                    <el-tooltip :content="t('table.syncAllTip')" placement="top">
+                      <el-button size="small" link class="row-action-btn" @click.stop="syncAll(row)">{{ t('table.syncAll') }}</el-button>
+                    </el-tooltip>
+                    <el-button size="small" link class="row-action-btn" @click.stop="openSyncDialog(row)">{{ t('table.syncPick') }}</el-button>
+                  </div>
                 </template>
               </el-table-column>
             </el-table>
@@ -305,10 +354,6 @@ const accountColumns = [
 
         <!-- Action bar -->
         <div class="action-bar">
-          <el-button :disabled="!profileStore.activeProfile">
-            <el-icon class="mr-1"><CopyDocument /></el-icon>
-            {{ t('actions.copySettings') }}
-          </el-button>
           <el-button :disabled="!profileStore.activeProfile" @click="openBackupDialog()">
             <el-icon class="mr-1"><Box /></el-icon>
             {{ t('actions.backup') }}
@@ -328,6 +373,27 @@ const accountColumns = [
       <template #footer>
         <el-button @click="backupDialog = false">{{ t('dialog.cancel') }}</el-button>
         <el-button type="primary" :disabled="!backupName.trim()" @click="confirmBackup">{{ t('dialog.save') }}</el-button>
+      </template>
+    </el-dialog>
+
+    <!-- Sync picker dialog -->
+    <el-dialog v-model="syncDialog" :title="t('dialog.syncTitle')" width="420px">
+      <p v-if="syncSource" class="sync-source-label">
+        {{ t('dialog.syncSource') }}: <strong>{{ syncTargetLabel(syncSource) }}</strong>
+      </p>
+      <div v-if="syncTargets.length" class="sync-target-list">
+        <el-checkbox
+          v-for="file in syncTargets"
+          :key="file.path"
+          :label="file.path"
+          v-model="syncSelected"
+          class="sync-target-item"
+        >{{ syncTargetLabel(file) }}</el-checkbox>
+      </div>
+      <p v-else class="sync-no-targets">{{ t('dialog.syncNoTargets') }}</p>
+      <template #footer>
+        <el-button @click="syncDialog = false">{{ t('dialog.cancel') }}</el-button>
+        <el-button type="primary" :disabled="!syncSelected.length" @click="confirmSync">{{ t('dialog.sync') }}</el-button>
       </template>
     </el-dialog>
 
@@ -532,6 +598,19 @@ html, body, #app {
   white-space: nowrap;
 }
 
+/* Row actions */
+.row-actions-cell {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.row-action-btn {
+  padding: 0 4px !important;
+  font-size: 12px !important;
+  opacity: 0.6;
+}
+.row-action-btn:hover { opacity: 1; }
+
 /* Backup icon */
 .backup-icon {
   color: var(--el-color-primary-light-3);
@@ -540,6 +619,12 @@ html, body, #app {
   font-size: 16px !important;
 }
 .backup-icon:hover { color: var(--el-text-color-primary); opacity: 1; }
+
+/* Sync dialog */
+.sync-source-label { margin: 0 0 12px; font-size: 13px; color: var(--el-text-color-secondary); }
+.sync-target-list { display: flex; flex-direction: column; gap: 8px; max-height: 280px; overflow-y: auto; }
+.sync-target-item { margin: 0 !important; }
+.sync-no-targets { margin: 0; font-size: 13px; color: var(--el-text-color-placeholder); }
 
 /* Misc */
 .loading-spin { animation: spin 1s linear infinite; }

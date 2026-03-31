@@ -26,9 +26,11 @@ export default {
     noAccountFiles: '계정 파일을 찾을 수 없습니다',
     selectProfile: '프로필을 선택하세요',
     backupFile: '파일 백업',
+    syncAll: 'Sync All',
+    syncAllTip: 'Overwrite all other files of this type with these settings',
+    syncPick: 'Sync...',
   },
   actions: {
-    copySettings: '설정 복사',
     backup: '폴더 백업',
     openFolder: '폴더 열기',
   },
@@ -38,5 +40,9 @@ export default {
     backupName: '백업 이름',
     cancel: '취소',
     save: '저장',
+    syncTitle: 'Sync to...',
+    syncSource: 'Source',
+    syncNoTargets: 'No other files to sync to.',
+    sync: 'Sync',
   },
 }

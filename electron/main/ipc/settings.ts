@@ -114,9 +114,6 @@ export async function resolveCharNames(
   }
 }
 
-/**
- * Copies a single .dat file to one or more destination paths (overwrite).
- */
 export async function copySettings(srcPath: string, destPaths: string[]): Promise<void> {
   await Promise.all(destPaths.map(dest => copyFile(srcPath, dest)))
 }

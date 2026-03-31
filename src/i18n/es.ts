@@ -26,9 +26,11 @@ export default {
     noAccountFiles: 'No se encontraron archivos de cuenta',
     selectProfile: 'Seleccione un perfil',
     backupFile: 'Hacer copia del archivo',
+    syncAll: 'Sync All',
+    syncAllTip: 'Overwrite all other files of this type with these settings',
+    syncPick: 'Sync...',
   },
   actions: {
-    copySettings: 'Copiar configuración',
     backup: 'Copia de carpeta',
     openFolder: 'Abrir carpeta',
   },
@@ -38,5 +40,9 @@ export default {
     backupName: 'Nombre de la copia',
     cancel: 'Cancelar',
     save: 'Guardar',
+    syncTitle: 'Sync to...',
+    syncSource: 'Source',
+    syncNoTargets: 'No other files to sync to.',
+    sync: 'Sync',
   },
 }

@@ -26,9 +26,11 @@ export default {
     noAccountFiles: '找不到帳號檔案',
     selectProfile: '請選擇設定檔',
     backupFile: '備份檔案',
+    syncAll: 'Sync All',
+    syncAllTip: 'Overwrite all other files of this type with these settings',
+    syncPick: 'Sync...',
   },
   actions: {
-    copySettings: '複製設定',
     backup: '備份資料夾',
     openFolder: '開啟資料夾',
   },
@@ -38,5 +40,9 @@ export default {
     backupName: '備份名稱',
     cancel: '取消',
     save: '儲存',
+    syncTitle: 'Sync to...',
+    syncSource: 'Source',
+    syncNoTargets: 'No other files to sync to.',
+    sync: 'Sync',
   },
 }

@@ -26,9 +26,11 @@ export default {
     noAccountFiles: '未找到账户文件',
     selectProfile: '请选择配置文件',
     backupFile: '备份文件',
+    syncAll: 'Sync All',
+    syncAllTip: 'Overwrite all other files of this type with these settings',
+    syncPick: 'Sync...',
   },
   actions: {
-    copySettings: '复制设置',
     backup: '备份文件夹',
     openFolder: '打开文件夹',
   },
@@ -38,5 +40,9 @@ export default {
     backupName: '备份名称',
     cancel: '取消',
     save: '保存',
+    syncTitle: 'Sync to...',
+    syncSource: 'Source',
+    syncNoTargets: 'No other files to sync to.',
+    sync: 'Sync',
   },
 }

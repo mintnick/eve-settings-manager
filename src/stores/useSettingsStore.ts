@@ -43,7 +43,7 @@ export const useSettingsStore = defineStore('settings', () => {
     }
   }
 
-  async function copySettings(srcPath: string, destPaths: string[]) {
+  async function syncSettings(srcPath: string, destPaths: string[]) {
     await window.ipcRenderer.invoke('settings:copy', srcPath, destPaths)
     await loadSettings()
   }
@@ -60,6 +60,6 @@ export const useSettingsStore = defineStore('settings', () => {
 
   return {
     charFiles, userFiles, loading, descriptions,
-    loadSettings, copySettings, setDescription, deleteDescription,
+    loadSettings, syncSettings, setDescription, deleteDescription,
   }
 })
