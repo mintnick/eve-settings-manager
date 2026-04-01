@@ -53,12 +53,18 @@ function formatDate(ms: number) {
   return `${date} ${time}`
 }
 
+function formatDateOnly(ms: number) {
+  const d = new Date(ms)
+  return d.getFullYear() + '-' +
+    String(d.getMonth() + 1).padStart(2, '0') + '-' +
+    String(d.getDate()).padStart(2, '0')
+}
+
 const backupDialog = ref(false)
 const backupName = ref('')
 
 function openBackupDialog() {
-  const profile = profileStore.activeProfile?.name ?? 'profile'
-  backupName.value = `${profile}_backup_${new Date().toISOString().slice(0, 10)}`
+  backupName.value = profileStore.activeProfile?.name ?? 'backup'
   backupDialog.value = true
 }
 
@@ -280,7 +286,7 @@ const accountColumns = [
             </el-icon>
             <div class="backup-item-text">
               <span class="backup-name">{{ backupDisplayName(backup) }}</span>
-              <span class="backup-meta">{{ backup.type === 'file' ? t('sidebar.singleFile') : t('sidebar.files', { n: backup.fileCount }) }}</span>
+              <span class="backup-meta">{{ formatDateOnly(backup.createdAt) }}</span>
             </div>
             <el-tooltip :content="t('sidebar.showInFolder')" placement="top">
               <el-icon class="backup-action-btn backup-reveal-btn" @click.stop="revealBackup(backup.path)">
@@ -594,14 +600,10 @@ html, body, #app {
   flex-shrink: 0;
   cursor: pointer;
   font-size: 18px !important;
-  transition: opacity 0.15s, color 0.15s;
 }
-.backup-reveal-btn { color: var(--el-color-primary-light-3) !important; opacity: 0.5; }
-.backup-reveal-btn:hover { color: var(--el-color-primary) !important; opacity: 1; }
-.backup-restore-btn { color: #4caf6e !important; opacity: 1; }
-.backup-restore-btn:hover { color: #3d9e5f !important; }
-.backup-delete-btn { color: var(--el-color-danger-light-3) !important; opacity: 0.5; }
-.backup-delete-btn:hover { color: var(--el-color-danger) !important; opacity: 1; }
+.backup-reveal-btn { color: var(--el-color-primary) !important; }
+.backup-restore-btn { color: #4caf6e !important; }
+.backup-delete-btn { color: var(--el-color-danger) !important; }
 .backup-item-text { display: flex; flex-direction: column; flex: 1; min-width: 0; }
 .backup-name { font-size: 14px; line-height: 1.4; }
 .backup-meta { font-size: 13px; color: var(--el-text-color-placeholder); }
@@ -682,12 +684,9 @@ html, body, #app {
 .row-icon {
   cursor: pointer;
   font-size: 15px !important;
-  transition: opacity 0.15s, color 0.15s;
 }
-.backup-icon { color: var(--el-color-primary-light-3) !important; opacity: 0.5; }
-.backup-icon:hover { color: var(--el-color-primary) !important; opacity: 1; }
-.sync-icon { color: #4caf6e !important; opacity: 1; }
-.sync-icon:hover { color: #3d9e5f !important; }
+.backup-icon { color: var(--el-color-primary) !important; }
+.sync-icon { color: #4caf6e !important; }
 
 /* Warning dialog */
 .warn-body { display: flex; flex-direction: column; gap: 10px; }

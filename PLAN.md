@@ -69,7 +69,7 @@ No top bar. 2-panel layout with sidebar + main content area:
 - [ ] Profile tabs — add/rename/delete actions
 - [x] Sync settings — icon (Share, green) + backup icon (DocumentCopy, muted blue); picker dialog pre-checks all, select-all toggle; char/account tooltips distinct
 - [x] Single file backup — auto-named from filename (no dialog); put-back button in sidebar (RefreshLeft icon) with overwrite warning
-- [x] Sidebar backup items — delete button (Delete icon, red); Document/Files icons for file/folder types; action buttons 18px; tooltips on top
+- [x] Sidebar backup items — delete button (Delete icon, red); Document/Files icons for file/folder types; action buttons 18px; tooltips on top; creation date shown in meta line (date only); backup dialog default name is profile name only (no date suffix)
 - [ ] Named per-file snapshots (Saved Settings)
 
 ---
