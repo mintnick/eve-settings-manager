@@ -70,6 +70,7 @@ No top bar. 2-panel layout with sidebar + main content area:
 - [x] Sync settings — icon (Share, green) + backup icon (DocumentCopy, muted blue); picker dialog pre-checks all, select-all toggle; char/account tooltips distinct
 - [x] Single file backup — auto-named from filename (no dialog); put-back button in sidebar (RefreshLeft icon) with overwrite warning
 - [x] Sidebar backup items — delete button (Delete icon, red); Document/Files icons for file/folder types; action buttons 18px; tooltips on top; two-line meta (creation date + file count label); sidebar 240px; backup dialog default name is profile name only
+- [x] Table polish — row action icons 18px; table cell font 15px; sidebar action btns and row icons consistent size
 - [ ] Named per-file snapshots (Saved Settings)
 
 ---

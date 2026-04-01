@@ -647,6 +647,7 @@ html, body, #app {
 }
 .table-divider { width: 1px; background: var(--el-border-color); flex-shrink: 0; }
 .settings-table { flex: 1; }
+.settings-table .el-table__cell { font-size: 15px; }
 
 /* Action bar */
 .action-bar {
@@ -672,7 +673,7 @@ html, body, #app {
 }
 .row-icon {
   cursor: pointer;
-  font-size: 15px !important;
+  font-size: 18px !important;
 }
 .backup-icon { color: var(--el-color-primary) !important; }
 .sync-icon { color: #4caf6e !important; }
