@@ -5,7 +5,7 @@ import { useServerStore } from './stores/useServerStore'
 import { useProfileStore } from './stores/useProfileStore'
 import { useSettingsStore } from './stores/useSettingsStore'
 import { useBackupStore } from './stores/useBackupStore'
-import type { CharFile, UserFile, SettingsFile } from './types'
+import type { CharFile, UserFile, SettingsFile, Backup } from './types'
 import {
   FolderOpened,
   Files,
@@ -43,7 +43,13 @@ watch(() => profileStore.activeProfile, async (profile) => {
 })
 
 function formatDate(ms: number) {
-  return new Date(ms).toLocaleString()
+  const d = new Date(ms)
+  const date = d.getFullYear() + '-' +
+    String(d.getMonth() + 1).padStart(2, '0') + '-' +
+    String(d.getDate()).padStart(2, '0')
+  const time = String(d.getHours()).padStart(2, '0') + ':' +
+    String(d.getMinutes()).padStart(2, '0')
+  return `${date} ${time}`
 }
 
 const backupDialog = ref(false)
@@ -71,25 +77,9 @@ async function confirmBackup() {
   await backupStore.createBackup(name)
 }
 
-const fileBackupDialog = ref(false)
-const fileBackupName = ref('')
-const fileBackupPending = ref<SettingsFile | null>(null)
-
-function openFileBackupDialog(file: SettingsFile) {
-  fileBackupPending.value = file
-  const label = file.type === 'char'
-    ? ((file as CharFile).charName ?? file.id)
-    : `account_${file.id}`
-  fileBackupName.value = `${label}_${new Date().toISOString().slice(0, 10)}`
-  fileBackupDialog.value = true
-}
-
-async function confirmFileBackup() {
-  const name = fileBackupName.value.trim()
-  if (!name || !fileBackupPending.value) return
-  fileBackupDialog.value = false
-  await backupStore.createFileBackup(fileBackupPending.value.path, name)
-  fileBackupPending.value = null
+async function createFileBackupDirect(file: SettingsFile) {
+  const name = file.path.split('/').pop()?.replace(/\.dat$/, '') ?? file.id
+  await backupStore.createFileBackup(file.path, name)
 }
 
 // ── Sync ──────────────────────────────────────────────────────────────────────
@@ -106,7 +96,7 @@ const syncTargets = computed(() => {
 
 function syncTargetLabel(file: SettingsFile): string {
   return file.type === 'char'
-    ? ((file as import('./types').CharFile).charName ?? file.id)
+    ? ((file as CharFile).charName ?? file.id)
     : `Account ${file.id}`
 }
 
@@ -127,9 +117,58 @@ function setSyncAll(val: boolean) {
 async function confirmSync() {
   if (!syncSource.value || !syncSelected.value.length) return
   syncDialog.value = false
-  await settingsStore.syncSettings(syncSource.value.path, [...syncSelected.value])
+  const src = syncSource.value
+  const targets = [...syncSelected.value]
   syncSource.value = null
   syncSelected.value = []
+  openWarnDialog(
+    t('warn.syncDetail', { n: targets.length }),
+    () => settingsStore.syncSettings(src.path, targets)
+  )
+}
+
+// ── Warning dialog ─────────────────────────────────────────────────────────────
+const warnDialog = ref(false)
+const warnDetail = ref('')
+const warnAction = ref<(() => Promise<void>) | null>(null)
+
+function openWarnDialog(detail: string, action: () => Promise<void>) {
+  warnDetail.value = detail
+  warnAction.value = action
+  warnDialog.value = true
+}
+
+async function proceedWarn() {
+  warnDialog.value = false
+  if (warnAction.value) await warnAction.value()
+  warnAction.value = null
+}
+
+// ── Backup put back ────────────────────────────────────────────────────────────
+function backupDisplayName(backup: Backup): string {
+  if (backup.type === 'folder') return backup.name
+  const charMatch = backup.name.match(/^core_char_(.+)$/)
+  if (charMatch) {
+    const charFile = settingsStore.charFiles.find(f => f.id === charMatch[1])
+    return charFile?.charName ?? charMatch[1]
+  }
+  const userMatch = backup.name.match(/^core_user_(.+)$/)
+  if (userMatch) return `Account ${userMatch[1]}`
+  return backup.name
+}
+
+function putBackFile(backup: Backup) {
+  openWarnDialog(
+    t('warn.putBackFileDetail', { name: backupDisplayName(backup) }),
+    () => backupStore.restoreFileBackup(backup.name)
+  )
+}
+
+function putBackFolder(backup: Backup) {
+  openWarnDialog(
+    t('warn.backupFolderDetail', { name: backup.name }),
+    () => backupStore.restoreBackup(backup.name)
+  )
 }
 
 const LANGUAGES = [
@@ -227,13 +266,19 @@ const accountColumns = [
               <Folder v-else />
             </el-icon>
             <div class="backup-item-text">
-              <span class="backup-name">{{ backup.name }}</span>
+              <span class="backup-name">{{ backupDisplayName(backup) }}</span>
               <span class="backup-meta">{{ backup.type === 'file' ? t('sidebar.singleFile') : t('sidebar.files', { n: backup.fileCount }) }}</span>
             </div>
             <el-tooltip :content="t('sidebar.showInFolder')" placement="right">
-              <el-icon class="backup-reveal-btn" @click.stop="revealBackup(backup.path)">
+              <el-icon class="backup-action-btn backup-reveal-btn" @click.stop="revealBackup(backup.path)">
                 <FolderOpened />
               </el-icon>
+            </el-tooltip>
+            <el-tooltip :content="t('sidebar.restoreBackup')" placement="right">
+              <el-icon
+                class="backup-action-btn backup-restore-btn"
+                @click.stop="backup.type === 'file' ? putBackFile(backup) : putBackFolder(backup)"
+              ><RefreshLeft /></el-icon>
             </el-tooltip>
           </div>
           <div v-if="!backupStore.backups.length && profileStore.activeProfile" class="sidebar-item sidebar-empty">
@@ -311,7 +356,7 @@ const accountColumns = [
                 <template #default="{ row }">
                   <div class="row-actions-cell">
                     <el-tooltip :content="t('table.backupFile')" placement="top">
-                      <el-icon class="row-icon backup-icon" @click.stop="openFileBackupDialog(row)"><DocumentCopy /></el-icon>
+                      <el-icon class="row-icon backup-icon" @click.stop="createFileBackupDirect(row)"><DocumentCopy /></el-icon>
                     </el-tooltip>
                     <el-tooltip :content="t('table.syncTip')" placement="top">
                       <el-icon class="row-icon sync-icon" @click.stop="openSyncDialog(row)"><Share /></el-icon>
@@ -341,7 +386,7 @@ const accountColumns = [
                 <template #default="{ row }">
                   <div class="row-actions-cell">
                     <el-tooltip :content="t('table.backupFile')" placement="top">
-                      <el-icon class="row-icon backup-icon" @click.stop="openFileBackupDialog(row)"><DocumentCopy /></el-icon>
+                      <el-icon class="row-icon backup-icon" @click.stop="createFileBackupDirect(row)"><DocumentCopy /></el-icon>
                     </el-tooltip>
                     <el-tooltip :content="t('table.syncTipAccount')" placement="top">
                       <el-icon class="row-icon sync-icon" @click.stop="openSyncDialog(row)"><Share /></el-icon>
@@ -399,12 +444,18 @@ const accountColumns = [
       </template>
     </el-dialog>
 
-    <!-- Single file backup dialog -->
-    <el-dialog v-model="fileBackupDialog" :title="t('dialog.backupFile')" width="400px" @keydown.enter="confirmFileBackup">
-      <el-input v-model="fileBackupName" :placeholder="t('dialog.backupName')" autofocus />
+    <!-- Overwrite warning dialog -->
+    <el-dialog v-model="warnDialog" :title="t('warn.title')" width="400px">
+      <div class="warn-body">
+        <p class="warn-detail">{{ warnDetail }}</p>
+        <p class="warn-suggest">
+          <el-icon class="warn-icon"><Warning /></el-icon>
+          {{ t('warn.suggest') }}
+        </p>
+      </div>
       <template #footer>
-        <el-button @click="fileBackupDialog = false">{{ t('dialog.cancel') }}</el-button>
-        <el-button type="primary" :disabled="!fileBackupName.trim()" @click="confirmFileBackup">{{ t('dialog.save') }}</el-button>
+        <el-button @click="warnDialog = false">{{ t('dialog.cancel') }}</el-button>
+        <el-button type="danger" @click="proceedWarn">{{ t('warn.proceed') }}</el-button>
       </template>
     </el-dialog>
 
@@ -519,16 +570,17 @@ html, body, #app {
 .sidebar-empty:hover { background: none; }
 .sidebar-divider { margin: 8px 0; border-top: 1px solid var(--el-border-color-lighter); }
 .backup-item { align-items: flex-start; }
-.backup-reveal-btn {
+.backup-action-btn {
   align-self: flex-end;
   flex-shrink: 0;
-  color: var(--el-text-color-placeholder);
-  opacity: 0;
   cursor: pointer;
-  font-size: 18px !important;
+  font-size: 16px !important;
+  transition: opacity 0.15s, color 0.15s;
 }
-.backup-item:hover .backup-reveal-btn { opacity: 1; }
-.backup-reveal-btn:hover { color: var(--el-color-primary); }
+.backup-reveal-btn { color: var(--el-color-primary-light-3) !important; opacity: 0.5; }
+.backup-reveal-btn:hover { color: var(--el-color-primary) !important; opacity: 1; }
+.backup-restore-btn { color: #4caf6e !important; opacity: 1; }
+.backup-restore-btn:hover { color: #3d9e5f !important; }
 .backup-item-text { display: flex; flex-direction: column; flex: 1; min-width: 0; }
 .backup-name { font-size: 14px; line-height: 1.4; }
 .backup-meta { font-size: 13px; color: var(--el-text-color-placeholder); }
@@ -615,6 +667,12 @@ html, body, #app {
 .backup-icon:hover { color: var(--el-color-primary) !important; opacity: 1; }
 .sync-icon { color: #4caf6e !important; opacity: 1; }
 .sync-icon:hover { color: #3d9e5f !important; }
+
+/* Warning dialog */
+.warn-body { display: flex; flex-direction: column; gap: 10px; }
+.warn-detail { margin: 0; font-size: 13px; }
+.warn-suggest { margin: 0; font-size: 12px; color: var(--el-color-warning); display: flex; align-items: center; gap: 5px; }
+.warn-icon { font-size: 14px !important; flex-shrink: 0; }
 
 /* Sync dialog */
 .sync-dialog-body { display: flex; flex-direction: column; gap: 6px; }

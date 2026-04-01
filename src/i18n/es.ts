@@ -8,6 +8,7 @@ export default {
     showInFolder: 'Mostrar en carpeta',
     singleFile: 'archivo único',
     files: '{n} archivos',
+    restoreBackup: 'Restaurar en perfil',
   },
   emptyState: {
     title: 'Carpeta de EVE no encontrada',
@@ -36,7 +37,6 @@ export default {
   },
   dialog: {
     saveBackup: 'Guardar copia de seguridad',
-    backupFile: 'Hacer copia del archivo',
     backupName: 'Nombre de la copia',
     cancel: 'Cancelar',
     save: 'Guardar',
@@ -44,5 +44,13 @@ export default {
     syncNoTargets: 'No hay otros archivos para sincronizar.',
     selectAll: 'Seleccionar todo',
     sync: 'Sync',
+  },
+  warn: {
+    title: '¿Sobrescribir configuración?',
+    suggest: 'Considera crear una copia de seguridad antes de continuar.',
+    proceed: 'Continuar',
+    syncDetail: 'Esto sobrescribirá {n} archivo(s) con la configuración seleccionada.',
+    putBackFileDetail: 'La configuración actual de "{name}" será reemplazada por la copia de seguridad.',
+    backupFolderDetail: 'Todos los archivos de "{name}" sobrescribirán el perfil actual.',
   },
 }

@@ -38,6 +38,12 @@ export const useBackupStore = defineStore('backup', () => {
     await window.ipcRenderer.invoke('backup:restore', profileStore.activeProfile.path, backupName)
   }
 
+  async function restoreFileBackup(backupName: string) {
+    const profileStore = useProfileStore()
+    if (!profileStore.activeProfile) return
+    await window.ipcRenderer.invoke('backup:restore-file', profileStore.activeProfile.path, backupName)
+  }
+
   async function deleteBackup(backupName: string) {
     const profileStore = useProfileStore()
     if (!profileStore.activeProfile) return
@@ -47,6 +53,6 @@ export const useBackupStore = defineStore('backup', () => {
 
   return {
     backups, loading,
-    loadBackups, createBackup, createFileBackup, restoreBackup, deleteBackup,
+    loadBackups, createBackup, createFileBackup, restoreBackup, restoreFileBackup, deleteBackup,
   }
 })

@@ -8,6 +8,7 @@ export default {
     showInFolder: '在資料夾中顯示',
     singleFile: '單一檔案',
     files: '{n} 個檔案',
+    restoreBackup: '還原至設定檔',
   },
   emptyState: {
     title: '找不到 EVE 設定資料夾',
@@ -44,5 +45,14 @@ export default {
     syncNoTargets: '沒有其他可同步的檔案。',
     selectAll: '全選',
     sync: '同步',
+    backupSyncTitle: '還原備份至...',
+  },
+  warn: {
+    title: '確認覆蓋設定？',
+    suggest: '建議先建立備份，以保留目前的設定。',
+    proceed: '繼續',
+    syncDetail: '將以所選設定覆蓋 {n} 個檔案。',
+    backupFileDetail: '「{name}」將覆蓋 {n} 個檔案。',
+    backupFolderDetail: '「{name}」中的所有檔案將覆蓋目前設定檔。',
   },
 }

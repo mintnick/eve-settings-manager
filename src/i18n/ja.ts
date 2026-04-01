@@ -8,6 +8,7 @@ export default {
     showInFolder: 'フォルダで表示',
     singleFile: '単一ファイル',
     files: '{n} ファイル',
+    restoreBackup: 'プロファイルに復元',
   },
   emptyState: {
     title: 'EVE 設定フォルダが見つかりません',
@@ -44,5 +45,14 @@ export default {
     syncNoTargets: '同期先のファイルがありません。',
     selectAll: 'すべて選択',
     sync: '同期',
+    backupSyncTitle: 'バックアップを復元する先...',
+  },
+  warn: {
+    title: '設定を上書きしますか？',
+    suggest: '現在の設定を保護するため、事前にバックアップを作成することをお勧めします。',
+    proceed: '続行',
+    syncDetail: '選択した設定で {n} 個のファイルを上書きします。',
+    backupFileDetail: '「{name}」で {n} 個のファイルを上書きします。',
+    backupFolderDetail: '「{name}」のすべてのファイルが現在のプロファイルを上書きします。',
   },
 }

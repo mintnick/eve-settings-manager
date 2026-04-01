@@ -3,7 +3,7 @@ import { findEveFolder, openFolderDialog } from './folder.js'
 import { detectServers, getServerStatus, inferEsiServer } from './server.js'
 import { listProfiles, createProfile, renameProfile, duplicateProfile, deleteProfile } from './profile.js'
 import { listSettings, resolveCharNames, copySettings } from './settings.js'
-import { createBackup, createFileBackup, listBackups, restoreBackup, deleteBackup, deleteFileBackup } from './backup.js'
+import { createBackup, createFileBackup, listBackups, restoreBackup, restoreFileBackup, deleteBackup, deleteFileBackup } from './backup.js'
 import {
   getDescription, setDescription, deleteDescription,
   getServerFolder, setServerFolder,
@@ -41,6 +41,7 @@ export function registerIpcHandlers(): void {
   ipcMain.handle('backup:create-file', (_e, profilePath: string, sourcePath: string, name: string) => createFileBackup(profilePath, sourcePath, name))
   ipcMain.handle('backup:list', (_e, profilePath: string) => listBackups(profilePath))
   ipcMain.handle('backup:restore', (_e, profilePath: string, backupName: string) => restoreBackup(profilePath, backupName))
+  ipcMain.handle('backup:restore-file', (_e, profilePath: string, backupName: string) => restoreFileBackup(profilePath, backupName))
   ipcMain.handle('backup:delete', (_e, profilePath: string, backupName: string) => deleteBackup(profilePath, backupName))
   ipcMain.handle('backup:delete-file', (_e, profilePath: string, backupName: string) => deleteFileBackup(profilePath, backupName))
 

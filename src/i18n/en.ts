@@ -8,6 +8,7 @@ export default {
     showInFolder: 'Show in folder',
     singleFile: 'single file',
     files: '{n} files',
+    restoreBackup: 'Put back to profile',
   },
   emptyState: {
     title: 'EVE settings folder not found',
@@ -36,7 +37,6 @@ export default {
   },
   dialog: {
     saveBackup: 'Save backup',
-    backupFile: 'Backup file',
     backupName: 'Backup name',
     cancel: 'Cancel',
     save: 'Save',
@@ -44,5 +44,13 @@ export default {
     syncNoTargets: 'No other files to sync to.',
     selectAll: 'Select all',
     sync: 'Sync',
+  },
+  warn: {
+    title: 'Overwrite settings?',
+    suggest: 'Consider creating a backup first to avoid losing your current settings.',
+    proceed: 'Proceed',
+    syncDetail: 'This will overwrite {n} file(s) with the selected settings.',
+    putBackFileDetail: 'This will overwrite "{name}"\'s current settings with the backup.',
+    backupFolderDetail: 'All files from "{name}" will overwrite the current profile.',
   },
 }

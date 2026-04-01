@@ -8,6 +8,7 @@ export default {
     showInFolder: '在文件夹中显示',
     singleFile: '单个文件',
     files: '{n} 个文件',
+    restoreBackup: '还原到配置文件',
   },
   emptyState: {
     title: '未找到 EVE 设置文件夹',
@@ -44,5 +45,14 @@ export default {
     syncNoTargets: '没有其他可同步的文件。',
     selectAll: '全选',
     sync: '同步',
+    backupSyncTitle: '还原备份到...',
+  },
+  warn: {
+    title: '确认覆盖设置？',
+    suggest: '建议先创建备份，以保留当前的设置。',
+    proceed: '继续',
+    syncDetail: '将以所选设置覆盖 {n} 个文件。',
+    backupFileDetail: '"{name}" 将覆盖 {n} 个文件。',
+    backupFolderDetail: '"{name}" 中的所有文件将覆盖当前配置文件。',
   },
 }

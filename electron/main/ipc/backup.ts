@@ -105,6 +105,16 @@ export async function restoreBackup(profilePath: string, backupName: string): Pr
 }
 
 /**
+ * Puts a single file backup back into the profile directory (overwrites).
+ * The backup name matches the original filename, so no mapping is needed.
+ */
+export async function restoreFileBackup(profilePath: string, backupName: string): Promise<void> {
+  const src = join(profilePath, FILE_BACKUPS_DIR, `${backupName}.dat`)
+  const dest = join(profilePath, `${backupName}.dat`)
+  await copyFile(src, dest)
+}
+
+/**
  * Deletes a named folder backup directory.
  */
 export async function deleteBackup(profilePath: string, backupName: string): Promise<void> {

@@ -63,11 +63,12 @@ No top bar. 2-panel layout with sidebar + main content area:
 - [x] Characters table — columns, row actions, empty state
 - [x] Accounts table — columns, row actions, empty state
 - [x] Action bar — centered buttons, stable min-width across languages
-- [x] Dialogs — backup name, file backup name
+- [x] Dialogs — backup name dialog; file backup is auto-named (no dialog)
 - [x] Empty / no-folder state
-- [x] i18n — vue-i18n, 8 languages (en, zh-CN, zh-CHT, ja, ko, fr, de, es); all sync keys fully translated
+- [x] i18n — vue-i18n, 8 languages (en, zh-CN, zh-CHT, ja, ko, fr, de, es); all keys fully translated
 - [ ] Profile tabs — add/rename/delete actions
 - [x] Sync settings — icon (Share, green) + backup icon (DocumentCopy, muted blue); picker dialog pre-checks all, select-all toggle; char/account tooltips distinct
+- [x] Single file backup — auto-named from filename (no dialog); put-back button in sidebar (RefreshLeft icon) with overwrite warning
 - [ ] Named per-file snapshots (Saved Settings)
 
 ---

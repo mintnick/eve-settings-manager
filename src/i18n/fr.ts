@@ -8,6 +8,7 @@ export default {
     showInFolder: 'Afficher dans le dossier',
     singleFile: 'fichier unique',
     files: '{n} fichiers',
+    restoreBackup: 'Remettre dans le profil',
   },
   emptyState: {
     title: 'Dossier EVE introuvable',
@@ -36,7 +37,6 @@ export default {
   },
   dialog: {
     saveBackup: 'Enregistrer la sauvegarde',
-    backupFile: 'Sauvegarder le fichier',
     backupName: 'Nom de la sauvegarde',
     cancel: 'Annuler',
     save: 'Enregistrer',
@@ -44,5 +44,13 @@ export default {
     syncNoTargets: 'Aucun autre fichier à synchroniser.',
     selectAll: 'Tout sélectionner',
     sync: 'Sync',
+  },
+  warn: {
+    title: 'Écraser les paramètres ?',
+    suggest: 'Pensez à créer une sauvegarde pour ne pas perdre vos paramètres actuels.',
+    proceed: 'Continuer',
+    syncDetail: 'Cela écrasera {n} fichier(s) avec les paramètres sélectionnés.',
+    putBackFileDetail: 'Les paramètres actuels de « {name} » seront écrasés par la sauvegarde.',
+    backupFolderDetail: 'Tous les fichiers de « {name} » écraseront le profil actuel.',
   },
 }

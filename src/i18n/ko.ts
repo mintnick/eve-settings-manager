@@ -8,6 +8,7 @@ export default {
     showInFolder: '폴더에서 보기',
     singleFile: '단일 파일',
     files: '{n}개 파일',
+    restoreBackup: '프로필에 복원',
   },
   emptyState: {
     title: 'EVE 설정 폴더를 찾을 수 없습니다',
@@ -44,5 +45,14 @@ export default {
     syncNoTargets: '동기화할 다른 파일이 없습니다.',
     selectAll: '모두 선택',
     sync: '동기화',
+    backupSyncTitle: '백업 복원 대상...',
+  },
+  warn: {
+    title: '설정을 덮어쓰시겠습니까?',
+    suggest: '현재 설정을 보호하려면 먼저 백업을 생성하는 것을 권장합니다.',
+    proceed: '진행',
+    syncDetail: '선택한 설정으로 {n}개의 파일을 덮어씁니다.',
+    backupFileDetail: '"{name}"으로 {n}개의 파일을 덮어씁니다.',
+    backupFolderDetail: '"{name}"의 모든 파일이 현재 프로필을 덮어씁니다.',
   },
 }

@@ -8,6 +8,7 @@ export default {
     showInFolder: 'Im Ordner anzeigen',
     singleFile: 'Einzeldatei',
     files: '{n} Dateien',
+    restoreBackup: 'Im Profil wiederherstellen',
   },
   emptyState: {
     title: 'EVE-Einstellungsordner nicht gefunden',
@@ -36,7 +37,6 @@ export default {
   },
   dialog: {
     saveBackup: 'Sicherung speichern',
-    backupFile: 'Datei sichern',
     backupName: 'Sicherungsname',
     cancel: 'Abbrechen',
     save: 'Speichern',
@@ -44,5 +44,13 @@ export default {
     syncNoTargets: 'Keine weiteren Dateien zum Synchronisieren.',
     selectAll: 'Alle auswählen',
     sync: 'Sync',
+  },
+  warn: {
+    title: 'Einstellungen überschreiben?',
+    suggest: 'Erstellen Sie zuerst eine Sicherung, um Ihre aktuellen Einstellungen zu erhalten.',
+    proceed: 'Fortfahren',
+    syncDetail: 'Dadurch werden {n} Datei(en) mit den ausgewählten Einstellungen überschrieben.',
+    putBackFileDetail: 'Die aktuellen Einstellungen von „{name}" werden mit der Sicherung überschrieben.',
+    backupFolderDetail: 'Alle Dateien aus „{name}" überschreiben das aktuelle Profil.',
   },
 }
