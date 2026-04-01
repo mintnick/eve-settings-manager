@@ -9,6 +9,7 @@ export default {
     singleFile: '單一檔案',
     files: '{n} 個檔案',
     restoreBackup: '還原至設定檔',
+    deleteBackup: '刪除備份',
   },
   emptyState: {
     title: '找不到 EVE 設定資料夾',
@@ -54,5 +55,7 @@ export default {
     syncDetail: '將以所選設定覆蓋 {n} 個檔案。',
     backupFileDetail: '「{name}」將覆蓋 {n} 個檔案。',
     backupFolderDetail: '「{name}」中的所有檔案將覆蓋目前設定檔。',
+    deleteBackupTitle: '刪除備份？',
+    deleteBackupDetail: '將永久刪除「{name}」，此操作無法復原。',
   },
 }

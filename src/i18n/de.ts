@@ -9,6 +9,7 @@ export default {
     singleFile: 'Einzeldatei',
     files: '{n} Dateien',
     restoreBackup: 'Im Profil wiederherstellen',
+    deleteBackup: 'Sicherung löschen',
   },
   emptyState: {
     title: 'EVE-Einstellungsordner nicht gefunden',
@@ -52,5 +53,7 @@ export default {
     syncDetail: 'Dadurch werden {n} Datei(en) mit den ausgewählten Einstellungen überschrieben.',
     putBackFileDetail: 'Die aktuellen Einstellungen von „{name}" werden mit der Sicherung überschrieben.',
     backupFolderDetail: 'Alle Dateien aus „{name}" überschreiben das aktuelle Profil.',
+    deleteBackupTitle: 'Sicherung löschen?',
+    deleteBackupDetail: '„{name}" wird dauerhaft gelöscht. Dieser Vorgang kann nicht rückgängig gemacht werden.',
   },
 }

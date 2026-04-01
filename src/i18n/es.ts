@@ -9,6 +9,7 @@ export default {
     singleFile: 'archivo único',
     files: '{n} archivos',
     restoreBackup: 'Restaurar en perfil',
+    deleteBackup: 'Eliminar copia de seguridad',
   },
   emptyState: {
     title: 'Carpeta de EVE no encontrada',
@@ -52,5 +53,7 @@ export default {
     syncDetail: 'Esto sobrescribirá {n} archivo(s) con la configuración seleccionada.',
     putBackFileDetail: 'La configuración actual de "{name}" será reemplazada por la copia de seguridad.',
     backupFolderDetail: 'Todos los archivos de "{name}" sobrescribirán el perfil actual.',
+    deleteBackupTitle: '¿Eliminar copia de seguridad?',
+    deleteBackupDetail: '"{name}" se eliminará permanentemente. Esta acción no se puede deshacer.',
   },
 }

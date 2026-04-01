@@ -9,6 +9,7 @@ export default {
     singleFile: 'fichier unique',
     files: '{n} fichiers',
     restoreBackup: 'Remettre dans le profil',
+    deleteBackup: 'Supprimer la sauvegarde',
   },
   emptyState: {
     title: 'Dossier EVE introuvable',
@@ -52,5 +53,7 @@ export default {
     syncDetail: 'Cela écrasera {n} fichier(s) avec les paramètres sélectionnés.',
     putBackFileDetail: 'Les paramètres actuels de « {name} » seront écrasés par la sauvegarde.',
     backupFolderDetail: 'Tous les fichiers de « {name} » écraseront le profil actuel.',
+    deleteBackupTitle: 'Supprimer la sauvegarde ?',
+    deleteBackupDetail: '« {name} » sera définitivement supprimé. Cette action est irréversible.',
   },
 }

@@ -9,12 +9,13 @@ import type { CharFile, UserFile, SettingsFile, Backup } from './types'
 import {
   FolderOpened,
   Files,
-  Folder,
+  Document,
   Box,
   Warning,
   DocumentCopy,
   RefreshLeft,
   Share,
+  Delete,
 } from '@element-plus/icons-vue'
 
 const { t, locale } = useI18n()
@@ -129,10 +130,12 @@ async function confirmSync() {
 
 // ── Warning dialog ─────────────────────────────────────────────────────────────
 const warnDialog = ref(false)
+const warnTitle = ref('')
 const warnDetail = ref('')
 const warnAction = ref<(() => Promise<void>) | null>(null)
 
-function openWarnDialog(detail: string, action: () => Promise<void>) {
+function openWarnDialog(detail: string, action: () => Promise<void>, title?: string) {
+  warnTitle.value = title ?? ''
   warnDetail.value = detail
   warnAction.value = action
   warnDialog.value = true
@@ -168,6 +171,16 @@ function putBackFolder(backup: Backup) {
   openWarnDialog(
     t('warn.backupFolderDetail', { name: backup.name }),
     () => backupStore.restoreBackup(backup.name)
+  )
+}
+
+function deleteBackupItem(backup: Backup) {
+  openWarnDialog(
+    t('warn.deleteBackupDetail', { name: backupDisplayName(backup) }),
+    () => backup.type === 'file'
+      ? backupStore.deleteFileBackup(backup.name)
+      : backupStore.deleteBackup(backup.name),
+    t('warn.deleteBackupTitle')
   )
 }
 
@@ -262,23 +275,29 @@ const accountColumns = [
             class="sidebar-item backup-item"
           >
             <el-icon class="sidebar-item-icon" color="#909399">
-              <Files v-if="backup.type === 'file'" />
-              <Folder v-else />
+              <Document v-if="backup.type === 'file'" />
+              <Files v-else />
             </el-icon>
             <div class="backup-item-text">
               <span class="backup-name">{{ backupDisplayName(backup) }}</span>
               <span class="backup-meta">{{ backup.type === 'file' ? t('sidebar.singleFile') : t('sidebar.files', { n: backup.fileCount }) }}</span>
             </div>
-            <el-tooltip :content="t('sidebar.showInFolder')" placement="right">
+            <el-tooltip :content="t('sidebar.showInFolder')" placement="top">
               <el-icon class="backup-action-btn backup-reveal-btn" @click.stop="revealBackup(backup.path)">
                 <FolderOpened />
               </el-icon>
             </el-tooltip>
-            <el-tooltip :content="t('sidebar.restoreBackup')" placement="right">
+            <el-tooltip :content="t('sidebar.restoreBackup')" placement="top">
               <el-icon
                 class="backup-action-btn backup-restore-btn"
                 @click.stop="backup.type === 'file' ? putBackFile(backup) : putBackFolder(backup)"
               ><RefreshLeft /></el-icon>
+            </el-tooltip>
+            <el-tooltip :content="t('sidebar.deleteBackup')" placement="top">
+              <el-icon
+                class="backup-action-btn backup-delete-btn"
+                @click.stop="deleteBackupItem(backup)"
+              ><Delete /></el-icon>
             </el-tooltip>
           </div>
           <div v-if="!backupStore.backups.length && profileStore.activeProfile" class="sidebar-item sidebar-empty">
@@ -445,7 +464,7 @@ const accountColumns = [
     </el-dialog>
 
     <!-- Overwrite warning dialog -->
-    <el-dialog v-model="warnDialog" :title="t('warn.title')" width="400px">
+    <el-dialog v-model="warnDialog" :title="warnTitle || t('warn.title')" width="400px">
       <div class="warn-body">
         <p class="warn-detail">{{ warnDetail }}</p>
         <p class="warn-suggest">
@@ -565,7 +584,7 @@ html, body, #app {
   border-color: var(--el-color-primary);
   background: var(--el-color-primary-light-9);
 }
-.sidebar-item-icon { font-size: 15px; }
+.sidebar-item-icon { font-size: 18px; }
 .sidebar-empty { color: var(--el-text-color-placeholder); font-size: 14px; cursor: default; }
 .sidebar-empty:hover { background: none; }
 .sidebar-divider { margin: 8px 0; border-top: 1px solid var(--el-border-color-lighter); }
@@ -574,13 +593,15 @@ html, body, #app {
   align-self: flex-end;
   flex-shrink: 0;
   cursor: pointer;
-  font-size: 16px !important;
+  font-size: 18px !important;
   transition: opacity 0.15s, color 0.15s;
 }
 .backup-reveal-btn { color: var(--el-color-primary-light-3) !important; opacity: 0.5; }
 .backup-reveal-btn:hover { color: var(--el-color-primary) !important; opacity: 1; }
 .backup-restore-btn { color: #4caf6e !important; opacity: 1; }
 .backup-restore-btn:hover { color: #3d9e5f !important; }
+.backup-delete-btn { color: var(--el-color-danger-light-3) !important; opacity: 0.5; }
+.backup-delete-btn:hover { color: var(--el-color-danger) !important; opacity: 1; }
 .backup-item-text { display: flex; flex-direction: column; flex: 1; min-width: 0; }
 .backup-name { font-size: 14px; line-height: 1.4; }
 .backup-meta { font-size: 13px; color: var(--el-text-color-placeholder); }

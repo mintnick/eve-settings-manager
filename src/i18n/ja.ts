@@ -9,6 +9,7 @@ export default {
     singleFile: '単一ファイル',
     files: '{n} ファイル',
     restoreBackup: 'プロファイルに復元',
+    deleteBackup: 'バックアップを削除',
   },
   emptyState: {
     title: 'EVE 設定フォルダが見つかりません',
@@ -54,5 +55,7 @@ export default {
     syncDetail: '選択した設定で {n} 個のファイルを上書きします。',
     backupFileDetail: '「{name}」で {n} 個のファイルを上書きします。',
     backupFolderDetail: '「{name}」のすべてのファイルが現在のプロファイルを上書きします。',
+    deleteBackupTitle: 'バックアップを削除しますか？',
+    deleteBackupDetail: '「{name}」を完全に削除します。この操作は取り消せません。',
   },
 }

@@ -9,6 +9,7 @@ export default {
     singleFile: '단일 파일',
     files: '{n}개 파일',
     restoreBackup: '프로필에 복원',
+    deleteBackup: '백업 삭제',
   },
   emptyState: {
     title: 'EVE 설정 폴더를 찾을 수 없습니다',
@@ -54,5 +55,7 @@ export default {
     syncDetail: '선택한 설정으로 {n}개의 파일을 덮어씁니다.',
     backupFileDetail: '"{name}"으로 {n}개의 파일을 덮어씁니다.',
     backupFolderDetail: '"{name}"의 모든 파일이 현재 프로필을 덮어씁니다.',
+    deleteBackupTitle: '백업을 삭제하시겠습니까?',
+    deleteBackupDetail: '"{name}"을(를) 영구적으로 삭제합니다. 이 작업은 취소할 수 없습니다.',
   },
 }

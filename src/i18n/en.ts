@@ -9,6 +9,7 @@ export default {
     singleFile: 'single file',
     files: '{n} files',
     restoreBackup: 'Put back to profile',
+    deleteBackup: 'Delete backup',
   },
   emptyState: {
     title: 'EVE settings folder not found',
@@ -52,5 +53,7 @@ export default {
     syncDetail: 'This will overwrite {n} file(s) with the selected settings.',
     putBackFileDetail: 'This will overwrite "{name}"\'s current settings with the backup.',
     backupFolderDetail: 'All files from "{name}" will overwrite the current profile.',
+    deleteBackupTitle: 'Delete backup?',
+    deleteBackupDetail: 'This will permanently delete "{name}". This cannot be undone.',
   },
 }
