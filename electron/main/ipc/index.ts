@@ -19,6 +19,7 @@ export function registerIpcHandlers(): void {
   ipcMain.handle('folder:find', (_e, customPath?: string) => findEveFolder(customPath))
   ipcMain.handle('folder:open-dialog', () => openFolderDialog())
   ipcMain.handle('folder:open-in-shell', (_e, path: string) => shell.openPath(path))
+  ipcMain.handle('shell:open-external', (_e, url: string) => shell.openExternal(url))
   ipcMain.handle('folder:show-in-shell', (_e, path: string) => shell.showItemInFolder(path))
 
   // ── Server ─────────────────────────────────────────────────────────────────
