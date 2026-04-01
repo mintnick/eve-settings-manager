@@ -6,6 +6,8 @@ export default {
     defaultPath: '기본 경로',
     noBackups: '백업 없음',
     showInFolder: '폴더에서 보기',
+    singleFile: '단일 파일',
+    files: '{n}개 파일',
     restoreBackup: '프로필에 복원',
     deleteBackup: '백업 삭제',
   },

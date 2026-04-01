@@ -6,6 +6,8 @@ export default {
     defaultPath: '預設路徑',
     noBackups: '尚無備份',
     showInFolder: '在資料夾中顯示',
+    singleFile: '單一檔案',
+    files: '{n} 個檔案',
     restoreBackup: '還原至設定檔',
     deleteBackup: '刪除備份',
   },

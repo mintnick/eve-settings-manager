@@ -6,6 +6,8 @@ export default {
     defaultPath: 'Default Path',
     noBackups: 'No backups yet',
     showInFolder: 'Show in folder',
+    singleFile: 'single file',
+    files: '{n} files',
     restoreBackup: 'Put back to profile',
     deleteBackup: 'Delete backup',
   },

@@ -275,6 +275,7 @@ async function setLanguage(lang: string) {
             <div class="backup-item-text">
               <span class="backup-name">{{ backupDisplayName(backup) }}</span>
               <span class="backup-meta">{{ formatDateOnly(backup.createdAt) }}</span>
+              <span class="backup-meta">{{ backup.type === 'file' ? t('sidebar.singleFile') : t('sidebar.files', { n: backup.fileCount }) }}</span>
             </div>
             <el-tooltip :content="t('sidebar.showInFolder')" placement="top">
               <el-icon class="backup-action-btn backup-reveal-btn" @click.stop="revealBackup(backup.path)">
@@ -511,7 +512,7 @@ html, body, #app {
 
 /* Sidebar */
 .sidebar {
-  width: 200px;
+  width: 240px;
   flex-shrink: 0;
   border-right: 1px solid var(--el-border-color);
   overflow-y: auto;

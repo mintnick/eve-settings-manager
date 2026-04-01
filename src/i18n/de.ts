@@ -6,6 +6,8 @@ export default {
     defaultPath: 'Standardpfad',
     noBackups: 'Keine Sicherungen',
     showInFolder: 'Im Ordner anzeigen',
+    singleFile: 'Einzeldatei',
+    files: '{n} Dateien',
     restoreBackup: 'Im Profil wiederherstellen',
     deleteBackup: 'Sicherung löschen',
   },

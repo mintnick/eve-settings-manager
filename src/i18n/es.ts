@@ -6,6 +6,8 @@ export default {
     defaultPath: 'Ruta predeterminada',
     noBackups: 'Sin copias de seguridad',
     showInFolder: 'Mostrar en carpeta',
+    singleFile: 'archivo único',
+    files: '{n} archivos',
     restoreBackup: 'Restaurar en perfil',
     deleteBackup: 'Eliminar copia de seguridad',
   },

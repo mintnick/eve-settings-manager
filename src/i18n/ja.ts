@@ -6,6 +6,8 @@ export default {
     defaultPath: 'デフォルトパス',
     noBackups: 'バックアップなし',
     showInFolder: 'フォルダで表示',
+    singleFile: '単一ファイル',
+    files: '{n} ファイル',
     restoreBackup: 'プロファイルに復元',
     deleteBackup: 'バックアップを削除',
   },
