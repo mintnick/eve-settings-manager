@@ -351,7 +351,7 @@ async function setLanguage(lang: string) {
         <div v-else class="tables-row">
 
           <!-- Characters -->
-          <div class="table-col">
+          <div class="table-col table-col-char">
             <div class="table-label">{{ t('table.characters') }}</div>
             <el-table
               :data="settingsStore.charFiles"
@@ -359,11 +359,11 @@ async function setLanguage(lang: string) {
               :empty-text="profileStore.activeProfile ? t('table.noCharFiles') : t('table.selectProfile')"
               class="settings-table"
             >
-              <el-table-column prop="charName" :label="t('table.colCharacter')" sortable>
+              <el-table-column prop="charName" :label="t('table.colCharacter')" sortable min-width="45">
                 <template #default="{ row }">{{ row.charName ?? row.id }}</template>
               </el-table-column>
-              <el-table-column prop="id" :label="t('table.colId')" />
-              <el-table-column prop="modifiedAt" :label="t('table.colModified')" sortable>
+              <el-table-column prop="id" :label="t('table.colId')" width="110" />
+              <el-table-column prop="modifiedAt" :label="t('table.colModified')" sortable width="150">
                 <template #default="{ row }">{{ formatDate(row.modifiedAt) }}</template>
               </el-table-column>
               <el-table-column width="64" class-name="row-actions">
@@ -384,7 +384,7 @@ async function setLanguage(lang: string) {
           <div class="table-divider" />
 
           <!-- Accounts -->
-          <div class="table-col">
+          <div class="table-col table-col-account">
             <div class="table-label">{{ t('table.accounts') }}</div>
             <el-table
               :data="settingsStore.userFiles"
@@ -392,8 +392,8 @@ async function setLanguage(lang: string) {
               :empty-text="profileStore.activeProfile ? t('table.noAccountFiles') : t('table.selectProfile')"
               class="settings-table"
             >
-              <el-table-column prop="id" :label="t('table.colAccountId')" sortable />
-              <el-table-column prop="modifiedAt" :label="t('table.colModified')" sortable>
+              <el-table-column prop="id" :label="t('table.colAccountId')" sortable min-width="110" />
+              <el-table-column prop="modifiedAt" :label="t('table.colModified')" sortable width="150">
                 <template #default="{ row }">{{ formatDate(row.modifiedAt) }}</template>
               </el-table-column>
               <el-table-column width="64" class-name="row-actions">
@@ -637,6 +637,8 @@ html, body, #app {
   min-height: 0;
 }
 .table-col { flex: 1; padding: 12px; min-width: 0; display: flex; flex-direction: column; }
+.table-col-char { flex: 3; }
+.table-col-account { flex: 2; }
 .table-label {
   font-size: 13px;
   font-weight: 600;
@@ -647,7 +649,10 @@ html, body, #app {
 }
 .table-divider { width: 1px; background: var(--el-border-color); flex-shrink: 0; }
 .settings-table { flex: 1; }
-.settings-table .el-table__cell { font-size: 15px; }
+.settings-table .el-table__inner-wrapper::before { display: none !important; }
+.settings-table .el-table__border-bottom-patch { display: none !important; }
+.settings-table .el-table__cell { font-size: 15px !important; padding: 10px 0 !important; }
+.settings-table .el-table__row:hover td.el-table__cell { background: var(--el-color-primary-light-8) !important; }
 
 /* Action bar */
 .action-bar {

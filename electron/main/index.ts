@@ -48,7 +48,7 @@ const indexHtml = path.join(RENDERER_DIST, 'index.html')
 interface WindowBounds { x: number; y: number; width: number; height: number }
 const windowStore = new ElectronStore<{ bounds: WindowBounds }>({
   name: 'window-state',
-  defaults: { bounds: { x: 0, y: 0, width: 1000, height: 700 } },
+  defaults: { bounds: { x: 0, y: 0, width: 1050, height: 660 } },
 })
 
 async function createWindow() {
