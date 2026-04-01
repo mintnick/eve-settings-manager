@@ -6,8 +6,6 @@ export default {
     defaultPath: 'デフォルトパス',
     noBackups: 'バックアップなし',
     showInFolder: 'フォルダで表示',
-    singleFile: '単一ファイル',
-    files: '{n} ファイル',
     restoreBackup: 'プロファイルに復元',
     deleteBackup: 'バックアップを削除',
   },
@@ -38,7 +36,6 @@ export default {
   },
   dialog: {
     saveBackup: 'バックアップを保存',
-    backupFile: 'ファイルをバックアップ',
     backupName: 'バックアップ名',
     cancel: 'キャンセル',
     save: '保存',
@@ -46,7 +43,6 @@ export default {
     syncNoTargets: '同期先のファイルがありません。',
     selectAll: 'すべて選択',
     sync: '同期',
-    backupSyncTitle: 'バックアップを復元する先...',
   },
   warn: {
     title: '設定を上書きしますか？',

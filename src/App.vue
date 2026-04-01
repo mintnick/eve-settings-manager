@@ -215,18 +215,6 @@ async function setLanguage(lang: string) {
   await window.ipcRenderer.invoke('store:set-language', lang)
 }
 
-const charColumns = [
-  { prop: 'charName', label: 'Character', sortable: true },
-  { prop: 'id', label: 'ID' },
-  { prop: 'modifiedAt', label: 'Modified', sortable: true },
-  { prop: 'backup', label: '', width: 40 },
-]
-
-const accountColumns = [
-  { prop: 'id', label: 'Account ID', sortable: true },
-  { prop: 'modifiedAt', label: 'Modified', sortable: true },
-  { prop: 'backup', label: '', width: 40 },
-]
 </script>
 
 <template>

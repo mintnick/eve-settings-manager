@@ -6,8 +6,6 @@ export default {
     defaultPath: '預設路徑',
     noBackups: '尚無備份',
     showInFolder: '在資料夾中顯示',
-    singleFile: '單一檔案',
-    files: '{n} 個檔案',
     restoreBackup: '還原至設定檔',
     deleteBackup: '刪除備份',
   },
@@ -38,7 +36,6 @@ export default {
   },
   dialog: {
     saveBackup: '儲存備份',
-    backupFile: '備份檔案',
     backupName: '備份名稱',
     cancel: '取消',
     save: '儲存',
@@ -46,7 +43,6 @@ export default {
     syncNoTargets: '沒有其他可同步的檔案。',
     selectAll: '全選',
     sync: '同步',
-    backupSyncTitle: '還原備份至...',
   },
   warn: {
     title: '確認覆蓋設定？',

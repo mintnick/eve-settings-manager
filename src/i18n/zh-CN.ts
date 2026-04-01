@@ -6,8 +6,6 @@ export default {
     defaultPath: '默认路径',
     noBackups: '暂无备份',
     showInFolder: '在文件夹中显示',
-    singleFile: '单个文件',
-    files: '{n} 个文件',
     restoreBackup: '还原到配置文件',
     deleteBackup: '删除备份',
   },
@@ -38,7 +36,6 @@ export default {
   },
   dialog: {
     saveBackup: '保存备份',
-    backupFile: '备份文件',
     backupName: '备份名称',
     cancel: '取消',
     save: '保存',
@@ -46,7 +43,6 @@ export default {
     syncNoTargets: '没有其他可同步的文件。',
     selectAll: '全选',
     sync: '同步',
-    backupSyncTitle: '还原备份到...',
   },
   warn: {
     title: '确认覆盖设置？',

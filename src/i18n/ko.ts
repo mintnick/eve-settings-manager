@@ -6,8 +6,6 @@ export default {
     defaultPath: '기본 경로',
     noBackups: '백업 없음',
     showInFolder: '폴더에서 보기',
-    singleFile: '단일 파일',
-    files: '{n}개 파일',
     restoreBackup: '프로필에 복원',
     deleteBackup: '백업 삭제',
   },
@@ -38,7 +36,6 @@ export default {
   },
   dialog: {
     saveBackup: '백업 저장',
-    backupFile: '파일 백업',
     backupName: '백업 이름',
     cancel: '취소',
     save: '저장',
@@ -46,7 +43,6 @@ export default {
     syncNoTargets: '동기화할 다른 파일이 없습니다.',
     selectAll: '모두 선택',
     sync: '동기화',
-    backupSyncTitle: '백업 복원 대상...',
   },
   warn: {
     title: '설정을 덮어쓰시겠습니까?',
