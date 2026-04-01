@@ -53,7 +53,7 @@ export default {
     suggest: '현재 설정을 보호하려면 먼저 백업을 생성하는 것을 권장합니다.',
     proceed: '진행',
     syncDetail: '선택한 설정으로 {n}개의 파일을 덮어씁니다.',
-    backupFileDetail: '"{name}"으로 {n}개의 파일을 덮어씁니다.',
+    putBackFileDetail: '"{name}"의 현재 설정을 백업으로 덮어씁니다.',
     backupFolderDetail: '"{name}"의 모든 파일이 현재 프로필을 덮어씁니다.',
     deleteBackupTitle: '백업을 삭제하시겠습니까?',
     deleteBackupDetail: '"{name}"을(를) 영구적으로 삭제합니다. 이 작업은 취소할 수 없습니다.',

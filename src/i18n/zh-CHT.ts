@@ -53,7 +53,7 @@ export default {
     suggest: '建議先建立備份，以保留目前的設定。',
     proceed: '繼續',
     syncDetail: '將以所選設定覆蓋 {n} 個檔案。',
-    backupFileDetail: '「{name}」將覆蓋 {n} 個檔案。',
+    putBackFileDetail: '將以備份覆蓋「{name}」的目前設定。',
     backupFolderDetail: '「{name}」中的所有檔案將覆蓋目前設定檔。',
     deleteBackupTitle: '刪除備份？',
     deleteBackupDetail: '將永久刪除「{name}」，此操作無法復原。',

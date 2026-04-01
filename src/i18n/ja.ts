@@ -53,7 +53,7 @@ export default {
     suggest: '現在の設定を保護するため、事前にバックアップを作成することをお勧めします。',
     proceed: '続行',
     syncDetail: '選択した設定で {n} 個のファイルを上書きします。',
-    backupFileDetail: '「{name}」で {n} 個のファイルを上書きします。',
+    putBackFileDetail: '「{name}」の現在の設定をバックアップで上書きします。',
     backupFolderDetail: '「{name}」のすべてのファイルが現在のプロファイルを上書きします。',
     deleteBackupTitle: 'バックアップを削除しますか？',
     deleteBackupDetail: '「{name}」を完全に削除します。この操作は取り消せません。',
