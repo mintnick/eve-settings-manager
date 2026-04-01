@@ -34,6 +34,8 @@ export default {
   actions: {
     backup: 'Ordner sichern',
     openFolder: 'Ordner öffnen',
+    darkMode: 'Dunkelmodus aktivieren',
+    lightMode: 'Hellmodus aktivieren',
   },
   dialog: {
     saveBackup: 'Sicherung speichern',

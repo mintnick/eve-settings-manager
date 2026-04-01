@@ -71,6 +71,7 @@ No top bar. 2-panel layout with sidebar + main content area:
 - [x] Single file backup — auto-named from filename (no dialog); put-back button in sidebar (RefreshLeft icon) with overwrite warning
 - [x] Sidebar backup items — delete button (Delete icon, red); Document/Files icons for file/folder types; action buttons 18px; tooltips on top; two-line meta (creation date + file count label); sidebar 240px; backup dialog default name is profile name only
 - [x] Table polish — row action icons 18px; table cell font 15px; row height increased (padding 10px); hover highlight (primary-light-8); bottom border removed; char/account table flex 3:2; Modified col 150px; char name min-width 45px; account ID min-width 110px
+- [x] Theme toggle — dark/light switch in action bar (bottom-right); dark mode default on first launch; preference persisted via electron-store; light theme uses softer gray-blue (#e8eaef base) to reduce eye strain
 - [ ] Named per-file snapshots (Saved Settings)
 
 ---

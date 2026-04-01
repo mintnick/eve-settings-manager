@@ -11,6 +11,7 @@ import {
   getLastActiveServer, setLastActiveServer,
   getCustomEveFolder, setCustomEveFolder,
   getLanguage, setLanguage,
+  getTheme, setTheme,
 } from './store.js'
 
 export function registerIpcHandlers(): void {
@@ -59,4 +60,6 @@ export function registerIpcHandlers(): void {
   ipcMain.handle('store:set-custom-folder', (_e, path: string) => setCustomEveFolder(path))
   ipcMain.handle('store:get-language', () => getLanguage())
   ipcMain.handle('store:set-language', (_e, lang: string) => setLanguage(lang))
+  ipcMain.handle('store:get-theme', () => getTheme())
+  ipcMain.handle('store:set-theme', (_e, theme: string) => setTheme(theme))
 }

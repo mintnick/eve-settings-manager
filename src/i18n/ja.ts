@@ -35,6 +35,8 @@ export default {
   actions: {
     backup: 'フォルダをバックアップ',
     openFolder: 'フォルダを開く',
+    darkMode: 'ダークモードに切り替え',
+    lightMode: 'ライトモードに切り替え',
   },
   dialog: {
     saveBackup: 'バックアップを保存',

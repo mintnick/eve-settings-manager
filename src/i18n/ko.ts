@@ -35,6 +35,8 @@ export default {
   actions: {
     backup: '폴더 백업',
     openFolder: '폴더 열기',
+    darkMode: '다크 모드로 전환',
+    lightMode: '라이트 모드로 전환',
   },
   dialog: {
     saveBackup: '백업 저장',

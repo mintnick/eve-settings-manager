@@ -16,6 +16,8 @@ import {
   RefreshLeft,
   Share,
   Delete,
+  Sunny,
+  Moon,
 } from '@element-plus/icons-vue'
 
 const { t, locale } = useI18n()
@@ -203,10 +205,45 @@ const LANGUAGES = [
 
 const language = ref('en')
 
+// ── Theme ──────────────────────────────────────────────────────────────────────
+const isDark = ref(false)
+
+function applyTheme(dark: boolean) {
+  isDark.value = dark
+  document.documentElement.classList.toggle('dark', dark)
+}
+
+async function toggleTheme() {
+  applyTheme(!isDark.value)
+  await window.ipcRenderer.invoke('store:set-theme', isDark.value ? 'dark' : 'light')
+}
+
 onMounted(async () => {
-  const saved = await window.ipcRenderer.invoke('store:get-language') || 'en'
-  language.value = saved
-  locale.value = saved
+  const saved = await window.ipcRenderer.invoke('store:get-theme')
+  const dark = saved ? saved === 'dark' : true
+  if (!saved) await window.ipcRenderer.invoke('store:set-theme', dark ? 'dark' : 'light')
+  applyTheme(dark)
+})
+
+// ── Language ───────────────────────────────────────────────────────────────────
+function detectSystemLanguage(): string {
+  const sys = navigator.language.toLowerCase()
+  if (sys.startsWith('zh'))
+    return (sys.includes('tw') || sys.includes('hk') || sys.includes('hant')) ? 'zh-CHT' : 'zh-CN'
+  if (sys.startsWith('ja')) return 'ja'
+  if (sys.startsWith('ko')) return 'ko'
+  if (sys.startsWith('fr')) return 'fr'
+  if (sys.startsWith('de')) return 'de'
+  if (sys.startsWith('es')) return 'es'
+  return 'en'
+}
+
+onMounted(async () => {
+  const saved = await window.ipcRenderer.invoke('store:get-language')
+  const lang = saved ?? detectSystemLanguage()
+  if (!saved) await window.ipcRenderer.invoke('store:set-language', lang)
+  language.value = lang
+  locale.value = lang
 })
 
 async function setLanguage(lang: string) {
@@ -422,6 +459,14 @@ async function setLanguage(lang: string) {
             <el-icon class="mr-1"><FolderOpened /></el-icon>
             {{ t('actions.openFolder') }}
           </el-button>
+          <div class="action-bar-right">
+            <el-tooltip :content="isDark ? t('actions.lightMode') : t('actions.darkMode')" placement="top">
+              <el-icon class="theme-toggle-btn" @click="toggleTheme()">
+                <Sunny v-if="isDark" />
+                <Moon v-else />
+              </el-icon>
+            </el-tooltip>
+          </div>
         </div>
 
       </div>
@@ -477,6 +522,20 @@ async function setLanguage(lang: string) {
 </template>
 
 <style>
+/* Softer light theme — less blinding for EVE players */
+html:not(.dark) {
+  --el-bg-color: #e8eaef;
+  --el-bg-color-page: #dfe2e8;
+  --el-bg-color-overlay: #eceef2;
+  --el-fill-color-blank: #e8eaef;
+  --el-fill-color-light: #d8dbe3;
+  --el-fill-color: #d0d4dd;
+  --el-table-bg-color: #e8eaef;
+  --el-table-tr-bg-color: #e8eaef;
+  --el-table-header-bg-color: #dfe2e8;
+  --el-table-row-hover-bg-color: #d0d4dd;
+}
+
 html, body, #app {
   height: 100%;
   margin: 0;
@@ -664,11 +723,25 @@ html, body, #app {
   border-top: 1px solid var(--el-border-color);
   background: var(--el-bg-color-page);
   flex-shrink: 0;
+  position: relative;
 }
 .action-bar .el-button {
   min-width: 130px;
   white-space: nowrap;
 }
+.action-bar-right {
+  position: absolute;
+  right: 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.theme-toggle-btn {
+  cursor: pointer;
+  font-size: 18px !important;
+  color: var(--el-text-color-secondary);
+}
+.theme-toggle-btn:hover { color: var(--el-text-color-primary); }
 
 /* Row actions */
 .row-actions-cell {

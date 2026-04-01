@@ -35,6 +35,8 @@ export default {
   actions: {
     backup: '备份文件夹',
     openFolder: '打开文件夹',
+    darkMode: '切换到深色模式',
+    lightMode: '切换到浅色模式',
   },
   dialog: {
     saveBackup: '保存备份',

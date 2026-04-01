@@ -34,6 +34,8 @@ export default {
   actions: {
     backup: 'Backup Folder',
     openFolder: 'Open folder',
+    darkMode: 'Switch to dark mode',
+    lightMode: 'Switch to light mode',
   },
   dialog: {
     saveBackup: 'Save backup',

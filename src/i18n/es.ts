@@ -34,6 +34,8 @@ export default {
   actions: {
     backup: 'Copia de carpeta',
     openFolder: 'Abrir carpeta',
+    darkMode: 'Cambiar a modo oscuro',
+    lightMode: 'Cambiar a modo claro',
   },
   dialog: {
     saveBackup: 'Guardar copia de seguridad',

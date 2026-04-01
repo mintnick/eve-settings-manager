@@ -8,6 +8,7 @@ interface StoreSchema {
   lastActiveServer: string               // last-selected server dir name
   customEveFolder: string                // user-selected EVE folder override
   language: string
+  theme: string
 }
 
 const defaults: StoreSchema = {
@@ -18,6 +19,7 @@ const defaults: StoreSchema = {
   lastActiveServer: '',
   customEveFolder: '',
   language: 'en',
+  theme: '',
 }
 
 let _store: ElectronStore<StoreSchema> | null = null
@@ -100,4 +102,12 @@ export function getLanguage(): string {
 
 export function setLanguage(lang: string): void {
   store().set('language', lang)
+}
+
+export function getTheme(): string {
+  return store().get('theme')
+}
+
+export function setTheme(theme: string): void {
+  store().set('theme', theme)
 }
