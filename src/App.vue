@@ -18,6 +18,9 @@ import {
   Delete,
   Sunny,
   Moon,
+  Plus,
+  MoreFilled,
+  EditPen,
 } from '@element-plus/icons-vue'
 
 const { t, locale } = useI18n()
@@ -140,11 +143,13 @@ async function confirmSync() {
 const warnDialog = ref(false)
 const warnTitle = ref('')
 const warnDetail = ref('')
+const warnShowSuggest = ref(true)
 const warnAction = ref<(() => Promise<void>) | null>(null)
 
-function openWarnDialog(detail: string, action: () => Promise<void>, title?: string) {
+function openWarnDialog(detail: string, action: () => Promise<void>, title?: string, showSuggest = true) {
   warnTitle.value = title ?? ''
   warnDetail.value = detail
+  warnShowSuggest.value = showSuggest
   warnAction.value = action
   warnDialog.value = true
 }
@@ -188,7 +193,8 @@ function deleteBackupItem(backup: Backup) {
     () => backup.type === 'file'
       ? backupStore.deleteFileBackup(backup.name)
       : backupStore.deleteBackup(backup.name),
-    t('warn.deleteBackupTitle')
+    t('warn.deleteBackupTitle'),
+    false
   )
 }
 
@@ -204,6 +210,109 @@ const LANGUAGES = [
 ]
 
 const language = ref('en')
+
+// ── Profile dialog ─────────────────────────────────────────────────────────────
+const profileDialog = ref(false)
+const profileDialogMode = ref<'create' | 'rename' | 'duplicate'>('create')
+const profileName = ref('')
+const profileNameError = ref('')
+
+const profileDialogTitle = computed(() => {
+  if (profileDialogMode.value === 'rename') return t('profile.rename')
+  if (profileDialogMode.value === 'duplicate') return t('profile.duplicate')
+  return t('profile.create')
+})
+
+function openProfileDialog(mode: 'create' | 'rename' | 'duplicate') {
+  profileDialogMode.value = mode
+  profileNameError.value = ''
+  if (mode === 'rename') {
+    profileName.value = profileStore.activeProfile?.name ?? ''
+  } else if (mode === 'duplicate') {
+    profileName.value = t('profile.duplicateOf', { name: profileStore.activeProfile?.name ?? '' })
+  } else {
+    profileName.value = ''
+  }
+  profileDialog.value = true
+}
+
+function onProfileMenuCommand(cmd: string) {
+  if (cmd === 'rename') openProfileDialog('rename')
+  else if (cmd === 'duplicate') openProfileDialog('duplicate')
+  else if (cmd === 'delete') confirmDeleteProfile()
+}
+
+function validateProfileName(name: string): boolean {
+  if (!name.trim()) {
+    profileNameError.value = t('profile.nameEmpty')
+    return false
+  }
+  const currentLower = profileDialogMode.value === 'rename' ? profileStore.activeProfile?.name?.toLowerCase() : null
+  const duplicate = profileStore.profiles.some(p =>
+    p.name.toLowerCase() === name.trim().toLowerCase() && p.name.toLowerCase() !== currentLower
+  )
+  if (duplicate) {
+    profileNameError.value = t('profile.nameDuplicate')
+    return false
+  }
+  return true
+}
+
+async function confirmProfileDialog() {
+  const name = profileName.value.trim()
+  if (!validateProfileName(name)) return
+  profileDialog.value = false
+  profileNameError.value = ''
+  if (profileDialogMode.value === 'create') {
+    await profileStore.createProfile(name)
+    const created = profileStore.profiles.find(p => p.name === name)
+    if (created) await profileStore.selectProfile(created)
+  } else if (profileDialogMode.value === 'rename') {
+    const oldName = profileStore.activeProfile!.name
+    await profileStore.renameProfile(oldName, name)
+    const renamed = profileStore.profiles.find(p => p.name === name)
+    if (renamed) await profileStore.selectProfile(renamed)
+  } else if (profileDialogMode.value === 'duplicate') {
+    const sourceName = profileStore.activeProfile!.name
+    await profileStore.duplicateProfile(sourceName, name)
+    const duped = profileStore.profiles.find(p => p.name === name)
+    if (duped) await profileStore.selectProfile(duped)
+  }
+}
+
+function confirmDeleteProfile() {
+  const name = profileStore.activeProfile?.name
+  if (!name) return
+  openWarnDialog(
+    t('profile.deleteDetail', { name }),
+    () => profileStore.deleteProfile(name),
+    t('profile.deleteTitle'),
+    false
+  )
+}
+
+// ── Notes dialog ───────────────────────────────────────────────────────────────
+const notesDialog = ref(false)
+const notesFile = ref<UserFile | null>(null)
+const notesValue = ref('')
+
+function openNotesDialog(file: UserFile) {
+  notesFile.value = file
+  notesValue.value = settingsStore.descriptions[file.filename] ?? ''
+  notesDialog.value = true
+}
+
+async function confirmNotes() {
+  if (!notesFile.value) return
+  notesDialog.value = false
+  const val = notesValue.value.trim()
+  if (val) {
+    await settingsStore.setDescription(notesFile.value.filename, val)
+  } else {
+    await settingsStore.deleteDescription(notesFile.value.filename)
+  }
+  notesFile.value = null
+}
 
 // ── GitHub ─────────────────────────────────────────────────────────────────────
 function openGitHub() {
@@ -367,6 +476,24 @@ async function setLanguage(lang: string) {
         <!-- Profile tabs -->
         <div v-if="profileStore.profiles.length" class="profile-tabs-row">
           <span class="profile-tabs-label">{{ t('table.profilesLabel') }}</span>
+          <div class="profile-tab-actions">
+            <el-tooltip :content="t('profile.create')" placement="top">
+              <el-icon class="profile-tab-btn" @click="openProfileDialog('create')"><Plus /></el-icon>
+            </el-tooltip>
+            <el-dropdown trigger="click" @command="onProfileMenuCommand">
+              <el-icon class="profile-tab-btn"><MoreFilled /></el-icon>
+              <template #dropdown>
+                <el-dropdown-menu>
+                  <el-dropdown-item command="rename">{{ t('profile.rename') }}</el-dropdown-item>
+                  <el-dropdown-item command="duplicate">{{ t('profile.duplicate') }}</el-dropdown-item>
+                  <el-dropdown-item
+                    command="delete"
+                    :disabled="profileStore.profiles.length <= 1"
+                  >{{ t('profile.delete') }}</el-dropdown-item>
+                </el-dropdown-menu>
+              </template>
+            </el-dropdown>
+          </div>
           <el-tabs
             :model-value="profileStore.activeProfile?.name"
             class="profile-tabs"
@@ -435,12 +562,20 @@ async function setLanguage(lang: string) {
               class="settings-table"
             >
               <el-table-column prop="id" :label="t('table.colAccountId')" sortable min-width="110" />
+              <el-table-column :label="t('table.colNotes')" min-width="80">
+                <template #default="{ row }">
+                  <span class="notes-cell-text">{{ settingsStore.descriptions[row.filename] ?? '' }}</span>
+                </template>
+              </el-table-column>
               <el-table-column prop="modifiedAt" :label="t('table.colModified')" sortable width="150">
                 <template #default="{ row }">{{ formatDate(row.modifiedAt) }}</template>
               </el-table-column>
-              <el-table-column width="64" class-name="row-actions">
+              <el-table-column width="80" class-name="row-actions">
                 <template #default="{ row }">
                   <div class="row-actions-cell">
+                    <el-tooltip :content="t('table.editNotes')" placement="top">
+                      <el-icon class="row-icon notes-icon" @click.stop="openNotesDialog(row)"><EditPen /></el-icon>
+                    </el-tooltip>
                     <el-tooltip :content="t('table.backupFile')" placement="top">
                       <el-icon class="row-icon backup-icon" @click.stop="createFileBackupDirect(row)"><DocumentCopy /></el-icon>
                     </el-tooltip>
@@ -482,6 +617,31 @@ async function setLanguage(lang: string) {
       </div>
     </div>
 
+    <!-- Profile name dialog -->
+    <el-dialog v-model="profileDialog" :title="profileDialogTitle" width="360px" @keydown.enter="confirmProfileDialog" @open="profileNameError = ''">
+      <el-input v-model="profileName" :placeholder="t('profile.namePlaceholder')" autofocus @input="profileNameError = ''" />
+      <div v-if="profileNameError" class="profile-name-error">{{ profileNameError }}</div>
+      <template #footer>
+        <el-button @click="profileDialog = false">{{ t('dialog.cancel') }}</el-button>
+        <el-button type="primary" @click="confirmProfileDialog">{{ t('dialog.save') }}</el-button>
+      </template>
+    </el-dialog>
+
+    <!-- Account notes dialog -->
+    <el-dialog v-model="notesDialog" :title="t('table.editNotes')" width="400px" @keydown.enter="confirmNotes">
+      <el-input
+        v-model="notesValue"
+        type="textarea"
+        :rows="3"
+        :placeholder="t('table.notesPlaceholder')"
+        autofocus
+      />
+      <template #footer>
+        <el-button @click="notesDialog = false">{{ t('dialog.cancel') }}</el-button>
+        <el-button type="primary" @click="confirmNotes">{{ t('dialog.save') }}</el-button>
+      </template>
+    </el-dialog>
+
     <!-- Backup name dialog -->
     <el-dialog v-model="backupDialog" :title="t('dialog.saveBackup')" width="400px" @keydown.enter="confirmBackup">
       <el-input v-model="backupName" :placeholder="t('dialog.backupName')" autofocus />
@@ -517,7 +677,7 @@ async function setLanguage(lang: string) {
     <el-dialog v-model="warnDialog" :title="warnTitle || t('warn.title')" width="400px">
       <div class="warn-body">
         <p class="warn-detail">{{ warnDetail }}</p>
-        <p class="warn-suggest">
+        <p v-if="warnShowSuggest" class="warn-suggest">
           <el-icon class="warn-icon"><Warning /></el-icon>
           {{ t('warn.suggest') }}
         </p>
@@ -692,11 +852,27 @@ html, body, #app {
   white-space: nowrap;
 }
 .profile-tabs {
-  flex: 1;
   min-width: 0;
 }
 .profile-tabs .el-tabs__header { margin: 0; }
 .profile-tabs .el-tabs__nav-wrap::after { display: none; }
+.profile-tab-actions {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  flex-shrink: 0;
+  padding-left: 6px;
+  margin-right: 10px;
+}
+.profile-tab-btn {
+  cursor: pointer;
+  font-size: 16px !important;
+  color: var(--el-text-color-secondary);
+  padding: 4px;
+  border-radius: 4px;
+}
+.profile-tab-btn:hover { color: var(--el-text-color-primary); background: var(--el-fill-color-light); }
+.profile-name-error { font-size: 12px; color: var(--el-color-danger); margin-top: 6px; }
 
 /* Tables */
 .tables-row {
@@ -707,7 +883,7 @@ html, body, #app {
 }
 .table-col { flex: 1; padding: 12px; min-width: 0; display: flex; flex-direction: column; }
 .table-col-char { flex: 3; }
-.table-col-account { flex: 2; }
+.table-col-account { flex: 3; }
 .table-label {
   font-size: 13px;
   font-weight: 600;
@@ -763,8 +939,18 @@ html, body, #app {
   cursor: pointer;
   font-size: 18px !important;
 }
+.notes-icon { color: var(--el-text-color-secondary) !important; }
+.notes-icon:hover { color: var(--el-text-color-primary) !important; }
 .backup-icon { color: var(--el-color-primary) !important; }
 .sync-icon { color: #4caf6e !important; }
+.notes-cell-text {
+  font-size: 13px;
+  color: var(--el-text-color-secondary);
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 
 /* Warning dialog */
 .warn-body { display: flex; flex-direction: column; gap: 10px; }
