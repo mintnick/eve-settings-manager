@@ -66,13 +66,7 @@ No top bar. 2-panel layout with sidebar + main content area:
 - [x] Dialogs — backup name dialog; file backup is auto-named (no dialog)
 - [x] Empty / no-folder state
 - [x] i18n — vue-i18n, 8 languages (en, zh-CN, zh-CHT, ja, ko, fr, de, es); all keys fully translated
-- [ ] Profile tabs — add/rename/delete/duplicate actions
-  - Layout: `+` (create) and `⋯` dropdown (rename/duplicate/delete) at right end of tabs row
-  - Reuse existing warn dialog for delete; single name-input dialog for create/rename/duplicate
-  - Delete blocked (menu item disabled + tooltip) when only 1 profile exists
-  - After create/duplicate: auto-select new profile; after delete: auto-select first remaining
-  - Name validation: no empty, no duplicates (inline error in dialog)
-  - i18n: profile.create/rename/duplicate/delete/newName/namePlaceholder/duplicateOf/deleteDetail/onlyOne — all 8 locales
+- [x] Profile tabs — add/rename/delete/duplicate actions (`+` button, `⋯` dropdown, name validation, warn dialog for delete, auto-select after all ops)
 - [x] Sync settings — icon (Share, green) + backup icon (DocumentCopy, muted blue); picker dialog pre-checks all, select-all toggle; char/account tooltips distinct
 - [x] Single file backup — auto-named from filename (no dialog); put-back button in sidebar (RefreshLeft icon) with overwrite warning
 - [x] Sidebar backup items — delete button (Delete icon, red); Document/Files icons for file/folder types; action buttons 18px; tooltips on top; two-line meta (creation date + file count label); sidebar 240px; backup dialog default name is profile name only
