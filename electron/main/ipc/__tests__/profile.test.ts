@@ -13,8 +13,10 @@ const TQ_SERVER_PATH = join(
 describe('listProfiles', () => {
   it('returns all settings_* directories', async () => {
     const profiles = await listProfiles(TQ_SERVER_PATH)
-    const names = profiles.map(p => p.name).sort()
-    expect(names).toEqual(['AltAccounts', 'Custom', 'Default'])
+    const names = profiles.map(p => p.name)
+    // Use arrayContaining so other test files running in parallel don't cause
+    // false failures if they temporarily create their own settings_* directories.
+    expect(names).toEqual(expect.arrayContaining(['AltAccounts', 'Custom', 'Default']))
   })
 
   it('returns absolute paths', async () => {
