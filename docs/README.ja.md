@@ -37,22 +37,10 @@
 
 ## はじめに
 
-**必要環境：** Node.js 18+、pnpm
-
-```bash
-git clone https://github.com/mintnick/eve-settings-manager.git
-cd eve-settings-manager
-pnpm install
-pnpm dev        # 開発サーバー + Electron を起動（ホットリロード）
-```
-
-### ビルド
-
-```bash
-pnpm build      # 型チェック・バンドル・electron-builder によるパッケージ化
-```
-
-出力先：`release/<バージョン>/`
+1. [Releases](https://github.com/mintnick/eve-settings-manager/releases) ページを開きます。
+2. お使いの環境に合ったファイルをダウンロードします：
+   - **macOS：** `.dmg` — 開いてアプリを Applications フォルダにドラッグ
+   - **Windows：** `.exe` — そのまま実行するだけ、インストール不要
 
 ---
 
@@ -69,10 +57,27 @@ pnpm build      # 型チェック・バンドル・electron-builder によるパ
 
 ## アンインストール
 
-アプリを削除しても、ローカルデータフォルダは**自動的に削除されません**。完全に削除するには、アプリをアンインストールした後、以下のデータフォルダを手動で削除してください。
+- **macOS：** Applications フォルダからアプリを削除します。ローカルデータフォルダは**自動的に削除されません** — 必要に応じて手動で削除してください：`~/Library/Application Support/eve-settings-manager`
+- **Windows：** `.exe` ファイルを削除します。完全に削除するにはデータフォルダも削除してください：`%APPDATA%\eve-settings-manager`
 
-- **macOS：** `~/Library/Application Support/eve-settings-manager`
-- **Windows：** `%APPDATA%\eve-settings-manager`
+---
+
+## ソースからビルド
+
+**必要環境：** Node.js 18+、pnpm
+
+```bash
+git clone https://github.com/mintnick/eve-settings-manager.git
+cd eve-settings-manager
+pnpm install
+pnpm dev        # 開発サーバー + Electron を起動（ホットリロード）
+```
+
+```bash
+pnpm build      # 型チェック・バンドル・electron-builder によるパッケージ化
+```
+
+出力先：`release/<バージョン>/`
 
 ---
 

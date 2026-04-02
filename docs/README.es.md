@@ -37,22 +37,10 @@
 
 ## Primeros pasos
 
-**Requisitos previos:** Node.js 18+, pnpm
-
-```bash
-git clone https://github.com/mintnick/eve-settings-manager.git
-cd eve-settings-manager
-pnpm install
-pnpm dev        # inicia el servidor de desarrollo + Electron (recarga en caliente)
-```
-
-### Build
-
-```bash
-pnpm build      # verificación de tipos, bundling y empaquetado con electron-builder
-```
-
-La salida se escribe en `release/<versión>/`.
+1. Ve a la página de [Releases](https://github.com/mintnick/eve-settings-manager/releases).
+2. Descarga el archivo para tu plataforma:
+   - **macOS:** `.dmg` — ábrelo y arrastra la app a Aplicaciones
+   - **Windows:** `.exe` — ejecútalo directamente, sin instalación
 
 ---
 
@@ -69,10 +57,27 @@ Todos los datos persistentes (notas, tema, idioma, memoria de servidor, caché d
 
 ## Desinstalación
 
-Desinstalar la aplicación **no elimina** la carpeta de datos local. Para borrar todo por completo, desinstala la app y luego elimina manualmente la siguiente carpeta:
+- **macOS:** Elimina la app de la carpeta Aplicaciones. La carpeta de datos local **no se elimina automáticamente** — bórrala manualmente si lo deseas: `~/Library/Application Support/eve-settings-manager`
+- **Windows:** Elimina el archivo `.exe`. Para borrar todo, elimina también la carpeta de datos: `%APPDATA%\eve-settings-manager`
 
-- **macOS:** `~/Library/Application Support/eve-settings-manager`
-- **Windows:** `%APPDATA%\eve-settings-manager`
+---
+
+## Compilar desde el código fuente
+
+**Requisitos previos:** Node.js 18+, pnpm
+
+```bash
+git clone https://github.com/mintnick/eve-settings-manager.git
+cd eve-settings-manager
+pnpm install
+pnpm dev        # inicia el servidor de desarrollo + Electron (recarga en caliente)
+```
+
+```bash
+pnpm build      # verificación de tipos, bundling y empaquetado con electron-builder
+```
+
+La salida se escribe en `release/<versión>/`.
 
 ---
 
