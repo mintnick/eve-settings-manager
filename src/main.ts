@@ -15,5 +15,12 @@ createApp(App)
   .use(i18n)
   .mount('#app')
   .$nextTick(() => {
+    // Must be inline styles — EP's CSS loads after style.css and would override :root declarations
+    document.documentElement.style.setProperty('--el-font-size-extra-large', '22px')
+    document.documentElement.style.setProperty('--el-font-size-large', '20px')
+    document.documentElement.style.setProperty('--el-font-size-medium', '18px')
+    document.documentElement.style.setProperty('--el-font-size-base', '16px')
+    document.documentElement.style.setProperty('--el-font-size-small', '15px')
+    document.documentElement.style.setProperty('--el-font-size-extra-small', '14px')
     postMessage({ payload: 'removeLoading' }, '*')
   })
