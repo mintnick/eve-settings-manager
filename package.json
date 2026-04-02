@@ -1,6 +1,6 @@
 {
   "name": "eve-settings-manager",
-  "version": "0.0.1",
+  "version": "2.0.0",
   "main": "dist-electron/main/index.js",
   "description": "EVE Online local setting files manager",
   "author": "Nick Ning",
@@ -29,7 +29,7 @@
   "devDependencies": {
     "@vitejs/plugin-vue": "^6.0.5",
     "electron": "^41.1.1",
-    "electron-builder": "^26.8.1",
+    "electron-builder": "^26.8.2",
     "typescript": "^6.0.2",
     "vite": "^8.0.3",
     "vite-plugin-electron": "^0.29.1",

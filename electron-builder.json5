@@ -1,9 +1,10 @@
 // @see https://www.electron.build/configuration/configuration
 {
   "$schema": "https://raw.githubusercontent.com/electron-userland/electron-builder/master/packages/app-builder-lib/scheme.json",
-  "appId": "YourAppID",
+  "appId": "com.mintnick.eve-settings-manager",
   "asar": true,
-  "productName": "YourAppName",
+  "productName": "EVE Settings Manager",
+  "electronDist": "node_modules/electron/dist",
   "directories": {
     "output": "release/${version}"
   },
@@ -12,10 +13,11 @@
     "dist-electron"
   ],
   "mac": {
+    "identity": null,
     "target": [
       "dmg"
     ],
-    "artifactName": "${productName}-Mac-${version}-Installer.${ext}"
+    "artifactName": "${productName}-Mac-${version}.${ext}"
   },
   "win": {
     "target": [
