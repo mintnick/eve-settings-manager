@@ -27,16 +27,16 @@
     "test": "vitest run"
   },
   "devDependencies": {
-    "@vitejs/plugin-vue": "^5.2.1",
-    "electron": "^29.4.6",
-    "electron-builder": "^24.13.3",
-    "typescript": "^5.7.2",
-    "vite": "^5.4.11",
-    "vite-plugin-electron": "^0.28.8",
+    "@vitejs/plugin-vue": "^6.0.5",
+    "electron": "^41.1.1",
+    "electron-builder": "^26.8.1",
+    "typescript": "^6.0.2",
+    "vite": "^8.0.3",
+    "vite-plugin-electron": "^0.29.1",
     "vite-plugin-electron-renderer": "^0.14.6",
-    "vitest": "^2.1.9",
+    "vitest": "^4.1.2",
     "vue": "^3.5.31",
-    "vue-tsc": "^2.1.10"
+    "vue-tsc": "^3.2.6"
   },
   "dependencies": {
     "@element-plus/icons-vue": "^2.3.2",
