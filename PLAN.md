@@ -146,3 +146,25 @@ settings_Default/
 5. Backup management
 6. Named per-file snapshots (Saved Settings)
 7. Profile management improvements
+
+---
+
+## Distribution
+
+**Build tool:** electron-builder 26.8.2 (confirmed still best-in-class for cross-platform packaging).
+
+**Targets:**
+- macOS → `.dmg` (unsigned, `identity: null`)
+- Windows → portable `.exe` (x64, no installer)
+- Linux → `.AppImage`
+
+**Artifact naming:** `EVE Settings Manager-{Mac|Windows|Linux}-{version}.{ext}`
+
+**GitHub Actions:** `.github/workflows/build.yml`
+- Triggers on push to `electron-vue-refactor`
+- Matrix build: macOS, Windows, Ubuntu runners in parallel
+- Artifacts uploadable from Actions tab → run → Artifacts section (no public release)
+- Uses `pnpm` with `node-linker=hoisted` (.npmrc)
+- `pnpm-lock.yaml` is committed (required for CI cache)
+
+**Local build:** `pnpm build` — produces `release/2.0.0/` with all three platform files (Mac only on Mac).
