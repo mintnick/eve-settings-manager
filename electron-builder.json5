@@ -4,7 +4,6 @@
   "appId": "com.mintnick.eve-settings-manager",
   "asar": true,
   "productName": "EVE Settings Manager",
-  "electronDist": "node_modules/electron/dist",
   "directories": {
     "output": "release/${version}"
   },

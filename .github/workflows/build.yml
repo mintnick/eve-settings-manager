@@ -36,9 +36,10 @@ jobs:
         run: pnpm install
 
       - name: Build
-        run: pnpm build
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          pnpm vue-tsc --noEmit
+          pnpm vite build
+          pnpm electron-builder --publish never
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
