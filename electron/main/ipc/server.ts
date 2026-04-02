@@ -1,7 +1,7 @@
 import { readdir } from 'node:fs/promises'
 import { join } from 'node:path'
-import { request } from 'node:https'
 import type { ServerDir, ServerStatus, EsiServer } from './types.js'
+import { httpsGet } from './http.js'
 
 const SERVER_KEYWORDS: [string, string][] = [
   ['tranquil', 'Tranquility'],
@@ -54,24 +54,6 @@ export function inferEsiServer(serverDirName: string): EsiServer {
   if (lower.includes('serenity')) return 'serenity'
   if (lower.includes('infinity')) return 'infinity'
   return 'tq'
-}
-
-/** GET via Node.js https. Resolves with parsed JSON or rejects on error/non-200. */
-function httpsGet(url: string): Promise<unknown> {
-  return new Promise((resolve, reject) => {
-    const req = request(url, { timeout: 5000 }, (res) => {
-      if (res.statusCode !== 200) {
-        res.resume()
-        return reject(new Error(`HTTP ${res.statusCode}`))
-      }
-      let data = ''
-      res.on('data', chunk => { data += chunk })
-      res.on('end', () => { try { resolve(JSON.parse(data)) } catch (e) { reject(e) } })
-    })
-    req.on('error', reject)
-    req.on('timeout', () => { req.destroy(); reject(new Error('timeout')) })
-    req.end()
-  })
 }
 
 /**

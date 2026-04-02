@@ -1,8 +1,8 @@
 import { readdir, stat, copyFile } from 'node:fs/promises'
 import { join } from 'node:path'
-import { request } from 'node:https'
 import type { SettingsFile, EsiServer } from './types.js'
 import { getCachedCharNames, setCachedCharNames } from './store.js'
+import { httpsPost } from './http.js'
 
 const CHAR_RE = /^core_char_(\d+)\.dat$/
 const USER_RE = /^core_user_(\d+)\.dat$/
@@ -31,39 +31,6 @@ export async function listSettings(profilePath: string): Promise<SettingsFile[]>
   }
 
   return results
-}
-
-/** POST JSON via Node.js https (bypasses Chromium network stack). */
-function httpsPost(url: string, body: unknown): Promise<unknown> {
-  return new Promise((resolve, reject) => {
-    const payload = JSON.stringify(body)
-    const parsed = new URL(url)
-    const req = request(
-      {
-        hostname: parsed.hostname,
-        path: parsed.pathname + parsed.search,
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Content-Length': Buffer.byteLength(payload),
-        },
-        timeout: 10000,
-      },
-      (res) => {
-        if (res.statusCode !== 200) {
-          res.resume()
-          return reject(new Error(`HTTP ${res.statusCode}`))
-        }
-        let data = ''
-        res.on('data', chunk => { data += chunk })
-        res.on('end', () => { try { resolve(JSON.parse(data)) } catch (e) { reject(e) } })
-      },
-    )
-    req.on('error', reject)
-    req.on('timeout', () => { req.destroy(); reject(new Error('timeout')) })
-    req.write(payload)
-    req.end()
-  })
 }
 
 /**

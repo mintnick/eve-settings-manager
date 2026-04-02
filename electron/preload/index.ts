@@ -21,7 +21,7 @@ contextBridge.exposeInMainWorld('ipcRenderer', {
     return ipcRenderer.invoke(channel, ...omit)
   },
 
-  // You can expose other APTs you need here.
+  // You can expose other APIs you need here.
   // ...
 })
 
@@ -42,12 +42,12 @@ function domReady(condition: DocumentReadyState[] = ['complete', 'interactive'])
 
 const safeDOM = {
   append(parent: HTMLElement, child: HTMLElement) {
-    if (!Array.from(parent.children).find(e => e === child)) {
+    if (!parent.contains(child)) {
       return parent.appendChild(child)
     }
   },
   remove(parent: HTMLElement, child: HTMLElement) {
-    if (Array.from(parent.children).find(e => e === child)) {
+    if (parent.contains(child)) {
       return parent.removeChild(child)
     }
   },
@@ -117,4 +117,3 @@ window.onmessage = (ev) => {
   ev.data.payload === 'removeLoading' && removeLoading()
 }
 
-setTimeout(removeLoading, 4999)

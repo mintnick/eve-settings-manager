@@ -332,13 +332,6 @@ async function toggleTheme() {
   await window.ipcRenderer.invoke('store:set-theme', isDark.value ? 'dark' : 'light')
 }
 
-onMounted(async () => {
-  const saved = await window.ipcRenderer.invoke('store:get-theme')
-  const dark = saved ? saved === 'dark' : true
-  if (!saved) await window.ipcRenderer.invoke('store:set-theme', dark ? 'dark' : 'light')
-  applyTheme(dark)
-})
-
 // ── Language ───────────────────────────────────────────────────────────────────
 function detectSystemLanguage(): string {
   const sys = navigator.language.toLowerCase()
@@ -353,9 +346,17 @@ function detectSystemLanguage(): string {
 }
 
 onMounted(async () => {
-  const saved = await window.ipcRenderer.invoke('store:get-language')
-  const lang = saved ?? detectSystemLanguage()
-  if (!saved) await window.ipcRenderer.invoke('store:set-language', lang)
+  const [savedTheme, savedLang] = await Promise.all([
+    window.ipcRenderer.invoke('store:get-theme'),
+    window.ipcRenderer.invoke('store:get-language'),
+  ])
+
+  const dark = savedTheme ? savedTheme === 'dark' : true
+  if (!savedTheme) await window.ipcRenderer.invoke('store:set-theme', dark ? 'dark' : 'light')
+  applyTheme(dark)
+
+  const lang = savedLang ?? detectSystemLanguage()
+  if (!savedLang) await window.ipcRenderer.invoke('store:set-language', lang)
   language.value = lang
   locale.value = lang
 })
