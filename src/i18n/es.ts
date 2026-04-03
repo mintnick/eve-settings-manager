@@ -58,7 +58,7 @@ export default {
     putBackFileDetail: 'La configuración actual de "{name}" será reemplazada por la copia de seguridad.',
     backupFolderDetail: 'Todos los archivos de "{name}" sobrescribirán el perfil actual.',
     deleteBackupTitle: '¿Eliminar copia de seguridad?',
-    deleteBackupDetail: '"{name}" se eliminará permanentemente. Esta acción no se puede deshacer.',
+    deleteBackupDetail: 'La copia de seguridad "{name}" se eliminará permanentemente.\nTu configuración actual no se verá afectada.',
   },
   profile: {
     create: 'Nuevo perfil',

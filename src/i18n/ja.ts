@@ -59,7 +59,7 @@ export default {
     putBackFileDetail: '「{name}」の現在の設定をバックアップで上書きします。',
     backupFolderDetail: '「{name}」のすべてのファイルが現在のプロファイルを上書きします。',
     deleteBackupTitle: 'バックアップを削除しますか？',
-    deleteBackupDetail: '「{name}」を完全に削除します。この操作は取り消せません。',
+    deleteBackupDetail: 'バックアップ「{name}」を完全に削除します。\n現在の設定には影響しません。',
   },
   profile: {
     create: '新しいプロファイル',

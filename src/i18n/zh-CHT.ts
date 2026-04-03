@@ -59,7 +59,7 @@ export default {
     putBackFileDetail: '將以備份覆蓋「{name}」的目前設定。',
     backupFolderDetail: '「{name}」中的所有檔案將覆蓋目前設定檔。',
     deleteBackupTitle: '刪除備份？',
-    deleteBackupDetail: '將永久刪除「{name}」，此操作無法復原。',
+    deleteBackupDetail: '將永久刪除備份「{name}」。\n目前設定不受影響。',
   },
   profile: {
     create: '新增設定資料夾',

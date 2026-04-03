@@ -59,7 +59,7 @@ export default {
     putBackFileDetail: '将以备份覆盖「{name}」的当前设置。',
     backupFolderDetail: '"{name}" 中的所有文件将覆盖当前配置文件。',
     deleteBackupTitle: '删除备份？',
-    deleteBackupDetail: '将永久删除「{name}」，此操作无法撤销。',
+    deleteBackupDetail: '将永久删除备份「{name}」。\n当前设置不受影响。',
   },
   profile: {
     create: '新建配置文件夹',

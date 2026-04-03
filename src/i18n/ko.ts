@@ -59,7 +59,7 @@ export default {
     putBackFileDetail: '"{name}"의 현재 설정을 백업으로 덮어씁니다.',
     backupFolderDetail: '"{name}"의 모든 파일이 현재 프로필을 덮어씁니다.',
     deleteBackupTitle: '백업을 삭제하시겠습니까?',
-    deleteBackupDetail: '"{name}"을(를) 영구적으로 삭제합니다. 이 작업은 취소할 수 없습니다.',
+    deleteBackupDetail: '백업 "{name}"을(를) 영구적으로 삭제합니다.\n현재 설정에는 영향을 미치지 않습니다.',
   },
   profile: {
     create: '새 프로필',

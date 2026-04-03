@@ -58,7 +58,7 @@ export default {
     putBackFileDetail: 'This will overwrite "{name}"\'s current settings with the backup.',
     backupFolderDetail: 'All files from "{name}" will overwrite the current profile.',
     deleteBackupTitle: 'Delete backup?',
-    deleteBackupDetail: 'This will permanently delete "{name}". This cannot be undone.',
+    deleteBackupDetail: 'This will permanently delete the backup "{name}".\nYour current settings will not be affected.',
   },
   profile: {
     create: 'New Profile',

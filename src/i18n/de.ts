@@ -58,7 +58,7 @@ export default {
     putBackFileDetail: 'Die aktuellen Einstellungen von „{name}" werden mit der Sicherung überschrieben.',
     backupFolderDetail: 'Alle Dateien aus „{name}" überschreiben das aktuelle Profil.',
     deleteBackupTitle: 'Sicherung löschen?',
-    deleteBackupDetail: '„{name}" wird dauerhaft gelöscht. Dieser Vorgang kann nicht rückgängig gemacht werden.',
+    deleteBackupDetail: 'Die Sicherung „{name}" wird dauerhaft gelöscht.\nDeine aktuellen Einstellungen werden nicht beeinflusst.',
   },
   profile: {
     create: 'Neues Profil',

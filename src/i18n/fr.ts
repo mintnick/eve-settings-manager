@@ -58,7 +58,7 @@ export default {
     putBackFileDetail: 'Les paramètres actuels de « {name} » seront écrasés par la sauvegarde.',
     backupFolderDetail: 'Tous les fichiers de « {name} » écraseront le profil actuel.',
     deleteBackupTitle: 'Supprimer la sauvegarde ?',
-    deleteBackupDetail: '« {name} » sera définitivement supprimé. Cette action est irréversible.',
+    deleteBackupDetail: 'La sauvegarde « {name} » sera définitivement supprimée.\nVos paramètres actuels ne seront pas affectés.',
   },
   profile: {
     create: 'Nouveau profil',

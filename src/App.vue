@@ -955,7 +955,7 @@ html, body, #app {
 
 /* Warning dialog */
 .warn-body { display: flex; flex-direction: column; gap: 10px; }
-.warn-detail { margin: 0; font-size: 13px; }
+.warn-detail { margin: 0; font-size: 14px; line-height: 1.7; white-space: pre-line; }
 .warn-suggest { margin: 0; font-size: 12px; color: var(--el-color-warning); display: flex; align-items: center; gap: 5px; }
 .warn-icon { font-size: 14px !important; flex-shrink: 0; }
 
