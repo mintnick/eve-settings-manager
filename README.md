@@ -35,12 +35,15 @@
 
 ---
 
-## Getting Started
+## Getting Started (Test Builds)
 
-1. Go to the [Releases](https://github.com/mintnick/eve-settings-manager/releases) page.
-2. Download the file for your platform:
-   - **macOS:** `.dmg` — open it and drag the app to Applications
-   - **Windows:** `.exe` — run it directly, no installation needed
+Builds are available from GitHub Actions — no public release yet.
+
+1. Go to the [Actions tab](https://github.com/mintnick/eve-settings-manager/actions/workflows/build.yml)
+2. Click the latest successful run
+3. Scroll to **Artifacts** and download the file for your platform:
+   - **macOS:** `EVE-Settings-Manager-macOS` → extract → open the `.dmg`, drag app to Applications
+   - **Windows:** `EVE-Settings-Manager-Windows` → extract → run the `.exe` directly, no installation needed
 
 ---
 
