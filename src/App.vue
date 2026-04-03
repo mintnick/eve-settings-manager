@@ -874,12 +874,13 @@ html, body, #app {
 .table-col-char { flex: 3; }
 .table-col-account { flex: 3; }
 .table-label {
-  font-size: 13px;
+  font-size: 15px;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.05em;
   color: var(--el-text-color-secondary);
   margin-bottom: 8px;
+  text-align: center;
 }
 .table-divider { width: 1px; background: var(--el-border-color); flex-shrink: 0; }
 .settings-table { flex: 1; }
