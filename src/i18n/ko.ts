@@ -45,8 +45,8 @@ export default {
     notesPlaceholder: '이 계정에 메모 추가…',
   },
   actions: {
-    backup: '폴더 백업',
-    openFolder: '폴더 열기',
+    backup: '프로필 백업',
+    openFolder: '프로필 열기',
     darkMode: '다크 모드로 전환',
     lightMode: '라이트 모드로 전환',
   },

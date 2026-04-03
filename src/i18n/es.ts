@@ -44,8 +44,8 @@ export default {
     notesPlaceholder: 'Añadir una nota para esta cuenta…',
   },
   actions: {
-    backup: 'Copia de carpeta',
-    openFolder: 'Abrir carpeta',
+    backup: 'Copia de perfil',
+    openFolder: 'Abrir perfil',
     darkMode: 'Cambiar a modo oscuro',
     lightMode: 'Cambiar a modo claro',
   },

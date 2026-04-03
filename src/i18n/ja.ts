@@ -45,8 +45,8 @@ export default {
     notesPlaceholder: 'このアカウントにメモを追加…',
   },
   actions: {
-    backup: 'フォルダをバックアップ',
-    openFolder: 'フォルダを開く',
+    backup: 'プロファイルをバックアップ',
+    openFolder: 'プロファイルを開く',
     darkMode: 'ダークモードに切り替え',
     lightMode: 'ライトモードに切り替え',
   },

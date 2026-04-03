@@ -45,8 +45,8 @@ export default {
     notesPlaceholder: '為此帳號新增備註…',
   },
   actions: {
-    backup: '備份資料夾',
-    openFolder: '開啟資料夾',
+    backup: '備份設定檔',
+    openFolder: '開啟設定資料夾',
     darkMode: '切換至深色模式',
     lightMode: '切換至淺色模式',
   },

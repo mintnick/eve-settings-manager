@@ -10,7 +10,7 @@ import {
   FolderOpened,
   Files,
   Document,
-  Box,
+  CopyDocument,
   Warning,
   DocumentCopy,
   RefreshLeft,
@@ -611,7 +611,7 @@ async function setLanguage(lang: string) {
         <!-- Action bar -->
         <div class="action-bar">
           <el-button :disabled="!profileStore.activeProfile" @click="openBackupDialog()">
-            <el-icon class="mr-1"><Box /></el-icon>
+            <el-icon class="mr-1"><CopyDocument /></el-icon>
             {{ t('actions.backup') }}
           </el-button>
           <el-button :disabled="!serverStore.activeServer" @click="openServerFolder()">
@@ -923,7 +923,7 @@ html, body, #app {
   position: relative;
 }
 .action-bar .el-button {
-  min-width: 130px;
+  width: 150px;
   white-space: nowrap;
 }
 .action-bar-right {

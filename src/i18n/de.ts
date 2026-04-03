@@ -44,8 +44,8 @@ export default {
     notesPlaceholder: 'Notiz für dieses Konto hinzufügen…',
   },
   actions: {
-    backup: 'Ordner sichern',
-    openFolder: 'Ordner öffnen',
+    backup: 'Profil sichern',
+    openFolder: 'Profil öffnen',
     darkMode: 'Dunkelmodus aktivieren',
     lightMode: 'Hellmodus aktivieren',
   },

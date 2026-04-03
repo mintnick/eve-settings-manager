@@ -44,8 +44,8 @@ export default {
     notesPlaceholder: 'Add a note for this account…',
   },
   actions: {
-    backup: 'Backup Folder',
-    openFolder: 'Open folder',
+    backup: 'Backup Profile',
+    openFolder: 'Open Profile',
     darkMode: 'Switch to dark mode',
     lightMode: 'Switch to light mode',
   },

@@ -45,8 +45,8 @@ export default {
     notesPlaceholder: '为此账户添加备注…',
   },
   actions: {
-    backup: '备份文件夹',
-    openFolder: '打开文件夹',
+    backup: '备份配置',
+    openFolder: '打开配置文件夹',
     darkMode: '切换到深色模式',
     lightMode: '切换到浅色模式',
   },
