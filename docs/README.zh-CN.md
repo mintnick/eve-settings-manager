@@ -25,7 +25,7 @@
 
 | 层级 | 库 |
 |---|---|
-| 桌面外壳 | Electron 29 |
+| 桌面外壳 | Electron 41 |
 | UI 框架 | Vue 3 + TypeScript |
 | 组件库 | Element Plus |
 | 状态管理 | Pinia |

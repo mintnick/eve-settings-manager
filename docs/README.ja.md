@@ -25,7 +25,7 @@
 
 | レイヤー | ライブラリ |
 |---|---|
-| デスクトップシェル | Electron 29 |
+| デスクトップシェル | Electron 41 |
 | UI フレームワーク | Vue 3 + TypeScript |
 | コンポーネントライブラリ | Element Plus |
 | 状態管理 | Pinia |

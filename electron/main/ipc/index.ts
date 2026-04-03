@@ -1,6 +1,7 @@
 import { ipcMain, shell } from 'electron'
 import { findEveFolder, openFolderDialog } from './folder.js'
 import { detectServers, getServerStatus, inferEsiServer } from './server.js'
+import type { EsiServer } from './types.js'
 import { listProfiles, createProfile, renameProfile, duplicateProfile, deleteProfile } from './profile.js'
 import { listSettings, resolveCharNames, copySettings } from './settings.js'
 import { createBackup, createFileBackup, listBackups, restoreBackup, restoreFileBackup, deleteBackup, deleteFileBackup } from './backup.js'
@@ -25,7 +26,7 @@ export function registerIpcHandlers(): void {
   // ── Server ─────────────────────────────────────────────────────────────────
   ipcMain.handle('server:detect', (_e, eveFolder: string) => detectServers(eveFolder))
   ipcMain.handle('server:infer-esi', (_e, serverDirName: string) => inferEsiServer(serverDirName))
-  ipcMain.handle('server:status', (_e, server: 'tq' | 'serenity' | 'infinity') => getServerStatus(server))
+  ipcMain.handle('server:status', (_e, server: EsiServer) => getServerStatus(server))
 
   // ── Profile ────────────────────────────────────────────────────────────────
   ipcMain.handle('profile:list', (_e, serverPath: string) => listProfiles(serverPath))
@@ -36,7 +37,7 @@ export function registerIpcHandlers(): void {
 
   // ── Settings ───────────────────────────────────────────────────────────────
   ipcMain.handle('settings:list', (_e, profilePath: string) => listSettings(profilePath))
-  ipcMain.handle('settings:resolve-names', (_e, ids: string[], server: 'tq' | 'serenity' | 'infinity') => resolveCharNames(ids, server))
+  ipcMain.handle('settings:resolve-names', (_e, ids: string[], server: EsiServer) => resolveCharNames(ids, server))
   ipcMain.handle('settings:copy', (_e, srcPath: string, destPaths: string[]) => copySettings(srcPath, destPaths))
   // ── Backup ─────────────────────────────────────────────────────────────────
   ipcMain.handle('backup:create', (_e, profilePath: string, name: string) => createBackup(profilePath, name))

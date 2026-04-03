@@ -25,7 +25,7 @@
 
 | Schicht | Bibliothek |
 |---|---|
-| Desktop-Shell | Electron 29 |
+| Desktop-Shell | Electron 41 |
 | UI-Framework | Vue 3 + TypeScript |
 | Komponentenbibliothek | Element Plus |
 | Zustandsverwaltung | Pinia |

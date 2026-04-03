@@ -25,7 +25,7 @@
 
 | Couche | Bibliothèque |
 |---|---|
-| Shell bureau | Electron 29 |
+| Shell bureau | Electron 41 |
 | Framework UI | Vue 3 + TypeScript |
 | Bibliothèque de composants | Element Plus |
 | Gestion d'état | Pinia |

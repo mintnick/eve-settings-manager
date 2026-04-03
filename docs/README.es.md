@@ -25,7 +25,7 @@
 
 | Capa | Biblioteca |
 |---|---|
-| Shell de escritorio | Electron 29 |
+| Shell de escritorio | Electron 41 |
 | Framework UI | Vue 3 + TypeScript |
 | Biblioteca de componentes | Element Plus |
 | Gestión de estado | Pinia |

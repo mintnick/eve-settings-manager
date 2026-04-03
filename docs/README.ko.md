@@ -25,7 +25,7 @@
 
 | 계층 | 라이브러리 |
 |---|---|
-| 데스크톱 셸 | Electron 29 |
+| 데스크톱 셸 | Electron 41 |
 | UI 프레임워크 | Vue 3 + TypeScript |
 | 컴포넌트 라이브러리 | Element Plus |
 | 상태 관리 | Pinia |
