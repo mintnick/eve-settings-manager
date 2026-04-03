@@ -64,8 +64,8 @@ export default {
   },
   profile: {
     create: '新しいプロファイル',
-    rename: '名前を変更',
-    duplicate: '複製',
+    rename: 'プロファイルの名前を変更',
+    duplicate: 'プロファイルを複製',
     delete: 'プロファイルを削除',
     deleteTitle: 'プロファイルを削除しますか？',
     deleteDetail: '「{name}」とそのすべての設定ファイルを完全に削除します。この操作は取り消せません。',

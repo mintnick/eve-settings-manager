@@ -63,8 +63,8 @@ export default {
   },
   profile: {
     create: 'New Profile',
-    rename: 'Rename',
-    duplicate: 'Duplicate',
+    rename: 'Rename Profile',
+    duplicate: 'Duplicate Profile',
     delete: 'Delete Profile',
     deleteTitle: 'Delete profile?',
     deleteDetail: 'This will permanently delete "{name}" and all its settings files. This cannot be undone.',

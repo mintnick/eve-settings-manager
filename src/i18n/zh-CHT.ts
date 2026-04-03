@@ -64,8 +64,8 @@ export default {
   },
   profile: {
     create: '新增設定資料夾',
-    rename: '重新命名',
-    duplicate: '複製',
+    rename: '重新命名設定資料夾',
+    duplicate: '複製設定資料夾',
     delete: '刪除設定資料夾',
     deleteTitle: '刪除設定資料夾？',
     deleteDetail: '將永久刪除「{name}」及其所有設定檔案，此操作無法復原。',

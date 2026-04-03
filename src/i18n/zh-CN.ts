@@ -64,8 +64,8 @@ export default {
   },
   profile: {
     create: '新建配置文件夹',
-    rename: '重命名',
-    duplicate: '复制',
+    rename: '重命名配置文件夹',
+    duplicate: '复制配置文件夹',
     delete: '删除配置文件夹',
     deleteTitle: '删除配置文件夹？',
     deleteDetail: '将永久删除「{name}」及其所有设置文件，此操作无法撤销。',

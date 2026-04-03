@@ -63,8 +63,8 @@ export default {
   },
   profile: {
     create: 'Neues Profil',
-    rename: 'Umbenennen',
-    duplicate: 'Duplizieren',
+    rename: 'Profil umbenennen',
+    duplicate: 'Profil duplizieren',
     delete: 'Profil löschen',
     deleteTitle: 'Profil löschen?',
     deleteDetail: '„{name}" und alle zugehörigen Einstellungsdateien werden dauerhaft gelöscht. Dieser Vorgang kann nicht rückgängig gemacht werden.',

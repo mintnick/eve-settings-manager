@@ -63,8 +63,8 @@ export default {
   },
   profile: {
     create: 'Nouveau profil',
-    rename: 'Renommer',
-    duplicate: 'Dupliquer',
+    rename: 'Renommer le profil',
+    duplicate: 'Dupliquer le profil',
     delete: 'Supprimer le profil',
     deleteTitle: 'Supprimer le profil ?',
     deleteDetail: '« {name} » et tous ses fichiers de paramètres seront définitivement supprimés. Cette action est irréversible.',

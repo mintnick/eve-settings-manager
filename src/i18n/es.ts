@@ -63,8 +63,8 @@ export default {
   },
   profile: {
     create: 'Nuevo perfil',
-    rename: 'Renombrar',
-    duplicate: 'Duplicar',
+    rename: 'Renombrar perfil',
+    duplicate: 'Duplicar perfil',
     delete: 'Eliminar perfil',
     deleteTitle: '¿Eliminar perfil?',
     deleteDetail: '"{name}" y todos sus archivos de configuración se eliminarán permanentemente. Esta acción no se puede deshacer.',

@@ -64,8 +64,8 @@ export default {
   },
   profile: {
     create: '새 프로필',
-    rename: '이름 변경',
-    duplicate: '복제',
+    rename: '프로필 이름 변경',
+    duplicate: '프로필 복제',
     delete: '프로필 삭제',
     deleteTitle: '프로필을 삭제하시겠습니까?',
     deleteDetail: '"{name}" 및 모든 설정 파일이 영구적으로 삭제됩니다. 이 작업은 취소할 수 없습니다.',
