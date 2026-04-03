@@ -1,4 +1,12 @@
 export default {
+  serverNames: {
+    tranquility: '宁静',
+    serenity: '晨曦',
+    infinity: '曙光',
+    singularity: '奇点',
+    duality: 'Duality',
+    thunderdome: '雷霆穹顶',
+  },
   sidebar: {
     servers: '服务器',
     backups: '备份',

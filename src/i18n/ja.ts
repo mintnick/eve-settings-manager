@@ -1,4 +1,12 @@
 export default {
+  serverNames: {
+    tranquility: 'Tranquility',
+    serenity: 'Serenity',
+    infinity: 'Infinity',
+    singularity: 'Singularity',
+    duality: 'Duality',
+    thunderdome: 'Thunderdome',
+  },
   sidebar: {
     servers: 'サーバー',
     backups: 'バックアップ',

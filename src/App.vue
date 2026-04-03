@@ -21,6 +21,7 @@ import {
   Plus,
   MoreFilled,
   Remove,
+  Monitor,
 } from '@element-plus/icons-vue'
 
 const { t, locale } = useI18n()
@@ -295,6 +296,24 @@ function confirmDeleteProfile() {
   )
 }
 
+// ── Server name localization ───────────────────────────────────────────────────
+const SERVER_KEY_MAP: Record<string, string> = {
+  'Tranquility': 'tranquility',
+  'Serenity': 'serenity',
+  'Infinity': 'infinity',
+  'Singularity': 'singularity',
+  'Duality': 'duality',
+  'Thunderdome': 'thunderdome',
+}
+
+function localizeServerName(displayName: string): string {
+  const base = displayName.replace(/\s*\(.*\)$/, '').trim()
+  const suffix = displayName.match(/\s*\(.*\)$/)?.[0] ?? ''
+  const key = SERVER_KEY_MAP[base]
+  if (!key) return displayName
+  return t(`serverNames.${key}`) + suffix
+}
+
 // ── Notes inline ───────────────────────────────────────────────────────────────
 async function saveNote(filename: string, val: string) {
   const trimmed = val.trim()
@@ -382,15 +401,15 @@ async function setLanguage(lang: string) {
       <!-- Sidebar -->
       <aside class="sidebar">
         <div class="sidebar-section">
-          <div class="sidebar-label">{{ t('sidebar.servers') }}</div>
+          <div class="sidebar-label"><el-icon class="sidebar-label-icon"><Monitor /></el-icon>{{ t('sidebar.servers') }}</div>
           <div
             v-for="server in serverStore.servers"
             :key="server.path"
-            class="sidebar-item"
+            class="sidebar-item sidebar-server-item"
             :class="{ active: serverStore.activeServer?.path === server.path }"
             @click="serverStore.selectServer(server)"
           >
-            {{ server.displayName }}
+            {{ localizeServerName(server.displayName) }}
           </div>
           <div class="sidebar-folder-btn-wrap">
             <button class="sidebar-folder-btn" @click="serverStore.openFolderDialog()">
@@ -757,13 +776,15 @@ html, body, #app {
 }
 .sidebar-section { padding: 0 4px; }
 .sidebar-label {
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 600;
   color: var(--el-color-success);
   letter-spacing: 0.02em;
   padding: 10px 10px 4px;
   text-align: center;
 }
+.sidebar-label-icon { font-size: 14px !important; margin-right: 5px; vertical-align: middle; }
+.sidebar-server-item { font-size: 16px; justify-content: center; font-weight: 500; }
 .sidebar-item {
   font-size: 15px;
   padding: 5px 10px;
