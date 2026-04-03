@@ -22,9 +22,16 @@ describe('inferEsiServer', () => {
     expect(inferEsiServer('_c_infinity')).toBe('infinity')
   })
 
+  it('maps singularity dir name to singularity', () => {
+    expect(inferEsiServer('_c_singularity')).toBe('singularity')
+  })
+
+  it('maps duality and buckshot dir names to other', () => {
+    expect(inferEsiServer('_c_duality')).toBe('other')
+    expect(inferEsiServer('_c_buckshot')).toBe('other')
+  })
+
   it('defaults to tq for unknown dir names', () => {
-    expect(inferEsiServer('_c_singularity')).toBe('tq')
-    expect(inferEsiServer('_c_duality')).toBe('tq')
     expect(inferEsiServer('unknowndirname')).toBe('tq')
   })
 

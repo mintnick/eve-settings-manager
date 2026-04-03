@@ -53,6 +53,8 @@ export function inferEsiServer(serverDirName: string): EsiServer {
   const lower = serverDirName.toLowerCase()
   if (lower.includes('serenity')) return 'serenity'
   if (lower.includes('infinity')) return 'infinity'
+  if (lower.includes('singulari')) return 'singularity'
+  if (lower.includes('duality') || lower.includes('buckshot')) return 'other'
   return 'tq'
 }
 
@@ -60,12 +62,15 @@ export function inferEsiServer(serverDirName: string): EsiServer {
  * Fetches live server status from ESI.
  */
 export async function getServerStatus(server: EsiServer): Promise<ServerStatus> {
+  if (server === 'other') return { online: false }
   try {
     let url: string
     if (server === 'tq') {
       url = 'https://esi.evetech.net/status/'
     } else if (server === 'serenity') {
       url = 'https://ali-esi.evepc.163.com/latest/status/?datasource=serenity'
+    } else if (server === 'singularity') {
+      url = 'https://esi.evetech.net/status/?datasource=singularity'
     } else {
       url = 'https://ali-esi.evepc.163.com/latest/status/?datasource=infinity'
     }

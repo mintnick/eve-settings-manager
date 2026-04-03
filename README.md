@@ -25,7 +25,7 @@
 
 | Layer | Library |
 |---|---|
-| Desktop shell | Electron 29 |
+| Desktop shell | Electron 41 |
 | UI framework | Vue 3 + TypeScript |
 | Component library | Element Plus |
 | State management | Pinia |

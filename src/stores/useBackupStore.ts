@@ -2,6 +2,7 @@ import { defineStore } from 'pinia'
 import { ref } from 'vue'
 import type { Backup } from '../types'
 import { useProfileStore } from './useProfileStore'
+import { useSettingsStore } from './useSettingsStore'
 
 export const useBackupStore = defineStore('backup', () => {
   const backups = ref<Backup[]>([])
@@ -36,12 +37,16 @@ export const useBackupStore = defineStore('backup', () => {
     const profileStore = useProfileStore()
     if (!profileStore.activeProfile) return
     await window.ipcRenderer.invoke('backup:restore', profileStore.activeProfile.path, backupName)
+    await loadBackups()
+    await useSettingsStore().loadSettings()
   }
 
   async function restoreFileBackup(backupName: string) {
     const profileStore = useProfileStore()
     if (!profileStore.activeProfile) return
     await window.ipcRenderer.invoke('backup:restore-file', profileStore.activeProfile.path, backupName)
+    await loadBackups()
+    await useSettingsStore().loadSettings()
   }
 
   async function deleteBackup(backupName: string) {

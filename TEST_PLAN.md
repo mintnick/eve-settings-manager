@@ -42,9 +42,7 @@ Run: `pnpm test`
 
 ---
 
-### 1.2 Tests to Write — Folder IPC
-
-File to create: `electron/main/ipc/__tests__/folder.test.ts`
+### 1.2 ✅ Folder IPC — `folder.test.ts`
 
 | # | Test | What it checks |
 |---|------|----------------|
@@ -53,9 +51,7 @@ File to create: `electron/main/ipc/__tests__/folder.test.ts`
 
 ---
 
-### 1.3 Tests to Write — Server IPC
-
-File to create: `electron/main/ipc/__tests__/server.test.ts`
+### 1.3 ✅ Server IPC — `server.test.ts`
 
 | # | Test | What it checks |
 |---|------|----------------|
@@ -66,9 +62,7 @@ File to create: `electron/main/ipc/__tests__/server.test.ts`
 
 ---
 
-### 1.4 Tests to Write — Settings IPC
-
-File to create: `electron/main/ipc/__tests__/settings.test.ts`
+### 1.4 ✅ Settings IPC — `settings.test.ts`
 
 | # | Test | What it checks |
 |---|------|----------------|
@@ -79,9 +73,7 @@ File to create: `electron/main/ipc/__tests__/settings.test.ts`
 
 ---
 
-### 1.5 Tests to Write — Backup IPC
-
-File to create: `electron/main/ipc/__tests__/backup.test.ts`
+### 1.5 ✅ Backup IPC — `backup.test.ts`
 
 | # | Test | What it checks |
 |---|------|----------------|
@@ -95,9 +87,7 @@ File to create: `electron/main/ipc/__tests__/backup.test.ts`
 
 ---
 
-### 1.6 Tests to Write — Store IPC
-
-File to create: `electron/main/ipc/__tests__/store.test.ts`
+### 1.6 ✅ Store IPC — `store.test.ts`
 
 | # | Test | What it checks |
 |---|------|----------------|
@@ -234,20 +224,17 @@ pnpm dev
 
 | Category | Count |
 |----------|-------|
-| Automated (existing) | 4 (A1–A4) |
-| Automated (to write) | 22 (A5–A26) |
+| Automated | 74 (6 files, all passing) |
 | Manual | 56 (M1–M56) |
-| **Total** | **82** |
+| **Total** | **130** |
 
 ---
 
-## Recommended Order (Learning Path)
+## Recommended Order
 
-1. Run existing tests first: `pnpm test` → confirm A1–A4 pass
-2. Write and run `backup.test.ts` (A15–A21) — most critical feature
-3. Write and run `settings.test.ts` (A11–A14) — core file logic
-4. Manual: work through M1–M11 (startup + server detection)
-5. Manual: M12–M20 (profile tab)
-6. Manual: M21–M31 (settings tab)
-7. Manual: M32–M40 (backups tab)
-8. Manual: M41–M56 (settings, UI, edge cases)
+1. Run automated tests: `pnpm test` → confirm all 74 pass
+2. Manual: work through M1–M11 (startup + server detection)
+3. Manual: M12–M20 (profile tab)
+4. Manual: M21–M31 (settings tab)
+5. Manual: M32–M40 (backups tab)
+6. Manual: M41–M56 (settings, UI, edge cases)

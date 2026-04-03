@@ -52,4 +52,4 @@ export interface ServerStatus {
   error?: string
 }
 
-export type EsiServer = 'tq' | 'serenity' | 'infinity'
+export type EsiServer = 'tq' | 'serenity' | 'infinity' | 'singularity' | 'other'

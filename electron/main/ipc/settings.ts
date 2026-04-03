@@ -58,11 +58,15 @@ export async function resolveCharNames(
 
   if (uncachedIds.length === 0) return cached
 
+  if (server === 'other') return cached
+
   let url: string
   if (server === 'tq') {
     url = 'https://esi.evetech.net/universe/names/'
   } else if (server === 'serenity') {
     url = 'https://ali-esi.evepc.163.com/latest/universe/names/?datasource=serenity'
+  } else if (server === 'singularity') {
+    url = 'https://esi.evetech.net/universe/names/?datasource=singularity'
   } else {
     url = 'https://ali-esi.evepc.163.com/latest/universe/names/?datasource=infinity'
   }

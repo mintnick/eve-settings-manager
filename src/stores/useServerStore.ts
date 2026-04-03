@@ -18,7 +18,7 @@ export const useServerStore = defineStore('server', () => {
     try {
       // Use explicit custom path (e.g. dev fixture), then stored user override, then OS default
       const savedFolder: string = await window.ipcRenderer.invoke('store:get-custom-folder')
-      const folder = await window.ipcRenderer.invoke('folder:find', savedFolder || customPath || undefined)
+      const folder = await window.ipcRenderer.invoke('folder:find', customPath || savedFolder || undefined)
       eveFolder.value = folder ?? null
       if (folder) await detectServers()
     } finally {
