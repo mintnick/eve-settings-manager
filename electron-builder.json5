@@ -7,6 +7,11 @@
   "directories": {
     "output": "release/${version}"
   },
+  "publish": {
+    "provider": "github",
+    "owner": "mintnick",
+    "repo": "eve-settings-manager"
+  },
   "files": [
     "dist",
     "dist-electron"

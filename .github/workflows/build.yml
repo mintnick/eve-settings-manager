@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - electron-vue-refactor
+    tags:
+      - 'v*'
 
 jobs:
   build:
@@ -36,12 +38,15 @@ jobs:
         run: pnpm install
 
       - name: Build
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           pnpm vue-tsc --noEmit
           pnpm vite build
-          pnpm electron-builder --publish never
+          pnpm electron-builder --publish ${{ startsWith(github.ref, 'refs/tags/') && 'always' || 'never' }}
 
       - name: Upload artifact
+        if: ${{ !startsWith(github.ref, 'refs/tags/') }}
         uses: actions/upload-artifact@v4
         with:
           name: EVE-Settings-Manager-${{ runner.os }}
