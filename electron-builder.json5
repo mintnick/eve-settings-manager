@@ -23,6 +23,13 @@
     ],
     "artifactName": "${productName}-Mac-${version}.${ext}"
   },
+  "dmg": {
+    "window": { "width": 540, "height": 380 },
+    "contents": [
+      { "x": 130, "y": 190, "type": "file" },
+      { "x": 410, "y": 190, "type": "link", "path": "/Applications" }
+    ]
+  },
   "win": {
     "target": [
       {
