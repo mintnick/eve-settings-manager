@@ -5,7 +5,7 @@ import { useServerStore } from './stores/useServerStore'
 import { useProfileStore } from './stores/useProfileStore'
 import { useSettingsStore } from './stores/useSettingsStore'
 import { useBackupStore } from './stores/useBackupStore'
-import type { CharFile, UserFile, SettingsFile, Backup } from './types'
+import type { CharFile, SettingsFile, Backup } from './types'
 import {
   FolderOpened,
   Files,
@@ -20,7 +20,7 @@ import {
   Moon,
   Plus,
   MoreFilled,
-  EditPen,
+  Remove,
 } from '@element-plus/icons-vue'
 
 const { t, locale } = useI18n()
@@ -291,27 +291,14 @@ function confirmDeleteProfile() {
   )
 }
 
-// ── Notes dialog ───────────────────────────────────────────────────────────────
-const notesDialog = ref(false)
-const notesFile = ref<UserFile | null>(null)
-const notesValue = ref('')
-
-function openNotesDialog(file: UserFile) {
-  notesFile.value = file
-  notesValue.value = settingsStore.descriptions[file.filename] ?? ''
-  notesDialog.value = true
-}
-
-async function confirmNotes() {
-  if (!notesFile.value) return
-  notesDialog.value = false
-  const val = notesValue.value.trim()
-  if (val) {
-    await settingsStore.setDescription(notesFile.value.filename, val)
+// ── Notes inline ───────────────────────────────────────────────────────────────
+async function saveNote(filename: string, val: string) {
+  const trimmed = val.trim()
+  if (trimmed) {
+    await settingsStore.setDescription(filename, trimmed)
   } else {
-    await settingsStore.deleteDescription(notesFile.value.filename)
+    await settingsStore.deleteDescription(filename)
   }
-  notesFile.value = null
 }
 
 // ── GitHub ─────────────────────────────────────────────────────────────────────
@@ -562,21 +549,29 @@ async function setLanguage(lang: string) {
               :empty-text="profileStore.activeProfile ? t('table.noAccountFiles') : t('table.selectProfile')"
               class="settings-table"
             >
-              <el-table-column prop="id" :label="t('table.colAccountId')" sortable min-width="110" />
-              <el-table-column :label="t('table.colNotes')" min-width="80">
+              <el-table-column prop="id" :label="t('table.colAccountId')" sortable width="130" />
+              <el-table-column :label="t('table.colNotes')" min-width="160">
                 <template #default="{ row }">
-                  <span class="notes-cell-text">{{ settingsStore.descriptions[row.filename] ?? '' }}</span>
+                  <div class="notes-cell">
+                    <el-input
+                      :model-value="settingsStore.descriptions[row.filename] ?? ''"
+                      class="notes-inline-input"
+                      @input="(val: string) => { settingsStore.descriptions[row.filename] = val }"
+                      @change="(val: string) => saveNote(row.filename, val)"
+                      @keydown.enter="($event.target as HTMLElement).blur()"
+                    />
+                    <el-tooltip v-if="settingsStore.descriptions[row.filename]" :content="t('table.clearNote')" placement="top">
+                      <el-icon class="notes-cell-clear" @click.stop="settingsStore.deleteDescription(row.filename)"><Remove /></el-icon>
+                    </el-tooltip>
+                  </div>
                 </template>
               </el-table-column>
               <el-table-column prop="modifiedAt" :label="t('table.colModified')" sortable width="150">
                 <template #default="{ row }">{{ formatDate(row.modifiedAt) }}</template>
               </el-table-column>
-              <el-table-column width="80" class-name="row-actions">
+              <el-table-column width="64" class-name="row-actions">
                 <template #default="{ row }">
                   <div class="row-actions-cell">
-                    <el-tooltip :content="t('table.editNotes')" placement="top">
-                      <el-icon class="row-icon notes-icon" @click.stop="openNotesDialog(row)"><EditPen /></el-icon>
-                    </el-tooltip>
                     <el-tooltip :content="t('table.backupFile')" placement="top">
                       <el-icon class="row-icon backup-icon" @click.stop="createFileBackupDirect(row)"><DocumentCopy /></el-icon>
                     </el-tooltip>
@@ -628,22 +623,8 @@ async function setLanguage(lang: string) {
       </template>
     </el-dialog>
 
-    <!-- Account notes dialog -->
-    <el-dialog v-model="notesDialog" :title="t('table.editNotes')" width="400px" @keydown.enter="confirmNotes">
-      <el-input
-        v-model="notesValue"
-        type="textarea"
-        :rows="3"
-        :placeholder="t('table.notesPlaceholder')"
-        autofocus
-      />
-      <template #footer>
-        <el-button @click="notesDialog = false">{{ t('dialog.cancel') }}</el-button>
-        <el-button type="primary" @click="confirmNotes">{{ t('dialog.save') }}</el-button>
-      </template>
-    </el-dialog>
 
-    <!-- Backup name dialog -->
+<!-- Backup name dialog -->
     <el-dialog v-model="backupDialog" :title="t('dialog.saveBackup')" width="400px" @keydown.enter="confirmBackup">
       <el-input v-model="backupName" :placeholder="t('dialog.backupName')" autofocus />
       <template #footer>
@@ -944,14 +925,37 @@ html, body, #app {
 .notes-icon:hover { color: var(--el-text-color-primary) !important; }
 .backup-icon { color: var(--el-color-primary) !important; }
 .sync-icon { color: #4caf6e !important; }
-.notes-cell-text {
-  font-size: 13px;
-  color: var(--el-text-color-secondary);
-  display: block;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+.notes-cell {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  min-width: 0;
 }
+.notes-inline-input { flex: 1; min-width: 0; }
+.notes-inline-input .el-input__wrapper {
+  background: transparent !important;
+  box-shadow: none !important;
+  padding: 0 4px;
+}
+.notes-inline-input .el-input__wrapper:hover {
+  box-shadow: 0 0 0 1px var(--el-border-color) inset !important;
+}
+.notes-inline-input .el-input__wrapper.is-focus {
+  box-shadow: 0 0 0 1px var(--el-color-primary) inset !important;
+  background: var(--el-fill-color-blank) !important;
+}
+.notes-inline-input .el-input__inner {
+  font-size: 15px !important;
+  color: var(--el-text-color-secondary) !important;
+}
+.notes-cell-clear {
+  flex-shrink: 0;
+  font-size: 20px !important;
+  color: var(--el-color-danger) !important;
+  cursor: pointer;
+  opacity: 0.7;
+}
+.notes-cell-clear:hover { opacity: 1; }
 
 /* Warning dialog */
 .warn-body { display: flex; flex-direction: column; gap: 10px; }

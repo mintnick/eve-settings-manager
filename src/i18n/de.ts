@@ -32,6 +32,7 @@ export default {
     syncTipAccount: 'Mit anderen Konten synchronisieren',
     colNotes: 'Notizen',
     editNotes: 'Notizen bearbeiten',
+    clearNote: 'Notiz löschen',
     notesPlaceholder: 'Notiz für dieses Konto hinzufügen…',
   },
   actions: {

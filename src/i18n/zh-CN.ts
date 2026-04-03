@@ -33,6 +33,7 @@ export default {
     syncTipAccount: '同步到其他账户',
     colNotes: '备注',
     editNotes: '编辑备注',
+    clearNote: '清除备注',
     notesPlaceholder: '为此账户添加备注…',
   },
   actions: {

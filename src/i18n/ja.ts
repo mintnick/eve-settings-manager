@@ -33,6 +33,7 @@ export default {
     syncTipAccount: '他のアカウントに同期',
     colNotes: 'メモ',
     editNotes: 'メモを編集',
+    clearNote: 'メモをクリア',
     notesPlaceholder: 'このアカウントにメモを追加…',
   },
   actions: {

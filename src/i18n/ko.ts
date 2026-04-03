@@ -33,6 +33,7 @@ export default {
     syncTipAccount: '다른 계정에 동기화',
     colNotes: '메모',
     editNotes: '메모 편집',
+    clearNote: '메모 지우기',
     notesPlaceholder: '이 계정에 메모 추가…',
   },
   actions: {

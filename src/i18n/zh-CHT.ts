@@ -33,6 +33,7 @@ export default {
     syncTipAccount: '同步至其他帳號',
     colNotes: '備註',
     editNotes: '編輯備註',
+    clearNote: '清除備註',
     notesPlaceholder: '為此帳號新增備註…',
   },
   actions: {

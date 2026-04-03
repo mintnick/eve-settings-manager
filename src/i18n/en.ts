@@ -32,6 +32,7 @@ export default {
     syncTipAccount: 'Sync to other accounts',
     colNotes: 'Notes',
     editNotes: 'Edit notes',
+    clearNote: 'Clear note',
     notesPlaceholder: 'Add a note for this account…',
   },
   actions: {

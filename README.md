@@ -42,11 +42,11 @@
    - **macOS:** `.dmg` — open it and drag the app to Applications
    - **Windows:** `.exe` — run it directly, no installation needed
 
-> **macOS note:** The app is not yet code-signed. On first launch macOS may say it is "damaged and can't be opened". If this happens, run the following in Terminal, then open the app normally:
+> **macOS note:** The app is not yet code-signed. On first launch macOS may say it is "damaged and can't be opened". The most reliable fix is to run the following in Terminal, then open the app normally:
 > ```bash
 > xattr -cr "/Applications/EVE Settings Manager.app"
 > ```
-> Alternatively: System Settings → Privacy & Security → scroll down → click **Open Anyway**.
+> Alternatively, macOS shows an **Open Anyway** button in System Settings → Privacy & Security for a short time (~1 hour) after the blocked launch. If you don't see it, use the Terminal command above instead.
 
 ---
 
