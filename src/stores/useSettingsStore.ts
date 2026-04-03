@@ -20,12 +20,13 @@ export const useSettingsStore = defineStore('settings', () => {
       charFiles.value = files.filter((f: CharFile | UserFile) => f.type === 'char')
       userFiles.value = files.filter((f: CharFile | UserFile) => f.type === 'user')
 
-      // Load descriptions
+      // Load descriptions in parallel
       const allFiles = [...charFiles.value, ...userFiles.value]
-      for (const f of allFiles) {
-        const desc = await window.ipcRenderer.invoke('store:get-description', f.filename)
-        if (desc) descriptions.value[f.filename] = desc
-      }
+      const descs = await Promise.all(
+        allFiles.map(f => window.ipcRenderer.invoke('store:get-description', f.filename))
+      )
+      descriptions.value = {}
+      allFiles.forEach((f, i) => { if (descs[i]) descriptions.value[f.filename] = descs[i] })
     } finally {
       loading.value = false
     }

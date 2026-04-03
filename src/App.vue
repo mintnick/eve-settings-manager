@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, watch, ref, computed } from 'vue'
+import { onMounted, watch, ref, computed, nextTick } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useServerStore } from './stores/useServerStore'
 import { useProfileStore } from './stores/useProfileStore'
@@ -133,10 +133,8 @@ async function confirmSync() {
   const targets = [...syncSelected.value]
   syncSource.value = null
   syncSelected.value = []
-  openWarnDialog(
-    t('warn.syncDetail', { n: targets.length }),
-    () => settingsStore.syncSettings(src.path, targets)
-  )
+  await nextTick()
+  await settingsStore.syncSettings(src.path, targets)
 }
 
 // ── Warning dialog ─────────────────────────────────────────────────────────────
@@ -156,8 +154,10 @@ function openWarnDialog(detail: string, action: () => Promise<void>, title?: str
 
 async function proceedWarn() {
   warnDialog.value = false
-  if (warnAction.value) await warnAction.value()
+  const action = warnAction.value
   warnAction.value = null
+  await nextTick()
+  if (action) await action()
 }
 
 // ── Backup put back ────────────────────────────────────────────────────────────
@@ -176,14 +176,18 @@ function backupDisplayName(backup: Backup): string {
 function putBackFile(backup: Backup) {
   openWarnDialog(
     t('warn.putBackFileDetail', { name: backupDisplayName(backup) }),
-    () => backupStore.restoreFileBackup(backup.name)
+    () => backupStore.restoreFileBackup(backup.name),
+    undefined,
+    false
   )
 }
 
 function putBackFolder(backup: Backup) {
   openWarnDialog(
     t('warn.backupFolderDetail', { name: backup.name }),
-    () => backupStore.restoreBackup(backup.name)
+    () => backupStore.restoreBackup(backup.name),
+    undefined,
+    false
   )
 }
 
@@ -639,19 +643,22 @@ async function setLanguage(lang: string) {
         <div class="sync-select-all">
           <el-checkbox :model-value="syncAllChecked" @change="setSyncAll">{{ t('dialog.selectAll') }}</el-checkbox>
         </div>
-        <div class="sync-target-list">
+        <el-checkbox-group v-model="syncSelected" class="sync-target-list">
           <el-checkbox
             v-for="file in syncTargets"
             :key="file.path"
-            :label="file.path"
-            v-model="syncSelected"
+            :value="file.path"
           >{{ syncTargetLabel(file) }}</el-checkbox>
-        </div>
+        </el-checkbox-group>
       </div>
       <p v-else class="sync-no-targets">{{ t('dialog.syncNoTargets') }}</p>
+      <p v-if="syncTargets.length" class="warn-suggest sync-warn">
+        <el-icon class="warn-icon"><Warning /></el-icon>
+        {{ t('warn.suggest') }}
+      </p>
       <template #footer>
         <el-button @click="syncDialog = false">{{ t('dialog.cancel') }}</el-button>
-        <el-button type="primary" :disabled="!syncSelected.length" @click="confirmSync">{{ t('dialog.sync') }}</el-button>
+        <el-button type="danger" :disabled="!syncSelected.length" @click="confirmSync">{{ t('dialog.sync') }}</el-button>
       </template>
     </el-dialog>
 
@@ -969,6 +976,7 @@ html, body, #app {
 .sync-target-list { display: flex; flex-direction: column; gap: 2px; max-height: 240px; overflow-y: auto; padding: 2px 0; }
 .sync-target-list .el-checkbox { margin: 0 !important; height: 26px; font-size: 12px; }
 .sync-no-targets { margin: 0; font-size: 13px; color: var(--el-text-color-placeholder); }
+.sync-warn { margin-top: 10px; }
 
 /* Misc */
 .loading-spin { animation: spin 1s linear infinite; }
