@@ -36,17 +36,19 @@ Findings from a codebase review, verified against the code. Ordered by priority.
 
 ---
 
-## Fix 4 — ESI mapping incorrect for test servers
+## Fix 4 — ESI mapping incorrect for test/tournament servers
 
-**File:** `electron/main/ipc/server.ts` (line 52–56), `electron/main/ipc/__tests__/server.test.ts` (line 25–29)
+**File:** `electron/main/ipc/server.ts`, `electron/main/ipc/__tests__/server.test.ts`
 
-**Problem:** `inferEsiServer` falls through to `'tq'` for Singularity, Duality, and Buckshot. Singularity has its own ESI endpoint (`?datasource=singularity`); the others have no public endpoint. The test explicitly asserts `'tq'` for these, locking in the wrong behavior.
+**Problem:** `inferEsiServer` fell through to `'tq'` for Singularity, Duality, and Buckshot.
 
-**Fix:**
-- Extend `EsiServer` type with a `'singularity'` variant (and optionally `'other'` for Duality/Buckshot which have no ESI).
-- Update `inferEsiServer` to return `'singularity'` for singularity dirs.
-- Update `getServerStatus` to use the singularity datasource URL for `'singularity'`, and return `{ online: false }` immediately for `'other'` (no endpoint exists).
-- Update the test to assert the corrected mappings.
+**Resolution (updated after further research):** Singularity's `datasource=singularity` ESI parameter was **removed by CCP on January 14, 2020** — it never had a usable public endpoint after that date. Duality is retired. "Buckshot" is CCP's internal folder name for the **Thunderdome** tournament server, which also has no public ESI. All three map to `'other'`.
+
+**Fix applied:**
+- `EsiServer` type is `'tq' | 'serenity' | 'infinity' | 'other'` — no `'singularity'` variant needed.
+- `inferEsiServer` returns `'other'` for singularity, duality, thunderdome, and buckshot.
+- `SERVER_KEYWORDS` updated: buckshot display name corrected to "Thunderdome"; `thunderdome` keyword added alongside it.
+- `getServerStatus` and `resolveCharNames` skip ESI for `'other'` — return `{ online: false }` and cached names only.
 
 ---
 

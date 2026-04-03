@@ -58,7 +58,8 @@ Run: `pnpm test`
 | A7 | `detectServers` finds dirs with known keywords | Picks up `_test_tranquility`, ignores unrelated dirs |
 | A8 | `inferEsiServer('tranquility')` returns `'tq'` | Keyword → ESI enum mapping |
 | A9 | `inferEsiServer('serenity')` returns `'serenity'` | Same for Serenity |
-| A10 | `inferEsiServer('unknown')` returns `'tq'` | Graceful fallback to TQ for unrecognised names |
+| A10 | `inferEsiServer('singularity/duality/thunderdome/buckshot')` returns `'other'` | No public ESI for test/tournament servers |
+| A10b | `inferEsiServer('unknown')` returns `'tq'` | Graceful fallback to TQ for unrecognised names |
 
 ---
 

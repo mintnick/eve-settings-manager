@@ -4,12 +4,13 @@ import type { ServerDir, ServerStatus, EsiServer } from './types.js'
 import { httpsGet } from './http.js'
 
 const SERVER_KEYWORDS: [string, string][] = [
-  ['tranquil', 'Tranquility'],
-  ['serenity',  'Serenity'],
-  ['infinity',  'Infinity'],
-  ['singulari', 'Singularity'],
-  ['duality',   'Duality'],
-  ['buckshot',  'Buckshot'],
+  ['tranquil',   'Tranquility'],
+  ['serenity',   'Serenity'],
+  ['infinity',   'Infinity'],
+  ['singulari',  'Singularity'],
+  ['duality',    'Duality'],
+  ['thunderdome','Thunderdome'],
+  ['buckshot',   'Thunderdome'],  // CCP's internal folder name for the tournament server
 ]
 
 const LANG_NAMES: Record<string, string> = {
@@ -53,8 +54,10 @@ export function inferEsiServer(serverDirName: string): EsiServer {
   const lower = serverDirName.toLowerCase()
   if (lower.includes('serenity')) return 'serenity'
   if (lower.includes('infinity')) return 'infinity'
-  if (lower.includes('singulari')) return 'singularity'
-  if (lower.includes('duality') || lower.includes('buckshot')) return 'other'
+  // Singularity, Duality, Thunderdome and its folder alias buckshot have no
+  // public ESI (Singularity's datasource was removed January 2020).
+  if (lower.includes('singulari') || lower.includes('duality')
+    || lower.includes('thunderdome') || lower.includes('buckshot')) return 'other'
   return 'tq'
 }
 
@@ -62,6 +65,7 @@ export function inferEsiServer(serverDirName: string): EsiServer {
  * Fetches live server status from ESI.
  */
 export async function getServerStatus(server: EsiServer): Promise<ServerStatus> {
+  // 'other' covers Singularity, Duality, Thunderdome — none have a public ESI endpoint.
   if (server === 'other') return { online: false }
   try {
     let url: string
@@ -69,8 +73,6 @@ export async function getServerStatus(server: EsiServer): Promise<ServerStatus> 
       url = 'https://esi.evetech.net/status/'
     } else if (server === 'serenity') {
       url = 'https://ali-esi.evepc.163.com/latest/status/?datasource=serenity'
-    } else if (server === 'singularity') {
-      url = 'https://esi.evetech.net/status/?datasource=singularity'
     } else {
       url = 'https://ali-esi.evepc.163.com/latest/status/?datasource=infinity'
     }
