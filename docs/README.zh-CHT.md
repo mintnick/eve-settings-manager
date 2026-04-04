@@ -7,40 +7,13 @@
 
 ---
 
-## 功能
-
-- **伺服器切換** — 支援 Tranquility、Serenity、Singularity、Infinity、Thunderdome，從 EVE 安裝目錄自動偵測
-- **設定資料夾管理** — 建立、重新命名、複製、刪除設定資料夾（即 EVE 使用的 `settings_*` 子目錄）
-- **角色清單** — 顯示所有角色檔案，透過 ESI API 自動解析角色名稱及最後修改時間
-- **帳號清單** — 顯示所有帳號檔案；可為每個帳號新增備註，方便記錄用途
-- **同步設定** — 一鍵將某個角色或帳號的介面配置複製到任意多個其他角色/帳號
-- **單一檔案備份** — 備份單一角色或帳號檔案，一鍵還原
-- **資料夾備份** — 為整個設定資料夾建立命名快照，從側邊欄進行還原或刪除
-- **深色 / 淺色主題** — 預設深色，首次啟動時跟隨系統主題；偏好設定跨工作階段保存
-- **11 種語言** — English、简体中文、繁體中文、Русский、Deutsch、Français、Español、Português (BR)、한국어、日本語、Polski
-
----
-
-## 技術堆疊
-
-| 層級 | 函式庫 |
-|---|---|
-| 桌面外殼 | Electron 41 |
-| UI 框架 | Vue 3 + TypeScript |
-| 元件庫 | Element Plus |
-| 狀態管理 | Pinia |
-| 國際化 | vue-i18n |
-| 建置工具 | Vite + vite-plugin-electron |
-| 持久化 | electron-store |
-
----
-
 ## 快速開始
 
-1. 前往 [Releases](https://github.com/mintnick/eve-settings-manager/releases) 頁面。
+1. 前往 [Releases](https://github.com/mintnick/eve-settings-manager/releases/latest) 頁面。
 2. 下載適合你平台的檔案：
    - **macOS：** `.dmg` — 開啟後將應用程式拖曳至 Applications 資料夾
    - **Windows：** `.exe` — 直接執行，無需安裝
+   - **Linux：** `.AppImage` — 賦予執行權限後執行
 
 > **macOS 注意：** 本應用程式尚未進行程式碼簽章。首次啟動時，macOS 可能提示應用程式「已損毀，無法開啟」。最可靠的修復方式是在終端機執行以下指令，然後正常開啟應用程式：
 > ```bash
@@ -54,17 +27,19 @@
 
 所有持久化資料均儲存在本地，不會上傳至任何伺服器。
 
-| 平台 | 設定檔 | 備份 |
-|---|---|---|
-| macOS | `~/Library/Application Support/eve-settings-manager/config.json` | `~/Library/Application Support/eve-settings-manager/backups/` |
-| Windows | `%APPDATA%\eve-settings-manager\config.json` | `%APPDATA%\eve-settings-manager\backups\` |
+| 平台 | 本地資料 |
+|---|---|
+| macOS | `~/Library/Application Support/eve-settings-manager/` |
+| Windows | `%APPDATA%\eve-settings-manager\` |
+| Linux | `~/.config/eve-settings-manager/` |
 
 ---
 
 ## 解除安裝
 
-- **macOS：** 從 Applications 資料夾刪除應用程式。本地資料夾（包含設定檔和所有備份）**不會自動刪除** — 如需完全清除，請手動刪除：`~/Library/Application Support/eve-settings-manager`
-- **Windows：** 刪除 `.exe` 檔案。如需完全清除，也請刪除資料夾（包含設定檔和所有備份）：`%APPDATA%\eve-settings-manager`
+- **macOS：** 從 Applications 資料夾刪除應用程式。本地資料夾**不會自動刪除** — 如需完全清除，請手動刪除：`~/Library/Application Support/eve-settings-manager`
+- **Windows：** 刪除 `.exe` 檔案。如需完全清除，也請刪除資料夾：`%APPDATA%\eve-settings-manager`
+- **Linux：** 刪除 `.AppImage` 檔案。如需完全清除，也請刪除資料夾：`~/.config/eve-settings-manager`
 
 ---
 
@@ -77,13 +52,14 @@ git clone https://github.com/mintnick/eve-settings-manager.git
 cd eve-settings-manager
 pnpm install
 pnpm dev        # 啟動開發伺服器 + Electron（熱重載）
-```
-
-```bash
 pnpm build      # 型別檢查、打包並透過 electron-builder 產生安裝檔
 ```
 
-輸出路徑：`release/<版本號>/`
+---
+
+## 免責聲明
+
+EVE Online 及其相關標誌、名稱和資產均為 CCP hf 的財產。本專案與 CCP hf 無關聯，亦未獲得其認可。
 
 ---
 
