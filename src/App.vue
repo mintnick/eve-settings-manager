@@ -395,8 +395,8 @@ onMounted(async () => {
     window.ipcRenderer.invoke('store:get-language'),
   ])
 
-  const dark = savedTheme ? savedTheme === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches
-  if (!savedTheme) await window.ipcRenderer.invoke('store:set-theme', dark ? 'dark' : 'light')
+  const dark = savedTheme ? savedTheme === 'dark' : true
+  if (!savedTheme) await window.ipcRenderer.invoke('store:set-theme', 'dark')
   applyTheme(dark)
 
   const lang = savedLang ?? detectSystemLanguage()
@@ -464,7 +464,7 @@ async function setLanguage(lang: string) {
             :key="backup.name"
             class="sidebar-item backup-item"
           >
-            <el-icon class="sidebar-item-icon" color="#909399">
+            <el-icon class="sidebar-item-icon">
               <Document v-if="backup.type === 'file'" />
               <Files v-else />
             </el-icon>
@@ -763,7 +763,7 @@ async function setLanguage(lang: string) {
 /* Softer light theme — less blinding for EVE players */
 html:not(.dark) {
   --el-bg-color: #e8eaef;
-  --el-bg-color-page: #cdd2dc;
+  --el-bg-color-page: #c5ccd8;
   --el-bg-color-overlay: #eceef2;
   --el-fill-color-blank: #e8eaef;
   --el-fill-color-light: #c0c6d2;
@@ -772,6 +772,11 @@ html:not(.dark) {
   --el-table-tr-bg-color: #e8eaef;
   --el-table-header-bg-color: #cdd2dc;
   --el-table-row-hover-bg-color: #c0c6d2;
+  /* Darker text for better contrast on blue-gray backgrounds */
+  --el-text-color-regular: #3a4255;
+  --el-text-color-secondary: #4e5a6e;
+  --el-text-color-placeholder: #68768a;
+  --sidebar-label-color: #4e6080;
 }
 
 /* Light mode table row hover — use neutral instead of primary tint */
@@ -844,7 +849,7 @@ html, body, #app {
 .sidebar-label {
   font-size: 16px;
   font-weight: 600;
-  color: var(--el-color-success);
+  color: var(--sidebar-label-color, var(--el-color-success));
   letter-spacing: 0.02em;
   padding: 10px 10px 4px;
   text-align: center;
@@ -884,7 +889,7 @@ html, body, #app {
   border-color: var(--el-color-primary);
   background: var(--el-color-primary-light-9);
 }
-.sidebar-item-icon { font-size: 18px; }
+.sidebar-item-icon { font-size: 18px; color: var(--el-text-color-secondary); }
 .sidebar-empty { color: var(--el-text-color-placeholder); font-size: 14px; cursor: default; }
 .sidebar-empty:hover { background: none; }
 .sidebar-divider { margin: 8px 0; border-top: 1px solid var(--el-border-color-lighter); }
