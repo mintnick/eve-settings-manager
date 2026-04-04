@@ -167,20 +167,4 @@ settings_Default/
 
 ## TODO
 
-Items from beta feedback — move or delete after implemented.
-
-- **Global backup path** — move all backups to a single global location (app data dir) so backups from all profiles are visible in one list. Each entry should show its source profile. Any backup can be restored to the currently active profile.
-- **Delete backup confirmation wording** — current message reads ambiguously (sounds like deleting the actual settings file). Reword to something like "Delete this backup? Your current settings will not be affected."
-- **Account notes clear button** — when a note has content, show a quick clear button to wipe it without having to manually select and delete the text.
-- **Light mode polish** — hover states need to be darker/more visible; topbar, sidebar, and bottom bar colors need better contrast and visual distinction.
-- **Bottom bar buttons** — all buttons in the bottom action bar should be the same size.
-- **Help/instructions button** — add a button to the bottom-right alongside the theme and GitHub buttons. Opens the README in the user's current language (e.g. `docs/README.zh-CN.md` for Chinese users, English README as fallback). Could open in system browser or a simple in-app dialog.
-- **Server list title** — make the "Servers" section title slightly larger and centered; add i18n translation; consider adding an icon and/or tooltip.
-- **Profile action labels** — the `⋯` dropdown actions should all specify "profile": "Rename Profile", "Duplicate Profile", "Delete Profile" (currently only Delete mentions profile).
-- **Backup reminder logic** — restore/put-back dialogs should NOT suggest backing up first (the user is already restoring from a backup). The sync/overwrite picker dialog SHOULD suggest backing up first, since it overwrites live settings files.
-- **OS theme detection on first launch** — after light mode is polished, restore system theme detection (`prefers-color-scheme`) so the app defaults to the user's OS theme on first open instead of always defaulting to dark.
-- **Localized READMEs — macOS note** — propagate the updated macOS Gatekeeper note (including the "Open Anyway disappears after ~1 hour" explanation) to all 7 language docs (`docs/README.zh-CN.md`, `zh-CHT`, `ja`, `ko`, `fr`, `de`, `es`).
-- **Additional i18n languages** — Russian (`ru`) is the highest priority given EVE's historically large Russian playerbase. Also consider Portuguese (`pt-BR`) and Polish (`pl`). Requires new locale JSON files, new docs README, and adding to the language selector.
-- **Table section titles** — center-align the "Characters" and "Accounts" section titles above each table.
-- **App icons** — create/refine proper app icons for all platforms (macOS `.icns`, Windows `.ico`, Linux `.png`).
-- **README default page promotion** — the root `README.md` should better promote the app with screenshots, feature highlights, and download links up front.
+All known items complete. App is feature-complete and release-ready.
