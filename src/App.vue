@@ -87,6 +87,7 @@ function revealBackup(path: string) {
 async function confirmBackup() {
   const name = backupName.value.trim()
   if (!name) return
+  ;(document.activeElement as HTMLElement)?.blur()
   backupDialog.value = false
   await backupStore.createBackup(name)
 }
@@ -148,12 +149,14 @@ const warnTitle = ref('')
 const warnDetail = ref('')
 const warnShowSuggest = ref(true)
 const warnAction = ref<(() => Promise<void>) | null>(null)
+const warnType = ref<'confirm' | 'danger'>('danger')
 
-function openWarnDialog(detail: string, action: () => Promise<void>, title?: string, showSuggest = true) {
+function openWarnDialog(detail: string, action: () => Promise<void>, title?: string, showSuggest = true, type: 'confirm' | 'danger' = 'danger') {
   warnTitle.value = title ?? ''
   warnDetail.value = detail
   warnShowSuggest.value = showSuggest
   warnAction.value = action
+  warnType.value = type
   warnDialog.value = true
 }
 
@@ -185,7 +188,8 @@ function putBackFile(backup: Backup) {
     t('warn.putBackFileDetail', { name: backupDisplayName(backup) }),
     () => backupStore.restoreFileBackup(backup),
     undefined,
-    false
+    false,
+    'confirm'
   )
 }
 
@@ -194,7 +198,8 @@ function putBackFolder(backup: Backup) {
     t('warn.backupFolderDetail', { name: backup.name }),
     () => backupStore.restoreBackup(backup),
     undefined,
-    false
+    false,
+    'confirm'
   )
 }
 
@@ -681,8 +686,8 @@ async function setLanguage(lang: string) {
 
 
 <!-- Backup name dialog -->
-    <el-dialog v-model="backupDialog" :title="t('dialog.saveBackup')" width="400px" @keydown.enter="confirmBackup">
-      <el-input v-model="backupName" :placeholder="t('dialog.backupName')" autofocus />
+    <el-dialog v-model="backupDialog" :title="t('dialog.saveBackup')" width="400px">
+      <el-input v-model="backupName" :placeholder="t('dialog.backupName')" autofocus @keydown.enter.prevent="confirmBackup" />
       <template #footer>
         <el-button @click="backupDialog = false">{{ t('dialog.cancel') }}</el-button>
         <el-button type="primary" :disabled="!backupName.trim()" @click="confirmBackup">{{ t('dialog.save') }}</el-button>
@@ -710,7 +715,7 @@ async function setLanguage(lang: string) {
       </p>
       <template #footer>
         <el-button @click="syncDialog = false">{{ t('dialog.cancel') }}</el-button>
-        <el-button type="danger" :disabled="!syncSelected.length" @click="confirmSync">{{ t('dialog.sync') }}</el-button>
+        <el-button class="btn-confirm" :disabled="!syncSelected.length" @click="confirmSync">{{ t('dialog.sync') }}</el-button>
       </template>
     </el-dialog>
 
@@ -725,7 +730,7 @@ async function setLanguage(lang: string) {
       </div>
       <template #footer>
         <el-button @click="warnDialog = false">{{ t('dialog.cancel') }}</el-button>
-        <el-button type="danger" @click="proceedWarn">{{ t('warn.proceed') }}</el-button>
+        <el-button :class="warnType === 'danger' ? 'btn-danger' : 'btn-confirm'" @click="proceedWarn">{{ t('warn.proceed') }}</el-button>
       </template>
     </el-dialog>
 
@@ -733,6 +738,28 @@ async function setLanguage(lang: string) {
 </template>
 
 <style>
+/* Dialog action button colors */
+.btn-confirm.el-button {
+  --el-button-bg-color: #10b981;
+  --el-button-border-color: #10b981;
+  --el-button-hover-bg-color: #059669;
+  --el-button-hover-border-color: #059669;
+  --el-button-active-bg-color: #047857;
+  --el-button-active-border-color: #047857;
+  --el-button-text-color: #fff;
+  --el-button-hover-text-color: #fff;
+}
+.btn-danger.el-button {
+  --el-button-bg-color: #f43f5e;
+  --el-button-border-color: #f43f5e;
+  --el-button-hover-bg-color: #e11d48;
+  --el-button-hover-border-color: #e11d48;
+  --el-button-active-bg-color: #be123c;
+  --el-button-active-border-color: #be123c;
+  --el-button-text-color: #fff;
+  --el-button-hover-text-color: #fff;
+}
+
 /* Softer light theme — less blinding for EVE players */
 html:not(.dark) {
   --el-bg-color: #e8eaef;
