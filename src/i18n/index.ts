@@ -7,6 +7,9 @@ import ko from './ko'
 import fr from './fr'
 import de from './de'
 import es from './es'
+import ru from './ru'
+import ptBR from './pt-BR'
+import pl from './pl'
 
 export const i18n = createI18n({
   legacy: false,
@@ -21,5 +24,8 @@ export const i18n = createI18n({
     fr,
     de,
     es,
+    ru,
+    'pt-BR': ptBR,
+    pl,
   },
 })

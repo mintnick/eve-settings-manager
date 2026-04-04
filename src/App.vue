@@ -213,6 +213,9 @@ const LANGUAGES = [
   { value: 'fr',     label: 'Français' },
   { value: 'de',     label: 'Deutsch' },
   { value: 'es',     label: 'Español' },
+  { value: 'ru',     label: 'Русский' },
+  { value: 'pt-BR',  label: 'Português (BR)' },
+  { value: 'pl',     label: 'Polski' },
 ]
 
 const language = ref('en')
@@ -370,6 +373,9 @@ function detectSystemLanguage(): string {
   if (sys.startsWith('fr')) return 'fr'
   if (sys.startsWith('de')) return 'de'
   if (sys.startsWith('es')) return 'es'
+  if (sys.startsWith('ru')) return 'ru'
+  if (sys.startsWith('pt')) return 'pt-BR'
+  if (sys.startsWith('pl')) return 'pl'
   return 'en'
 }
 
