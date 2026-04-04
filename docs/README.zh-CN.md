@@ -59,7 +59,7 @@ pnpm build      # 类型检查、构建并打包
 
 ## 免责声明
 
-EVE Online® 及其相关名称、标志和资产均为 CCP Games 的财产。本项目与 CCP Games 没有任何关联，也未获得其授权或认可。
+EVE Online® 及其相关名称、标志和资产均为 CCP Games 的财产。
 
 ---
 

@@ -76,7 +76,7 @@ pnpm build      # type-check, bundle, and package
 
 ## Disclaimer
 
-EVE Online® and all related names, logos, and assets are the property of CCP Games. This project is not affiliated with or endorsed by CCP Games.
+EVE Online® and all related names, logos, and assets are the property of CCP Games.
 
 ---
 

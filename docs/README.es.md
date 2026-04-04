@@ -59,7 +59,7 @@ pnpm build      # verificación de tipos, bundling y empaquetado con electron-bu
 
 ## Aviso legal
 
-EVE Online® y todos los nombres, logotipos y recursos relacionados son propiedad de CCP Games. Este proyecto no está afiliado ni respaldado por CCP Games.
+EVE Online® y todos los nombres, logotipos y recursos relacionados son propiedad de CCP Games.
 
 ---
 
