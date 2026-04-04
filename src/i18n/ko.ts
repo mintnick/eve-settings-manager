@@ -30,7 +30,7 @@ export default {
     accounts: '계정',
     colCharacter: '캐릭터 이름',
     colId: 'ID',
-    colAccountId: '계정 ID',
+    colAccountId: 'ID',
     colModified: '수정 날짜',
     noCharFiles: '캐릭터 파일을 찾을 수 없습니다',
     noAccountFiles: '계정 파일을 찾을 수 없습니다',
@@ -47,6 +47,7 @@ export default {
   actions: {
     backup: '프로필 백업',
     openFolder: '프로필 열기',
+    help: '도움말',
     darkMode: '다크 모드로 전환',
     lightMode: '라이트 모드로 전환',
   },

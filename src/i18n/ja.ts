@@ -30,7 +30,7 @@ export default {
     accounts: 'アカウント',
     colCharacter: 'キャラクター名',
     colId: 'ID',
-    colAccountId: 'アカウント ID',
+    colAccountId: 'ID',
     colModified: '更新日時',
     noCharFiles: 'キャラクターファイルが見つかりません',
     noAccountFiles: 'アカウントファイルが見つかりません',
@@ -47,6 +47,7 @@ export default {
   actions: {
     backup: 'プロファイルをバックアップ',
     openFolder: 'プロファイルを開く',
+    help: 'ヘルプ',
     darkMode: 'ダークモードに切り替え',
     lightMode: 'ライトモードに切り替え',
   },

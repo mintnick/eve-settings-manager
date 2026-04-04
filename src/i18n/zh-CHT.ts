@@ -30,7 +30,7 @@ export default {
     accounts: '帳號',
     colCharacter: '角色名稱',
     colId: 'ID',
-    colAccountId: '帳號 ID',
+    colAccountId: 'ID',
     colModified: '修改時間',
     noCharFiles: '找不到角色檔案',
     noAccountFiles: '找不到帳號檔案',
@@ -47,6 +47,7 @@ export default {
   actions: {
     backup: '備份設定檔',
     openFolder: '開啟設定資料夾',
+    help: '說明',
     darkMode: '切換至深色模式',
     lightMode: '切換至淺色模式',
   },

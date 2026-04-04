@@ -22,6 +22,7 @@ import {
   MoreFilled,
   Remove,
   Monitor,
+  QuestionFilled,
 } from '@element-plus/icons-vue'
 
 const { t, locale } = useI18n()
@@ -329,6 +330,23 @@ function openGitHub() {
   window.ipcRenderer.invoke('shell:open-external', 'https://github.com/mintnick/eve-settings-manager')
 }
 
+// ── Help ───────────────────────────────────────────────────────────────────────
+const README_URLS: Record<string, string> = {
+  'zh-CN':  'https://github.com/mintnick/eve-settings-manager/blob/main/docs/README.zh-CN.md',
+  'zh-CHT': 'https://github.com/mintnick/eve-settings-manager/blob/main/docs/README.zh-CHT.md',
+  'ja':     'https://github.com/mintnick/eve-settings-manager/blob/main/docs/README.ja.md',
+  'ko':     'https://github.com/mintnick/eve-settings-manager/blob/main/docs/README.ko.md',
+  'fr':     'https://github.com/mintnick/eve-settings-manager/blob/main/docs/README.fr.md',
+  'de':     'https://github.com/mintnick/eve-settings-manager/blob/main/docs/README.de.md',
+  'es':     'https://github.com/mintnick/eve-settings-manager/blob/main/docs/README.es.md',
+}
+const FALLBACK_README = 'https://github.com/mintnick/eve-settings-manager/blob/main/README.md'
+
+function openHelp() {
+  const url = README_URLS[language.value] ?? FALLBACK_README
+  window.ipcRenderer.invoke('shell:open-external', url)
+}
+
 // ── Theme ──────────────────────────────────────────────────────────────────────
 const isDark = ref(false)
 
@@ -361,7 +379,7 @@ onMounted(async () => {
     window.ipcRenderer.invoke('store:get-language'),
   ])
 
-  const dark = savedTheme ? savedTheme === 'dark' : true
+  const dark = savedTheme ? savedTheme === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches
   if (!savedTheme) await window.ipcRenderer.invoke('store:set-theme', dark ? 'dark' : 'light')
   applyTheme(dark)
 
@@ -572,8 +590,8 @@ async function setLanguage(lang: string) {
               :empty-text="profileStore.activeProfile ? t('table.noAccountFiles') : t('table.selectProfile')"
               class="settings-table"
             >
-              <el-table-column prop="id" :label="t('table.colAccountId')" sortable width="130" />
-              <el-table-column :label="t('table.colNotes')" min-width="160">
+              <el-table-column prop="id" :label="t('table.colAccountId')" sortable width="110" />
+              <el-table-column :label="t('table.colNotes')" min-width="45">
                 <template #default="{ row }">
                   <div class="notes-cell">
                     <el-input
@@ -629,6 +647,9 @@ async function setLanguage(lang: string) {
               <el-icon class="theme-toggle-btn" @click="openGitHub()">
                 <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.009-.868-.013-1.703-2.782.604-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.463-1.11-1.463-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.831.092-.646.35-1.086.636-1.336-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0 1 12 6.836a9.59 9.59 0 0 1 2.504.337c1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.202 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.741 0 .267.18.578.688.48C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg>
               </el-icon>
+            </el-tooltip>
+            <el-tooltip :content="t('actions.help')" placement="top">
+              <el-icon class="theme-toggle-btn" @click="openHelp()"><QuestionFilled /></el-icon>
             </el-tooltip>
           </div>
         </div>
@@ -703,15 +724,20 @@ async function setLanguage(lang: string) {
 /* Softer light theme — less blinding for EVE players */
 html:not(.dark) {
   --el-bg-color: #e8eaef;
-  --el-bg-color-page: #dfe2e8;
+  --el-bg-color-page: #cdd2dc;
   --el-bg-color-overlay: #eceef2;
   --el-fill-color-blank: #e8eaef;
-  --el-fill-color-light: #d8dbe3;
-  --el-fill-color: #d0d4dd;
+  --el-fill-color-light: #c0c6d2;
+  --el-fill-color: #b6bcc9;
   --el-table-bg-color: #e8eaef;
   --el-table-tr-bg-color: #e8eaef;
-  --el-table-header-bg-color: #dfe2e8;
-  --el-table-row-hover-bg-color: #d0d4dd;
+  --el-table-header-bg-color: #cdd2dc;
+  --el-table-row-hover-bg-color: #c0c6d2;
+}
+
+/* Light mode table row hover — use neutral instead of primary tint */
+html:not(.dark) .settings-table .el-table__row:hover td.el-table__cell {
+  background: var(--el-fill-color-light) !important;
 }
 
 html, body, #app {
@@ -907,7 +933,8 @@ html, body, #app {
 .settings-table { flex: 1; }
 .settings-table .el-table__inner-wrapper::before { display: none !important; }
 .settings-table .el-table__border-bottom-patch { display: none !important; }
-.settings-table .el-table__cell { font-size: 15px !important; padding: 10px 0 !important; }
+.settings-table .el-table__row { height: 46px; }
+.settings-table .el-table__cell { font-size: 15px !important; padding: 0 !important; }
 .settings-table .el-table__row:hover td.el-table__cell { background: var(--el-color-primary-light-8) !important; }
 
 /* Action bar */
@@ -960,8 +987,9 @@ html, body, #app {
   gap: 4px;
   min-width: 0;
 }
-.notes-inline-input { flex: 1; min-width: 0; }
+.notes-inline-input { flex: 1; min-width: 0; height: 100%; }
 .notes-inline-input .el-input__wrapper {
+  height: 100% !important;
   background: transparent !important;
   box-shadow: none !important;
   padding: 0 4px;
@@ -1006,7 +1034,9 @@ html, body, #app {
 .mr-1 { margin-right: 4px; }
 .flex-1 { flex: 1; }
 
-/* Tooltip fade-out (EP only ships the enter half by default) */
-.el-fade-in-linear-leave-active { transition: opacity 0.15s linear !important; }
+/* Tooltips — no animation */
+.el-fade-in-linear-enter-active,
+.el-fade-in-linear-leave-active { transition: none !important; }
+.el-fade-in-linear-enter-from,
 .el-fade-in-linear-leave-to { opacity: 0 !important; }
 </style>

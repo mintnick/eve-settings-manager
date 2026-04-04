@@ -30,7 +30,7 @@ export default {
     accounts: '账户',
     colCharacter: '角色名',
     colId: 'ID',
-    colAccountId: '账户 ID',
+    colAccountId: 'ID',
     colModified: '修改时间',
     noCharFiles: '未找到角色文件',
     noAccountFiles: '未找到账户文件',
@@ -47,6 +47,7 @@ export default {
   actions: {
     backup: '备份配置',
     openFolder: '打开配置文件夹',
+    help: '说明',
     darkMode: '切换到深色模式',
     lightMode: '切换到浅色模式',
   },

@@ -30,7 +30,7 @@ export default {
     accounts: 'Konten',
     colCharacter: 'Charakter',
     colId: 'ID',
-    colAccountId: 'Konto-ID',
+    colAccountId: 'ID',
     colModified: 'Geändert',
     noCharFiles: 'Keine Charakterdateien gefunden',
     noAccountFiles: 'Keine Kontodateien gefunden',
@@ -46,6 +46,7 @@ export default {
   actions: {
     backup: 'Profil sichern',
     openFolder: 'Profil öffnen',
+    help: 'Hilfe',
     darkMode: 'Dunkelmodus aktivieren',
     lightMode: 'Hellmodus aktivieren',
   },
