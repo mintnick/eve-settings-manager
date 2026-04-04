@@ -9,6 +9,7 @@ export const useSettingsStore = defineStore('settings', () => {
   const userFiles = ref<UserFile[]>([])
   const loading = ref(false)
   const descriptions = ref<Record<string, string>>({})
+  const charNames = ref<Record<string, string>>({}) // accumulated across all profile loads
 
   async function loadSettings() {
     const profileStore = useProfileStore()
@@ -40,6 +41,7 @@ export const useSettingsStore = defineStore('settings', () => {
       // Only apply if charFiles still matches this load (profile hasn't changed)
       if (charFiles.value === snapshot) {
         charFiles.value = snapshot.map(f => ({ ...f, charName: nameMap[f.id] ?? f.charName }))
+        charNames.value = { ...charNames.value, ...nameMap }
       }
     }
   }
@@ -60,7 +62,7 @@ export const useSettingsStore = defineStore('settings', () => {
   }
 
   return {
-    charFiles, userFiles, loading, descriptions,
+    charFiles, userFiles, loading, descriptions, charNames,
     loadSettings, syncSettings, setDescription, deleteDescription,
   }
 })

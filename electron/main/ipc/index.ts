@@ -40,13 +40,13 @@ export function registerIpcHandlers(): void {
   ipcMain.handle('settings:resolve-names', (_e, ids: string[], server: EsiServer) => resolveCharNames(ids, server))
   ipcMain.handle('settings:copy', (_e, srcPath: string, destPaths: string[]) => copySettings(srcPath, destPaths))
   // ── Backup ─────────────────────────────────────────────────────────────────
-  ipcMain.handle('backup:create', (_e, profilePath: string, name: string) => createBackup(profilePath, name))
-  ipcMain.handle('backup:create-file', (_e, profilePath: string, sourcePath: string, name: string) => createFileBackup(profilePath, sourcePath, name))
-  ipcMain.handle('backup:list', (_e, profilePath: string) => listBackups(profilePath))
-  ipcMain.handle('backup:restore', (_e, profilePath: string, backupName: string) => restoreBackup(profilePath, backupName))
-  ipcMain.handle('backup:restore-file', (_e, profilePath: string, backupName: string) => restoreFileBackup(profilePath, backupName))
-  ipcMain.handle('backup:delete', (_e, profilePath: string, backupName: string) => deleteBackup(profilePath, backupName))
-  ipcMain.handle('backup:delete-file', (_e, profilePath: string, backupName: string) => deleteFileBackup(profilePath, backupName))
+  ipcMain.handle('backup:create', (_e, profilePath: string, profileName: string, name: string) => createBackup(profilePath, profileName, name))
+  ipcMain.handle('backup:create-file', (_e, profilePath: string, profileName: string, sourcePath: string, name: string, displayName?: string) => createFileBackup(profilePath, profileName, sourcePath, name, displayName))
+  ipcMain.handle('backup:list', () => listBackups())
+  ipcMain.handle('backup:restore', (_e, profilePath: string, backupPath: string) => restoreBackup(profilePath, backupPath))
+  ipcMain.handle('backup:restore-file', (_e, profilePath: string, backupFilePath: string) => restoreFileBackup(profilePath, backupFilePath))
+  ipcMain.handle('backup:delete', (_e, backupPath: string) => deleteBackup(backupPath))
+  ipcMain.handle('backup:delete-file', (_e, backupFilePath: string) => deleteFileBackup(backupFilePath))
 
   // ── Store ──────────────────────────────────────────────────────────────────
   ipcMain.handle('store:get-description', (_e, filename: string) => getDescription(filename))

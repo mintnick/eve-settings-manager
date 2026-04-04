@@ -36,6 +36,7 @@ const fixturePath = import.meta.env.VITE_FIXTURE_PATH as string | undefined
 
 onMounted(() => {
   serverStore.detectFolder(fixturePath)
+  backupStore.loadBackups()
 })
 
 watch(() => serverStore.activeServer, async (server) => {
@@ -47,7 +48,6 @@ watch(() => serverStore.activeServer, async (server) => {
 watch(() => profileStore.activeProfile, async (profile) => {
   if (!profile) return
   await settingsStore.loadSettings()
-  await backupStore.loadBackups()
 })
 
 function formatDate(ms: number) {
@@ -93,7 +93,10 @@ async function confirmBackup() {
 
 async function createFileBackupDirect(file: SettingsFile) {
   const name = file.path.split('/').pop()?.replace(/\.dat$/, '') ?? file.id
-  await backupStore.createFileBackup(file.path, name)
+  const displayName = file.type === 'char'
+    ? (file.charName ?? settingsStore.charNames[file.id])
+    : `Account ${file.id}`
+  await backupStore.createFileBackup(file.path, name, displayName)
 }
 
 // ── Sync ──────────────────────────────────────────────────────────────────────
@@ -165,10 +168,12 @@ async function proceedWarn() {
 // ── Backup put back ────────────────────────────────────────────────────────────
 function backupDisplayName(backup: Backup): string {
   if (backup.type === 'folder') return backup.name
+  if (backup.displayName) return backup.displayName
   const charMatch = backup.name.match(/^core_char_(.+)$/)
   if (charMatch) {
-    const charFile = settingsStore.charFiles.find(f => f.id === charMatch[1])
-    return charFile?.charName ?? charMatch[1]
+    return settingsStore.charNames[charMatch[1]]
+      ?? settingsStore.charFiles.find(f => f.id === charMatch[1])?.charName
+      ?? charMatch[1]
   }
   const userMatch = backup.name.match(/^core_user_(.+)$/)
   if (userMatch) return `Account ${userMatch[1]}`
@@ -178,7 +183,7 @@ function backupDisplayName(backup: Backup): string {
 function putBackFile(backup: Backup) {
   openWarnDialog(
     t('warn.putBackFileDetail', { name: backupDisplayName(backup) }),
-    () => backupStore.restoreFileBackup(backup.name),
+    () => backupStore.restoreFileBackup(backup),
     undefined,
     false
   )
@@ -187,7 +192,7 @@ function putBackFile(backup: Backup) {
 function putBackFolder(backup: Backup) {
   openWarnDialog(
     t('warn.backupFolderDetail', { name: backup.name }),
-    () => backupStore.restoreBackup(backup.name),
+    () => backupStore.restoreBackup(backup),
     undefined,
     false
   )
@@ -197,8 +202,8 @@ function deleteBackupItem(backup: Backup) {
   openWarnDialog(
     t('warn.deleteBackupDetail', { name: backupDisplayName(backup) }),
     () => backup.type === 'file'
-      ? backupStore.deleteFileBackup(backup.name)
-      : backupStore.deleteBackup(backup.name),
+      ? backupStore.deleteFileBackup(backup)
+      : backupStore.deleteBackup(backup),
     t('warn.deleteBackupTitle'),
     false
   )
@@ -460,8 +465,8 @@ async function setLanguage(lang: string) {
             </el-icon>
             <div class="backup-item-text">
               <span class="backup-name">{{ backupDisplayName(backup) }}</span>
-              <span class="backup-meta">{{ formatDateOnly(backup.createdAt) }}</span>
-              <span class="backup-meta">{{ backup.type === 'file' ? t('sidebar.singleFile') : t('sidebar.files', { n: backup.fileCount }) }}</span>
+              <span class="backup-meta">{{ backup.profileName }}</span>
+              <span class="backup-meta">{{ formatDateOnly(backup.createdAt) }} · {{ backup.type === 'file' ? t('sidebar.singleFile') : t('sidebar.files', { n: backup.fileCount }) }}</span>
             </div>
             <el-tooltip :content="t('sidebar.showInFolder')" placement="top">
               <el-icon class="backup-action-btn backup-reveal-btn" @click.stop="revealBackup(backup.path)">
@@ -481,7 +486,7 @@ async function setLanguage(lang: string) {
               ><Delete /></el-icon>
             </el-tooltip>
           </div>
-          <div v-if="!backupStore.backups.length && profileStore.activeProfile" class="sidebar-item sidebar-empty">
+          <div v-if="!backupStore.backups.length" class="sidebar-item sidebar-empty">
             {{ t('sidebar.noBackups') }}
           </div>
         </div>

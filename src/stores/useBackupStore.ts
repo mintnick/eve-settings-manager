@@ -9,11 +9,9 @@ export const useBackupStore = defineStore('backup', () => {
   const loading = ref(false)
 
   async function loadBackups() {
-    const profileStore = useProfileStore()
-    if (!profileStore.activeProfile) return
     loading.value = true
     try {
-      backups.value = await window.ipcRenderer.invoke('backup:list', profileStore.activeProfile.path)
+      backups.value = await window.ipcRenderer.invoke('backup:list')
     } finally {
       loading.value = false
     }
@@ -22,44 +20,40 @@ export const useBackupStore = defineStore('backup', () => {
   async function createBackup(name: string) {
     const profileStore = useProfileStore()
     if (!profileStore.activeProfile) return
-    await window.ipcRenderer.invoke('backup:create', profileStore.activeProfile.path, name)
+    await window.ipcRenderer.invoke('backup:create', profileStore.activeProfile.path, profileStore.activeProfile.name, name)
     await loadBackups()
   }
 
-  async function createFileBackup(sourcePath: string, name: string) {
+  async function createFileBackup(sourcePath: string, name: string, displayName?: string) {
     const profileStore = useProfileStore()
     if (!profileStore.activeProfile) return
-    await window.ipcRenderer.invoke('backup:create-file', profileStore.activeProfile.path, sourcePath, name)
+    await window.ipcRenderer.invoke('backup:create-file', profileStore.activeProfile.path, profileStore.activeProfile.name, sourcePath, name, displayName)
     await loadBackups()
   }
 
-  async function restoreBackup(backupName: string) {
+  async function restoreBackup(backup: Backup) {
     const profileStore = useProfileStore()
     if (!profileStore.activeProfile) return
-    await window.ipcRenderer.invoke('backup:restore', profileStore.activeProfile.path, backupName)
-    await loadBackups()
-    await useSettingsStore().loadSettings()
-  }
-
-  async function restoreFileBackup(backupName: string) {
-    const profileStore = useProfileStore()
-    if (!profileStore.activeProfile) return
-    await window.ipcRenderer.invoke('backup:restore-file', profileStore.activeProfile.path, backupName)
+    await window.ipcRenderer.invoke('backup:restore', profileStore.activeProfile.path, backup.path)
     await loadBackups()
     await useSettingsStore().loadSettings()
   }
 
-  async function deleteBackup(backupName: string) {
+  async function restoreFileBackup(backup: Backup) {
     const profileStore = useProfileStore()
     if (!profileStore.activeProfile) return
-    await window.ipcRenderer.invoke('backup:delete', profileStore.activeProfile.path, backupName)
+    await window.ipcRenderer.invoke('backup:restore-file', profileStore.activeProfile.path, backup.path)
+    await loadBackups()
+    await useSettingsStore().loadSettings()
+  }
+
+  async function deleteBackup(backup: Backup) {
+    await window.ipcRenderer.invoke('backup:delete', backup.path)
     await loadBackups()
   }
 
-  async function deleteFileBackup(backupName: string) {
-    const profileStore = useProfileStore()
-    if (!profileStore.activeProfile) return
-    await window.ipcRenderer.invoke('backup:delete-file', profileStore.activeProfile.path, backupName)
+  async function deleteFileBackup(backup: Backup) {
+    await window.ipcRenderer.invoke('backup:delete-file', backup.path)
     await loadBackups()
   }
 
