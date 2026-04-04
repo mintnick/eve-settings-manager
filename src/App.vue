@@ -208,13 +208,13 @@ const LANGUAGES = [
   { value: 'en',     label: 'English' },
   { value: 'zh-CN',  label: '简体中文' },
   { value: 'zh-CHT', label: '繁體中文' },
-  { value: 'ja',     label: '日本語' },
-  { value: 'ko',     label: '한국어' },
-  { value: 'fr',     label: 'Français' },
-  { value: 'de',     label: 'Deutsch' },
-  { value: 'es',     label: 'Español' },
   { value: 'ru',     label: 'Русский' },
+  { value: 'de',     label: 'Deutsch' },
+  { value: 'fr',     label: 'Français' },
+  { value: 'es',     label: 'Español' },
   { value: 'pt-BR',  label: 'Português (BR)' },
+  { value: 'ko',     label: '한국어' },
+  { value: 'ja',     label: '日本語' },
   { value: 'pl',     label: 'Polski' },
 ]
 
@@ -493,6 +493,7 @@ async function setLanguage(lang: string) {
           </svg>
           <el-select
             :model-value="language"
+            popper-class="lang-dropdown"
             @change="setLanguage"
           >
             <el-option
@@ -800,6 +801,7 @@ html, body, #app {
   gap: 7px;
 }
 .sidebar-lang .el-select { flex: 1; }
+.lang-dropdown .el-select-dropdown__wrap { max-height: none; }
 .lang-icon {
   width: 16px;
   height: 16px;
