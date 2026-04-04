@@ -59,7 +59,7 @@ pnpm build      # sprawdzanie typów, bundling i pakowanie z electron-builder
 
 ## Zastrzeżenie
 
-EVE Online oraz wszystkie powiązane logotypy, nazwy i zasoby są własnością CCP hf. Niniejszy projekt nie jest powiązany z CCP hf ani przez nią zatwierdzony.
+EVE Online® oraz wszystkie powiązane nazwy, logotypy i zasoby są własnością CCP Games. Niniejszy projekt nie jest powiązany z CCP Games ani przez nią zatwierdzony.
 
 ---
 

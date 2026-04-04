@@ -59,7 +59,7 @@ pnpm build      # 型チェック・バンドル・electron-builder によるパ
 
 ## 免責事項
 
-EVE Online および関連するすべてのロゴ、名称、アセットは CCP hf の財産です。本プロジェクトは CCP hf とは無関係であり、CCP hf による承認を受けていません。
+EVE Online® および関連するすべての名称、ロゴ、アセットは CCP Games の財産です。本プロジェクトは CCP Games とは無関係であり、CCP Games による承認を受けていません。
 
 ---
 

@@ -59,7 +59,7 @@ pnpm build      # Typprüfung, Bundling und Paketierung mit electron-builder
 
 ## Haftungsausschluss
 
-EVE Online sowie alle zugehörigen Logos, Namen und Assets sind Eigentum von CCP hf. Dieses Projekt steht in keiner Verbindung zu CCP hf und wird von CCP hf nicht unterstützt.
+EVE Online® sowie alle zugehörigen Namen, Logos und Assets sind Eigentum von CCP Games. Dieses Projekt steht in keiner Verbindung zu CCP Games und wird von CCP Games nicht unterstützt.
 
 ---
 

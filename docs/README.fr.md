@@ -59,7 +59,7 @@ pnpm build      # vérification des types, bundling et packaging avec electron-b
 
 ## Avis de non-responsabilité
 
-EVE Online ainsi que tous les logos, noms et ressources associés sont la propriété de CCP hf. Ce projet n'est pas affilié à CCP hf ni approuvé par CCP hf.
+EVE Online® ainsi que tous les noms, logos et ressources associés sont la propriété de CCP Games. Ce projet n'est pas affilié à CCP Games ni approuvé par CCP Games.
 
 ---
 

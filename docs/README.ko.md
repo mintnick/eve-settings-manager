@@ -59,7 +59,7 @@ pnpm build      # 타입 검사, 번들링, electron-builder로 패키지 생성
 
 ## 면책 조항
 
-EVE Online 및 관련 로고, 이름, 자산은 CCP hf의 재산입니다. 이 프로젝트는 CCP hf와 관련이 없으며 CCP hf의 승인을 받지 않았습니다.
+EVE Online® 및 관련 이름, 로고, 자산은 CCP Games의 재산입니다. 이 프로젝트는 CCP Games와 무관하며 CCP Games의 승인을 받지 않았습니다.
 
 ---
 

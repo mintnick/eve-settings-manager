@@ -7,25 +7,25 @@
 
 ---
 
-## 快速開始
+## 下載安裝
 
 1. 前往 [Releases](https://github.com/mintnick/eve-settings-manager/releases/latest) 頁面。
-2. 下載適合你平台的檔案：
+2. 下載適合你系統的檔案：
    - **macOS：** `.dmg` — 開啟後將應用程式拖曳至 Applications 資料夾
    - **Windows：** `.exe` — 直接執行，無需安裝
    - **Linux：** `.AppImage` — 賦予執行權限後執行
 
-> **macOS 注意：** 本應用程式尚未進行程式碼簽章。首次啟動時，macOS 可能提示應用程式「已損毀，無法開啟」。最可靠的修復方式是在終端機執行以下指令，然後正常開啟應用程式：
+> **macOS 注意：** 本應用程式尚未進行程式碼簽署。首次開啟時，macOS 可能提示「已損毀，無法開啟」。最可靠的解決方式是在終端機執行以下指令，然後正常開啟應用程式：
 > ```bash
 > xattr -cr "/Applications/EVE Settings Manager.app"
 > ```
-> 另外，在攔截啟動後約 1 小時內，macOS 的「系統設定 → 隱私權與安全性」中會出現**仍要開啟**按鈕。若未看到該按鈕，請改用上方的終端機指令。
+> 另外，在首次被拒絕後約 1 小時內，macOS 的「系統設定 → 隱私權與安全性」中會出現**仍要開啟**按鈕。如果沒有看到該按鈕，請使用上方的終端機指令。
 
 ---
 
 ## 資料儲存
 
-所有持久化資料均儲存在本地，不會上傳至任何伺服器。
+所有資料均儲存在本地，不會發送至任何伺服器。
 
 | 平台 | 本地資料 |
 |---|---|
@@ -45,21 +45,21 @@
 
 ## 從原始碼建置
 
-**前置條件：** Node.js 18+、pnpm
+**環境要求：** Node.js 18+、pnpm
 
 ```bash
 git clone https://github.com/mintnick/eve-settings-manager.git
 cd eve-settings-manager
 pnpm install
-pnpm dev        # 啟動開發伺服器 + Electron（熱重載）
-pnpm build      # 型別檢查、打包並透過 electron-builder 產生安裝檔
+pnpm dev        # 啟動開發伺服器 + Electron（支援熱重載）
+pnpm build      # 型別檢查、建置並打包
 ```
 
 ---
 
 ## 免責聲明
 
-EVE Online 及其相關標誌、名稱和資產均為 CCP hf 的財產。本專案與 CCP hf 無關聯，亦未獲得其認可。
+EVE Online® 及其相關名稱、標誌和資產均為 CCP Games 的財產。本專案與 CCP Games 沒有任何關聯，也未獲得其授權或認可。
 
 ---
 
