@@ -3,7 +3,7 @@
 **EVE Online 設定管理器**是一款桌面應用程式，用於管理本地 EVE Online 設定檔案——在角色之間複製介面配置、備份和還原設定資料夾、為帳號新增備註，無需啟動遊戲用戶端。
 
 **語言:**
-[English](../README.md) · [简体中文](README.zh-CN.md) · [日本語](README.ja.md) · [한국어](README.ko.md) · [Français](README.fr.md) · [Deutsch](README.de.md) · [Español](README.es.md)
+[English](../README.md) · [简体中文](README.zh-CN.md) · [Русский](README.ru.md) · [Deutsch](README.de.md) · [Français](README.fr.md) · [Español](README.es.md) · [Português (BR)](README.pt-BR.md) · [한국어](README.ko.md) · [日本語](README.ja.md) · [Polski](README.pl.md)
 
 ---
 
@@ -16,8 +16,8 @@
 - **同步設定** — 一鍵將某個角色或帳號的介面配置複製到任意多個其他角色/帳號
 - **單一檔案備份** — 備份單一角色或帳號檔案，一鍵還原
 - **資料夾備份** — 為整個設定資料夾建立命名快照，從側邊欄進行還原或刪除
-- **深色 / 淺色主題** — 預設深色，偏好設定跨工作階段保存
-- **8 種語言** — English、简体中文、繁體中文、日本語、한국어、Français、Deutsch、Español
+- **深色 / 淺色主題** — 預設深色，首次啟動時跟隨系統主題；偏好設定跨工作階段保存
+- **11 種語言** — English、简体中文、繁體中文、Русский、Deutsch、Français、Español、Português (BR)、한국어、日本語、Polski
 
 ---
 
@@ -42,23 +42,29 @@
    - **macOS：** `.dmg` — 開啟後將應用程式拖曳至 Applications 資料夾
    - **Windows：** `.exe` — 直接執行，無需安裝
 
+> **macOS 注意：** 本應用程式尚未進行程式碼簽章。首次啟動時，macOS 可能提示應用程式「已損毀，無法開啟」。最可靠的修復方式是在終端機執行以下指令，然後正常開啟應用程式：
+> ```bash
+> xattr -cr "/Applications/EVE Settings Manager.app"
+> ```
+> 另外，在攔截啟動後約 1 小時內，macOS 的「系統設定 → 隱私權與安全性」中會出現**仍要開啟**按鈕。若未看到該按鈕，請改用上方的終端機指令。
+
 ---
 
 ## 資料儲存
 
-所有持久化資料（備註、主題偏好、語言、伺服器記憶、角色名稱快取）均儲存在本地 JSON 檔案中，不會上傳至任何伺服器。
+所有持久化資料均儲存在本地，不會上傳至任何伺服器。
 
-| 平台 | 路徑 |
-|---|---|
-| macOS | `~/Library/Application Support/eve-settings-manager/config.json` |
-| Windows | `%APPDATA%\eve-settings-manager\config.json` |
+| 平台 | 設定檔 | 備份 |
+|---|---|---|
+| macOS | `~/Library/Application Support/eve-settings-manager/config.json` | `~/Library/Application Support/eve-settings-manager/backups/` |
+| Windows | `%APPDATA%\eve-settings-manager\config.json` | `%APPDATA%\eve-settings-manager\backups\` |
 
 ---
 
 ## 解除安裝
 
-- **macOS：** 從 Applications 資料夾刪除應用程式。本地資料夾**不會自動刪除** — 如需完全清除，請手動刪除：`~/Library/Application Support/eve-settings-manager`
-- **Windows：** 刪除 `.exe` 檔案。如需完全清除，也請刪除資料夾：`%APPDATA%\eve-settings-manager`
+- **macOS：** 從 Applications 資料夾刪除應用程式。本地資料夾（包含設定檔和所有備份）**不會自動刪除** — 如需完全清除，請手動刪除：`~/Library/Application Support/eve-settings-manager`
+- **Windows：** 刪除 `.exe` 檔案。如需完全清除，也請刪除資料夾（包含設定檔和所有備份）：`%APPDATA%\eve-settings-manager`
 
 ---
 

@@ -3,7 +3,7 @@
 **EVE Online Settings Manager** es una aplicación de escritorio para gestionar tus archivos de configuración locales de EVE Online — copia diseños de interfaz entre personajes, realiza copias de seguridad y restaura perfiles, y añade notas a cada cuenta, sin necesidad de abrir el cliente del juego.
 
 **Idiomas:**
-[English](../README.md) · [简体中文](README.zh-CN.md) · [繁體中文](README.zh-CHT.md) · [日本語](README.ja.md) · [한국어](README.ko.md) · [Français](README.fr.md) · [Deutsch](README.de.md)
+[English](../README.md) · [简体中文](README.zh-CN.md) · [繁體中文](README.zh-CHT.md) · [Русский](README.ru.md) · [Deutsch](README.de.md) · [Français](README.fr.md) · [Português (BR)](README.pt-BR.md) · [한국어](README.ko.md) · [日本語](README.ja.md) · [Polski](README.pl.md)
 
 ---
 
@@ -16,8 +16,8 @@
 - **Sincronización de ajustes** — copia el diseño de interfaz de un personaje o cuenta a varios destinos con un solo clic
 - **Copia de seguridad de archivo** — guarda un archivo individual de personaje o cuenta; restáuralo con un clic
 - **Copia de seguridad de carpeta** — crea una instantánea con nombre del perfil completo; restáurala o elimínala desde la barra lateral
-- **Tema oscuro / claro** — oscuro por defecto; la preferencia se guarda entre sesiones
-- **8 idiomas** — English, 简体中文, 繁體中文, 日本語, 한국어, Français, Deutsch, Español
+- **Tema oscuro / claro** — oscuro por defecto; sigue el tema del sistema en el primer lanzamiento; la preferencia se guarda entre sesiones
+- **11 idiomas** — English, 简体中文, 繁體中文, Русский, Deutsch, Français, Español, Português (BR), 한국어, 日本語, Polski
 
 ---
 
@@ -42,23 +42,29 @@
    - **macOS:** `.dmg` — ábrelo y arrastra la app a Aplicaciones
    - **Windows:** `.exe` — ejecútalo directamente, sin instalación
 
+> **Nota macOS:** La app aún no está firmada con código. Al primer lanzamiento, macOS puede indicar que está «dañada y no puede abrirse». La solución más fiable es ejecutar el siguiente comando en la Terminal y luego abrir la app normalmente:
+> ```bash
+> xattr -cr "/Applications/EVE Settings Manager.app"
+> ```
+> Alternativamente, macOS muestra un botón **Abrir de todas formas** en Ajustes del Sistema → Privacidad y Seguridad durante aproximadamente 1 hora después del lanzamiento bloqueado. Si no aparece ese botón, usa el comando de Terminal indicado arriba.
+
 ---
 
 ## Almacenamiento de datos
 
-Todos los datos persistentes (notas, tema, idioma, memoria de servidor, caché de nombres de personajes) se almacenan localmente en un archivo JSON — no se envía nada a ningún servidor externo.
+Todos los datos persistentes se almacenan localmente — no se envía nada a ningún servidor externo.
 
-| Plataforma | Ruta |
-|---|---|
-| macOS | `~/Library/Application Support/eve-settings-manager/config.json` |
-| Windows | `%APPDATA%\eve-settings-manager\config.json` |
+| Plataforma | Configuración | Copias de seguridad |
+|---|---|---|
+| macOS | `~/Library/Application Support/eve-settings-manager/config.json` | `~/Library/Application Support/eve-settings-manager/backups/` |
+| Windows | `%APPDATA%\eve-settings-manager\config.json` | `%APPDATA%\eve-settings-manager\backups\` |
 
 ---
 
 ## Desinstalación
 
-- **macOS:** Elimina la app de la carpeta Aplicaciones. La carpeta de datos local **no se elimina automáticamente** — bórrala manualmente si lo deseas: `~/Library/Application Support/eve-settings-manager`
-- **Windows:** Elimina el archivo `.exe`. Para borrar todo, elimina también la carpeta de datos: `%APPDATA%\eve-settings-manager`
+- **macOS:** Elimina la app de la carpeta Aplicaciones. La carpeta de datos local (que incluye la configuración y todas las copias de seguridad) **no se elimina automáticamente** — bórrala manualmente si lo deseas: `~/Library/Application Support/eve-settings-manager`
+- **Windows:** Elimina el archivo `.exe`. Para borrar todo, elimina también la carpeta de datos (que incluye la configuración y todas las copias de seguridad): `%APPDATA%\eve-settings-manager`
 
 ---
 

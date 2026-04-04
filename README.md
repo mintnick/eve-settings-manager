@@ -3,7 +3,7 @@
 **EVE Online Settings Manager** is a desktop app for managing your local EVE Online settings files — copy character layouts between toons, back up and restore profiles, and keep notes on each account, all without touching the game client.
 
 **Languages / 语言:**
-[简体中文](docs/README.zh-CN.md) · [繁體中文](docs/README.zh-CHT.md) · [日本語](docs/README.ja.md) · [한국어](docs/README.ko.md) · [Français](docs/README.fr.md) · [Deutsch](docs/README.de.md) · [Español](docs/README.es.md)
+[简体中文](docs/README.zh-CN.md) · [繁體中文](docs/README.zh-CHT.md) · [Русский](docs/README.ru.md) · [Deutsch](docs/README.de.md) · [Français](docs/README.fr.md) · [Español](docs/README.es.md) · [Português (BR)](docs/README.pt-BR.md) · [한국어](docs/README.ko.md) · [日本語](docs/README.ja.md) · [Polski](docs/README.pl.md)
 
 ---
 
@@ -16,8 +16,8 @@
 - **Sync settings** — copy one character or account's UI layout to any number of others in one click
 - **File backup** — save a single character or account file; restore it back with one click
 - **Folder backup** — create a named snapshot of the entire profile; restore or delete from the sidebar
-- **Dark / light theme** — dark by default; preference saved across sessions
-- **8 languages** — English, 简体中文, 繁體中文, 日本語, 한국어, Français, Deutsch, Español
+- **Dark / light theme** — dark by default, follows system theme on first launch; preference saved across sessions
+- **11 languages** — English, 简体中文, 繁體中文, Русский, Deutsch, Français, Español, Português (BR), 한국어, 日本語, Polski
 
 ---
 
@@ -52,12 +52,12 @@
 
 ## Data Storage
 
-All persistent data (notes, theme preference, language, server memory, character name cache) is stored locally in a single JSON file — nothing is sent to any server.
+All persistent data is stored locally — nothing is sent to any server.
 
-| Platform | Path |
-|---|---|
-| macOS | `~/Library/Application Support/eve-settings-manager/config.json` |
-| Windows | `%APPDATA%\eve-settings-manager\config.json` |
+| Platform | Config | Backups |
+|---|---|---|
+| macOS | `~/Library/Application Support/eve-settings-manager/config.json` | `~/Library/Application Support/eve-settings-manager/backups/` |
+| Windows | `%APPDATA%\eve-settings-manager\config.json` | `%APPDATA%\eve-settings-manager\backups\` |
 
 ---
 
