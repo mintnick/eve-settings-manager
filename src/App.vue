@@ -41,8 +41,8 @@ onMounted(() => {
 
 async function selectFolder() {
   await serverStore.openFolderDialog()
-  // If activeServer ended up null (empty folder), the watcher won't fire
-  // because null→null is not a change — clear downstream state explicitly
+  // If the previous and new activeServer are the same object reference
+  // (e.g. repeated empty-folder selection), the watcher won't fire — clear explicitly
   if (!serverStore.activeServer) {
     await profileStore.loadProfiles()
   }
