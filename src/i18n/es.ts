@@ -80,8 +80,6 @@ export default {
     folderDesc: 'La app busca automáticamente tu carpeta de configuración de EVE al iniciar. Si no la encuentra, usa el botón «Seleccionar carpeta manualmente».',
     folderDefaultPaths: 'Rutas predeterminadas:',
     folderTip: 'Consejo: puedes seleccionar la carpeta raíz CCP/EVE o navegar directamente a una subcarpeta de servidor (p. ej. c_tranquility).',
-    macHeading: 'macOS: Advertencia «Dañado»',
-    macDesc: 'La app no está firmada con código. Si macOS la bloquea con «dañado y no se puede abrir», ejecuta este comando en la Terminal y luego abre la app normalmente:',
     close: 'Cerrar',
   },
   profile: {

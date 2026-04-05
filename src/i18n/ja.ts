@@ -81,8 +81,6 @@ export default {
     folderDesc: 'アプリは起動時に EVE 設定フォルダーを自動的に検索します。見つからない場合は「フォルダーを手動選択」ボタンを使用してください。',
     folderDefaultPaths: 'デフォルトのパス：',
     folderTip: 'ヒント：最上位の CCP/EVE フォルダーを選択するか、サーバーサブフォルダー（例：c_tranquility）に直接移動できます。',
-    macHeading: 'macOS：「壊れている」警告',
-    macDesc: 'アプリはコード署名されていません。macOS が「壊れているため開けません」と表示した場合は、ターミナルで以下のコマンドを実行してから通常どおり起動してください：',
     close: '閉じる',
   },
   profile: {

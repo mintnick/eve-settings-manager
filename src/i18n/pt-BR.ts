@@ -80,8 +80,6 @@ export default {
     folderDesc: 'O app procura automaticamente a pasta de configurações do EVE ao iniciar. Se não for encontrada, use o botão «Selecionar pasta manualmente».',
     folderDefaultPaths: 'Caminhos padrão:',
     folderTip: 'Dica: você pode selecionar a pasta raiz CCP/EVE ou navegar diretamente para uma subpasta de servidor (ex.: c_tranquility).',
-    macHeading: 'macOS: Aviso «Danificado»',
-    macDesc: 'O app não possui assinatura de código. Se o macOS bloqueá-lo com «danificado e não pode ser aberto», execute este comando no Terminal e abra o app normalmente:',
     close: 'Fechar',
   },
   profile: {

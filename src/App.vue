@@ -759,10 +759,6 @@ async function setLanguage(lang: string) {
           <tr><td>Linux</td><td>varies by Wine / Proton prefix</td></tr>
         </table>
         <p class="info-tip">{{ t('info.folderTip') }}</p>
-
-        <h4 class="info-section-heading">{{ t('info.macHeading') }}</h4>
-        <p class="info-p">{{ t('info.macDesc') }}</p>
-        <pre class="info-code-block">xattr -cr "/Applications/EVE Settings Manager.app"</pre>
       </div>
       <template #footer>
         <el-button @click="infoDialog = false">{{ t('info.close') }}</el-button>
@@ -1160,16 +1156,4 @@ html, body, #app {
 .info-path-table td:first-child { white-space: nowrap; color: var(--el-text-color-secondary); padding-right: 16px; }
 .info-path-table code { font-family: monospace; font-size: 12.5px; }
 .info-tip { margin: 7px 0 0; font-size: 13px; color: var(--el-text-color-secondary); line-height: 1.5; }
-.info-code-block {
-  margin: 7px 0 0;
-  padding: 8px 12px;
-  background: var(--el-fill-color);
-  border-radius: 4px;
-  font-family: monospace;
-  font-size: 13px;
-  color: var(--el-text-color-primary);
-  white-space: pre-wrap;
-  word-break: break-all;
-  line-height: 1.5;
-}
 </style>

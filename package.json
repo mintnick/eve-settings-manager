@@ -1,6 +1,6 @@
 {
   "name": "eve-settings-manager",
-  "version": "2.0.5",
+  "version": "2.0.6",
   "main": "dist-electron/main/index.js",
   "description": "EVE Online local setting files manager",
   "author": "Nick Ning",

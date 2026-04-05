@@ -81,8 +81,6 @@ export default {
     folderDesc: '앱이 시작 시 EVE 설정 폴더를 자동으로 찾습니다. 찾을 수 없는 경우 「폴더 수동 선택」 버튼을 사용하세요.',
     folderDefaultPaths: '기본 경로:',
     folderTip: '팁: 최상위 CCP/EVE 폴더를 선택하거나 서버 하위 폴더(예: c_tranquility)로 직접 이동할 수 있습니다.',
-    macHeading: 'macOS: "손상됨" 경고',
-    macDesc: '앱이 코드 서명되지 않았습니다. macOS에서 "손상되어 열 수 없음"이라고 표시되면 터미널에서 다음 명령을 실행한 후 앱을 정상적으로 여세요:',
     close: '닫기',
   },
   profile: {
