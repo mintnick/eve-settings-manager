@@ -75,6 +75,15 @@ export default {
     backupExistsTitle: 'Kopia zapasowa już istnieje',
     backupExistsDetail: 'Kopia zapasowa o nazwie „{name}“ już istnieje. Zastąpić ją?',
   },
+  info: {
+    folderHeading: 'Folder ustawień',
+    folderDesc: 'Aplikacja automatycznie wyszukuje folder ustawień EVE przy uruchomieniu. Jeśli nie zostanie znaleziony, użyj przycisku „Wybierz folder ręcznie".',
+    folderDefaultPaths: 'Domyślne ścieżki:',
+    folderTip: 'Wskazówka: możesz wybrać główny folder CCP/EVE lub przejść bezpośrednio do podfolderu serwera (np. c_tranquility).',
+    macHeading: 'macOS: ostrzeżenie „Uszkodzony"',
+    macDesc: 'Aplikacja nie jest podpisana cyfrowo. Jeśli macOS zablokuje ją komunikatem „uszkodzony i nie można go otworzyć", uruchom to polecenie w Terminalu, a następnie otwórz aplikację normalnie:',
+    close: 'Zamknij',
+  },
   profile: {
     create: 'Nowy profil',
     rename: 'Zmień nazwę profilu',

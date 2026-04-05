@@ -75,6 +75,15 @@ export default {
     backupExistsTitle: 'Backup already exists',
     backupExistsDetail: 'A backup named "{name}" already exists. Overwrite it?',
   },
+  info: {
+    folderHeading: 'Settings Folder',
+    folderDesc: 'The app looks for your EVE settings folder automatically on startup. If it\'s not found, use the Manually Select Folder button.',
+    folderDefaultPaths: 'Default paths:',
+    folderTip: 'Tip: you can select the top-level CCP/EVE folder or navigate directly into a server subfolder (e.g. c_tranquility).',
+    macHeading: 'macOS: "Damaged" Warning',
+    macDesc: 'The app is not code-signed. If macOS blocks it with "damaged and can\'t be opened", run this in Terminal, then open the app normally:',
+    close: 'Close',
+  },
   profile: {
     create: 'New Profile',
     rename: 'Rename Profile',

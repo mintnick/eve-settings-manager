@@ -374,25 +374,8 @@ function openGitHub() {
   window.ipcRenderer.invoke('shell:open-external', 'https://github.com/mintnick/eve-settings-manager')
 }
 
-// ── Help ───────────────────────────────────────────────────────────────────────
-const README_URLS: Record<string, string> = {
-  'zh-CN':  'https://github.com/mintnick/eve-settings-manager/blob/main/docs/README.zh-CN.md',
-  'zh-CHT': 'https://github.com/mintnick/eve-settings-manager/blob/main/docs/README.zh-CHT.md',
-  'ja':     'https://github.com/mintnick/eve-settings-manager/blob/main/docs/README.ja.md',
-  'ko':     'https://github.com/mintnick/eve-settings-manager/blob/main/docs/README.ko.md',
-  'fr':     'https://github.com/mintnick/eve-settings-manager/blob/main/docs/README.fr.md',
-  'de':     'https://github.com/mintnick/eve-settings-manager/blob/main/docs/README.de.md',
-  'es':     'https://github.com/mintnick/eve-settings-manager/blob/main/docs/README.es.md',
-  'ru':     'https://github.com/mintnick/eve-settings-manager/blob/main/docs/README.ru.md',
-  'pt-BR':  'https://github.com/mintnick/eve-settings-manager/blob/main/docs/README.pt-BR.md',
-  'pl':     'https://github.com/mintnick/eve-settings-manager/blob/main/docs/README.pl.md',
-}
-const FALLBACK_README = 'https://github.com/mintnick/eve-settings-manager/blob/main/README.md'
-
-function openHelp() {
-  const url = README_URLS[language.value] ?? FALLBACK_README
-  window.ipcRenderer.invoke('shell:open-external', url)
-}
+// ── Info dialog ────────────────────────────────────────────────────────────────
+const infoDialog = ref(false)
 
 // ── Theme ──────────────────────────────────────────────────────────────────────
 const isDark = ref(false)
@@ -711,7 +694,7 @@ async function setLanguage(lang: string) {
               </el-icon>
             </el-tooltip>
             <el-tooltip :content="t('actions.help')" :hide-after="0" placement="top">
-              <el-icon class="theme-toggle-btn" @click="openHelp()"><QuestionFilled /></el-icon>
+              <el-icon class="theme-toggle-btn" @click="infoDialog = true"><QuestionFilled /></el-icon>
             </el-tooltip>
           </div>
         </div>
@@ -761,6 +744,28 @@ async function setLanguage(lang: string) {
       <template #footer>
         <el-button @click="syncDialog = false">{{ t('dialog.cancel') }}</el-button>
         <el-button class="btn-confirm" :disabled="!syncSelected.length" @click="confirmSync">{{ t('dialog.sync') }}</el-button>
+      </template>
+    </el-dialog>
+
+    <!-- Info dialog -->
+    <el-dialog v-model="infoDialog" title="" width="500px">
+      <div class="info-dialog-body">
+        <h4 class="info-section-heading">{{ t('info.folderHeading') }}</h4>
+        <p class="info-p">{{ t('info.folderDesc') }}</p>
+        <p class="info-label">{{ t('info.folderDefaultPaths') }}</p>
+        <table class="info-path-table">
+          <tr><td>macOS</td><td><code>~/Library/Application Support/CCP/EVE</code></td></tr>
+          <tr><td>Windows</td><td><code>%LOCALAPPDATA%\CCP\EVE</code></td></tr>
+          <tr><td>Linux</td><td>varies by Wine / Proton prefix</td></tr>
+        </table>
+        <p class="info-tip">{{ t('info.folderTip') }}</p>
+
+        <h4 class="info-section-heading">{{ t('info.macHeading') }}</h4>
+        <p class="info-p">{{ t('info.macDesc') }}</p>
+        <pre class="info-code-block">xattr -cr "/Applications/EVE Settings Manager.app"</pre>
+      </div>
+      <template #footer>
+        <el-button @click="infoDialog = false">{{ t('info.close') }}</el-button>
       </template>
     </el-dialog>
 
@@ -1042,7 +1047,7 @@ html, body, #app {
   position: relative;
 }
 .action-bar .el-button {
-  width: 150px;
+  min-width: 150px;
   white-space: nowrap;
 }
 .action-bar-right {
@@ -1143,4 +1148,28 @@ html, body, #app {
 .el-fade-in-linear-leave-active { transition: none !important; }
 .el-fade-in-linear-enter-from,
 .el-fade-in-linear-leave-to { opacity: 0 !important; }
+
+/* Info dialog */
+.info-dialog-body { display: flex; flex-direction: column; gap: 4px; }
+.info-section-heading { margin: 14px 0 5px; font-size: 14px; font-weight: 600; color: var(--el-text-color-primary); }
+.info-section-heading:first-child { margin-top: 0; }
+.info-p { margin: 0; font-size: 14px; color: var(--el-text-color-regular); line-height: 1.6; }
+.info-label { margin: 7px 0 4px; font-size: 13px; color: var(--el-text-color-secondary); }
+.info-path-table { border-collapse: collapse; font-size: 13px; width: 100%; }
+.info-path-table td { padding: 3px 8px 3px 0; color: var(--el-text-color-regular); vertical-align: top; }
+.info-path-table td:first-child { white-space: nowrap; color: var(--el-text-color-secondary); padding-right: 16px; }
+.info-path-table code { font-family: monospace; font-size: 12.5px; }
+.info-tip { margin: 7px 0 0; font-size: 13px; color: var(--el-text-color-secondary); line-height: 1.5; }
+.info-code-block {
+  margin: 7px 0 0;
+  padding: 8px 12px;
+  background: var(--el-fill-color);
+  border-radius: 4px;
+  font-family: monospace;
+  font-size: 13px;
+  color: var(--el-text-color-primary);
+  white-space: pre-wrap;
+  word-break: break-all;
+  line-height: 1.5;
+}
 </style>

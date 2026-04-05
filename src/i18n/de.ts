@@ -75,6 +75,15 @@ export default {
     backupExistsTitle: 'Sicherung existiert bereits',
     backupExistsDetail: 'Eine Sicherung mit dem Namen "{name}" existiert bereits. Überschreiben?',
   },
+  info: {
+    folderHeading: 'Einstellungsordner',
+    folderDesc: 'Die App sucht beim Start automatisch nach dem EVE-Einstellungsordner. Falls dieser nicht gefunden wird, verwende die Schaltfläche „Ordner manuell auswählen".',
+    folderDefaultPaths: 'Standardpfade:',
+    folderTip: 'Tipp: Du kannst den übergeordneten CCP/EVE-Ordner wählen oder direkt in einen Server-Unterordner navigieren (z. B. c_tranquility).',
+    macHeading: 'macOS: „Beschädigt"-Warnung',
+    macDesc: 'Die App ist nicht codesigniert. Falls macOS sie mit „beschädigt und kann nicht geöffnet werden" blockiert, führe diesen Befehl im Terminal aus und öffne die App anschließend normal:',
+    close: 'Schließen',
+  },
   profile: {
     create: 'Neues Profil',
     rename: 'Profil umbenennen',

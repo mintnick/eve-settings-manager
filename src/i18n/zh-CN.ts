@@ -76,6 +76,15 @@ export default {
     backupExistsTitle: '备份已存在',
     backupExistsDetail: '名为「{name}」的备份已存在，确定要覆盖吗？',
   },
+  info: {
+    folderHeading: '设置文件夹',
+    folderDesc: '应用会在启动时自动查找您的 EVE 设置文件夹。若未找到，请使用「手动选择文件夹」按钮。',
+    folderDefaultPaths: '默认路径：',
+    folderTip: '提示：可以选择顶层 CCP/EVE 文件夹，也可以直接进入服务器子文件夹（如 c_tranquility）。',
+    macHeading: 'macOS：「已损坏」警告',
+    macDesc: '本应用未经代码签名。若 macOS 提示「已损坏，无法打开」，请在终端中运行以下命令，然后正常打开应用：',
+    close: '关闭',
+  },
   profile: {
     create: '新建配置文件夹',
     rename: '重命名配置文件夹',

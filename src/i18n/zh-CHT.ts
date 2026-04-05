@@ -76,6 +76,15 @@ export default {
     backupExistsTitle: '備份已存在',
     backupExistsDetail: '名為「{name}」的備份已存在，確定要覆蓋嗎？',
   },
+  info: {
+    folderHeading: '設定資料夾',
+    folderDesc: '應用程式會在啟動時自動尋找您的 EVE 設定資料夾。若未找到，請使用「手動選擇資料夾」按鈕。',
+    folderDefaultPaths: '預設路徑：',
+    folderTip: '提示：可選擇最上層 CCP/EVE 資料夾，或直接進入伺服器子資料夾（如 c_tranquility）。',
+    macHeading: 'macOS：「已損毀」警告',
+    macDesc: '本應用程式未經程式碼簽署。若 macOS 提示「已損毀，無法開啟」，請在終端機中執行以下指令，然後正常開啟應用程式：',
+    close: '關閉',
+  },
   profile: {
     create: '新增設定資料夾',
     rename: '重新命名設定資料夾',
