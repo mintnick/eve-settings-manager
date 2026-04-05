@@ -81,6 +81,9 @@ export default {
     folderDesc: '앱이 시작 시 EVE 설정 폴더를 자동으로 찾습니다. 찾을 수 없는 경우 「폴더 수동 선택」 버튼을 사용하세요.',
     folderDefaultPaths: '기본 경로:',
     folderTip: '팁: 최상위 CCP/EVE 폴더를 선택하거나 서버 하위 폴더(예: c_tranquility)로 직접 이동할 수 있습니다.',
+    dataHeading: '로컬 데이터',
+    dataDesc: '앱 데이터(백업, 메모, 환경설정)는 모두 로컬에 저장됩니다. 어떤 서버에도 전송되지 않습니다.',
+    dataLabel: '저장 위치:',
     close: '닫기',
   },
   profile: {

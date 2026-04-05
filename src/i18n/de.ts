@@ -80,6 +80,9 @@ export default {
     folderDesc: 'Die App sucht beim Start automatisch nach dem EVE-Einstellungsordner. Falls dieser nicht gefunden wird, verwende die Schaltfläche „Ordner manuell auswählen".',
     folderDefaultPaths: 'Standardpfade:',
     folderTip: 'Tipp: Du kannst den übergeordneten CCP/EVE-Ordner wählen oder direkt in einen Server-Unterordner navigieren (z. B. c_tranquility).',
+    dataHeading: 'Lokale Daten',
+    dataDesc: 'App-Daten (Sicherungen, Notizen, Einstellungen) werden lokal gespeichert. Es werden keine Daten an Server gesendet.',
+    dataLabel: 'Speicherort:',
     close: 'Schließen',
   },
   profile: {

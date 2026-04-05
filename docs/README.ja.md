@@ -5,6 +5,10 @@
 **言語:**
 [English](../README.md) · [简体中文](README.zh-CN.md) · [繁體中文](README.zh-CHT.md) · [Русский](README.ru.md) · [Deutsch](README.de.md) · [Français](README.fr.md) · [Español](README.es.md) · [Português (BR)](README.pt-BR.md) · [한국어](README.ko.md) · [Polski](README.pl.md)
 
+- [設定フォルダーの選択](#設定フォルダーの選択)
+- [macOS：「壊れている」](#はじめに)
+- [アンインストール](#アンインストール)
+
 ---
 
 ## はじめに

@@ -5,6 +5,10 @@
 **语言:**
 [English](../README.md) · [繁體中文](README.zh-CHT.md) · [Русский](README.ru.md) · [Deutsch](README.de.md) · [Français](README.fr.md) · [Español](README.es.md) · [Português (BR)](README.pt-BR.md) · [한국어](README.ko.md) · [日本語](README.ja.md) · [Polski](README.pl.md)
 
+- [选择设置文件夹](#选择设置文件夹)
+- [macOS：「已损坏」](#下载安装)
+- [卸载](#卸载)
+
 ---
 
 ## 下载安装

@@ -81,6 +81,9 @@ export default {
     folderDesc: 'アプリは起動時に EVE 設定フォルダーを自動的に検索します。見つからない場合は「フォルダーを手動選択」ボタンを使用してください。',
     folderDefaultPaths: 'デフォルトのパス：',
     folderTip: 'ヒント：最上位の CCP/EVE フォルダーを選択するか、サーバーサブフォルダー（例：c_tranquility）に直接移動できます。',
+    dataHeading: 'ローカルデータ',
+    dataDesc: 'アプリのデータ（バックアップ、メモ、設定）はすべてローカルに保存されます。どのサーバーにも送信されません。',
+    dataLabel: '保存場所：',
     close: '閉じる',
   },
   profile: {

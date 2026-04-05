@@ -5,6 +5,10 @@
 **語言:**
 [English](../README.md) · [简体中文](README.zh-CN.md) · [Русский](README.ru.md) · [Deutsch](README.de.md) · [Français](README.fr.md) · [Español](README.es.md) · [Português (BR)](README.pt-BR.md) · [한국어](README.ko.md) · [日本語](README.ja.md) · [Polski](README.pl.md)
 
+- [選擇設定資料夾](#選擇設定資料夾)
+- [macOS：「已損毀」](#下載安裝)
+- [解除安裝](#解除安裝)
+
 ---
 
 ## 下載安裝

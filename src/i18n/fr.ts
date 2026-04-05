@@ -80,6 +80,9 @@ export default {
     folderDesc: 'L\'application recherche automatiquement votre dossier de paramètres EVE au démarrage. S\'il n\'est pas trouvé, utilisez le bouton « Sélectionner manuellement le dossier ».',
     folderDefaultPaths: 'Chemins par défaut :',
     folderTip: 'Conseil : vous pouvez sélectionner le dossier CCP/EVE racine ou naviguer directement dans un sous-dossier serveur (ex. c_tranquility).',
+    dataHeading: 'Données locales',
+    dataDesc: 'Les données de l\'application (sauvegardes, notes, préférences) sont stockées localement. Rien n\'est envoyé à aucun serveur.',
+    dataLabel: 'Emplacement :',
     close: 'Fermer',
   },
   profile: {

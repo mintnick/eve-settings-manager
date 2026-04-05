@@ -80,6 +80,9 @@ export default {
     folderDesc: 'O app procura automaticamente a pasta de configurações do EVE ao iniciar. Se não for encontrada, use o botão «Selecionar pasta manualmente».',
     folderDefaultPaths: 'Caminhos padrão:',
     folderTip: 'Dica: você pode selecionar a pasta raiz CCP/EVE ou navegar diretamente para uma subpasta de servidor (ex.: c_tranquility).',
+    dataHeading: 'Dados locais',
+    dataDesc: 'Os dados do app (backups, notas, preferências) são armazenados localmente. Nada é enviado a nenhum servidor.',
+    dataLabel: 'Local:',
     close: 'Fechar',
   },
   profile: {

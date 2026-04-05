@@ -5,6 +5,10 @@
 **Języki:**
 [English](../README.md) · [简体中文](README.zh-CN.md) · [繁體中文](README.zh-CHT.md) · [Русский](README.ru.md) · [Deutsch](README.de.md) · [Français](README.fr.md) · [Español](README.es.md) · [Português (BR)](README.pt-BR.md) · [한국어](README.ko.md) · [日本語](README.ja.md)
 
+- [Folder ustawień](#wybór-folderu-ustawień)
+- [macOS: „Uszkodzony"](#pierwsze-kroki)
+- [Odinstalowanie](#odinstalowanie)
+
 ---
 
 ## Pierwsze kroki

@@ -21,14 +21,14 @@
     "target": [
       "dmg"
     ],
-    "artifactName": "${productName}-Mac-${version}.${ext}"
+    "artifactName": "${productName}-${version}.${ext}"
   },
   "dmg": {
-    "license": "build/dmg-license.txt",
-    "window": { "width": 540, "height": 380 },
+    "background": "build/dmg-background.png",
+    "window": { "width": 540, "height": 230 },
     "contents": [
-      { "x": 130, "y": 190, "type": "file" },
-      { "x": 410, "y": 190, "type": "link", "path": "/Applications" }
+      { "x": 130, "y": 85, "type": "file" },
+      { "x": 410, "y": 85, "type": "link", "path": "/Applications" }
     ]
   },
   "win": {
@@ -40,12 +40,12 @@
         ]
       }
     ],
-    "artifactName": "${productName}-Windows-${version}.${ext}"
+    "artifactName": "${productName}-${version}.${ext}"
   },
   "linux": {
     "target": [
       "AppImage"
     ],
-    "artifactName": "${productName}-Linux-${version}.${ext}"
+    "artifactName": "${productName}-${version}.${ext}"
   }
 }

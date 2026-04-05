@@ -80,6 +80,9 @@ export default {
     folderDesc: 'The app looks for your EVE settings folder automatically on startup. If it\'s not found, use the Manually Select Folder button.',
     folderDefaultPaths: 'Default paths:',
     folderTip: 'Tip: you can select the top-level CCP/EVE folder or navigate directly into a server subfolder (e.g. c_tranquility).',
+    dataHeading: 'Local Data',
+    dataDesc: 'App data (backups, notes, preferences) is stored locally. Nothing is sent to any server.',
+    dataLabel: 'Location:',
     close: 'Close',
   },
   profile: {

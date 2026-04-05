@@ -5,6 +5,10 @@
 **Sprachen:**
 [English](../README.md) · [简体中文](README.zh-CN.md) · [繁體中文](README.zh-CHT.md) · [Русский](README.ru.md) · [Français](README.fr.md) · [Español](README.es.md) · [Português (BR)](README.pt-BR.md) · [한국어](README.ko.md) · [日本語](README.ja.md) · [Polski](README.pl.md)
 
+- [Einstellungsordner](#einstellungsordner-auswählen)
+- [macOS: „Beschädigt"](#erste-schritte)
+- [Deinstallation](#deinstallation)
+
 ---
 
 ## Erste Schritte

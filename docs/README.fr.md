@@ -5,6 +5,10 @@
 **Langues :**
 [English](../README.md) · [简体中文](README.zh-CN.md) · [繁體中文](README.zh-CHT.md) · [Русский](README.ru.md) · [Deutsch](README.de.md) · [Español](README.es.md) · [Português (BR)](README.pt-BR.md) · [한국어](README.ko.md) · [日本語](README.ja.md) · [Polski](README.pl.md)
 
+- [Dossier de paramètres](#sélectionner-le-dossier-de-paramètres)
+- [macOS : « Endommagé »](#démarrage-rapide)
+- [Désinstallation](#désinstallation)
+
 ---
 
 ## Démarrage rapide

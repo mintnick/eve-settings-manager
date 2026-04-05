@@ -81,6 +81,9 @@ export default {
     folderDesc: '应用会在启动时自动查找您的 EVE 设置文件夹。若未找到，请使用「手动选择文件夹」按钮。',
     folderDefaultPaths: '默认路径：',
     folderTip: '提示：可以选择顶层 CCP/EVE 文件夹，也可以直接进入服务器子文件夹（如 c_tranquility）。',
+    dataHeading: '本地数据',
+    dataDesc: '应用数据（备份、备注、偏好设置）均存储在本地，不向任何服务器发送。',
+    dataLabel: '存储位置：',
     close: '关闭',
   },
   profile: {

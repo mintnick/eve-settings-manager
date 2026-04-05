@@ -759,6 +759,15 @@ async function setLanguage(lang: string) {
           <tr><td>Linux</td><td>varies by Wine / Proton prefix</td></tr>
         </table>
         <p class="info-tip">{{ t('info.folderTip') }}</p>
+
+        <h4 class="info-section-heading">{{ t('info.dataHeading') }}</h4>
+        <p class="info-p">{{ t('info.dataDesc') }}</p>
+        <p class="info-label">{{ t('info.dataLabel') }}</p>
+        <table class="info-path-table">
+          <tr><td>macOS</td><td><code>~/Library/Application Support/eve-settings-manager/</code></td></tr>
+          <tr><td>Windows</td><td><code>%APPDATA%\eve-settings-manager\</code></td></tr>
+          <tr><td>Linux</td><td><code>~/.config/eve-settings-manager/</code></td></tr>
+        </table>
       </div>
       <template #footer>
         <el-button @click="infoDialog = false">{{ t('info.close') }}</el-button>
