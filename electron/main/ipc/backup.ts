@@ -1,6 +1,6 @@
 import { app } from 'electron'
 import { readdir, mkdir, stat, copyFile, writeFile, readFile } from 'node:fs/promises'
-import { join, basename } from 'node:path'
+import { join, basename, dirname } from 'node:path'
 import type { Backup } from './types.js'
 
 function getBackupRoot(): string {
@@ -166,7 +166,7 @@ export async function deleteBackup(backupPath: string): Promise<void> {
 export async function deleteFileBackup(backupFilePath: string): Promise<void> {
   const { rm } = await import('node:fs/promises')
   await rm(backupFilePath, { force: true })
-  const profileBackupPath = backupFilePath.substring(0, backupFilePath.lastIndexOf('/'))
+  const profileBackupPath = dirname(backupFilePath)
   const name = basename(backupFilePath).replace(/\.dat$/, '')
   await removeMeta(profileBackupPath, name)
 }

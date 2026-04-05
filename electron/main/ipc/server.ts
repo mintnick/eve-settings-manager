@@ -11,6 +11,7 @@ const SERVER_KEYWORDS: [string, string][] = [
   ['duality',    'Duality'],
   ['thunderdome','Thunderdome'],
   ['buckshot',   'Thunderdome'],  // CCP's internal folder name for the tournament server
+  ['tornado',    'Tornado'],      // Temporary China tournament server
 ]
 
 const LANG_NAMES: Record<string, string> = {
@@ -57,7 +58,8 @@ export function inferEsiServer(serverDirName: string): EsiServer {
   // Singularity, Duality, Thunderdome and its folder alias buckshot have no
   // public ESI (Singularity's datasource was removed January 2020).
   if (lower.includes('singulari') || lower.includes('duality')
-    || lower.includes('thunderdome') || lower.includes('buckshot')) return 'other'
+    || lower.includes('thunderdome') || lower.includes('buckshot')
+    || lower.includes('tornado')) return 'other'
   return 'tq'
 }
 

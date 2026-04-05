@@ -113,9 +113,9 @@ const syncTargets = computed(() => {
 })
 
 function syncTargetLabel(file: SettingsFile): string {
-  return file.type === 'char'
-    ? ((file as CharFile).charName ?? file.id)
-    : `Account ${file.id}`
+  if (file.type === 'char') return (file as CharFile).charName ?? file.id
+  const note = settingsStore.descriptions[file.filename]
+  return note ? `Account ${file.id} — ${note}` : `Account ${file.id}`
 }
 
 const syncAllChecked = computed(() =>

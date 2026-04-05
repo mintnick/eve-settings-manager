@@ -46,9 +46,11 @@ const preload = path.join(__dirname, '../preload/index.mjs')
 const indexHtml = path.join(RENDERER_DIST, 'index.html')
 
 interface WindowBounds { x: number; y: number; width: number; height: number }
+const defaultWidth  = process.platform === 'win32' ? 1280 : 1050
+const defaultHeight = process.platform === 'win32' ?  780 :  660
 const windowStore = new ElectronStore<{ bounds: WindowBounds }>({
   name: 'window-state',
-  defaults: { bounds: { x: 0, y: 0, width: 1050, height: 660 } },
+  defaults: { bounds: { x: 0, y: 0, width: defaultWidth, height: defaultHeight } },
 })
 
 async function createWindow() {
@@ -56,6 +58,8 @@ async function createWindow() {
 
   win = new BrowserWindow({
     ...bounds,
+    minWidth: 900,
+    minHeight: 580,
     title: 'EVE Settings Manager',
     icon: path.join(process.env.VITE_PUBLIC, 'favicon.ico'),
     webPreferences: { preload },
