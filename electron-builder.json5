@@ -24,6 +24,7 @@
     "artifactName": "${productName}-Mac-${version}.${ext}"
   },
   "dmg": {
+    "license": "build/dmg-license.txt",
     "window": { "width": 540, "height": 380 },
     "contents": [
       { "x": 130, "y": 190, "type": "file" },
