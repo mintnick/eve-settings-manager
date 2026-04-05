@@ -7,32 +7,36 @@ function getBackupRoot(): string {
   return join(app.getPath('userData'), 'backups')
 }
 
-async function readMeta(profileBackupPath: string): Promise<Record<string, string>> {
+async function readMeta(): Promise<Record<string, string>> {
   try {
-    return JSON.parse(await readFile(join(profileBackupPath, 'meta.json'), 'utf8'))
+    return JSON.parse(await readFile(join(getBackupRoot(), 'meta.json'), 'utf8'))
   } catch {
     return {}
   }
 }
 
-async function updateMeta(profileBackupPath: string, name: string, displayName: string): Promise<void> {
-  const meta = await readMeta(profileBackupPath)
+async function updateMeta(name: string, displayName: string): Promise<void> {
+  const meta = await readMeta()
   meta[name] = displayName
-  await writeFile(join(profileBackupPath, 'meta.json'), JSON.stringify(meta), 'utf8')
+  await writeFile(join(getBackupRoot(), 'meta.json'), JSON.stringify(meta), 'utf8')
 }
 
-async function removeMeta(profileBackupPath: string, name: string): Promise<void> {
-  const meta = await readMeta(profileBackupPath)
+async function removeMeta(name: string): Promise<void> {
+  const root = getBackupRoot()
+  const meta = await readMeta()
+  if (!Object.keys(meta).length && !(name in meta)) return
   delete meta[name]
-  await writeFile(join(profileBackupPath, 'meta.json'), JSON.stringify(meta), 'utf8')
+  try {
+    await writeFile(join(root, 'meta.json'), JSON.stringify(meta), 'utf8')
+  } catch { /* backup root may not exist if there are no backups */ }
 }
 
 /**
  * Creates a named backup of all .dat files in a profile directory.
- * Files are copied into: <userData>/backups/<profileName>/<name>/
+ * Files are copied into: <userData>/backups/<name>/
  */
-export async function createBackup(profilePath: string, profileName: string, name: string): Promise<Backup> {
-  const backupPath = join(getBackupRoot(), profileName, name)
+export async function createBackup(profilePath: string, name: string): Promise<Backup> {
+  const backupPath = join(getBackupRoot(), name)
   await mkdir(backupPath, { recursive: true })
 
   const entries = await readdir(profilePath, { withFileTypes: true })
@@ -42,7 +46,6 @@ export async function createBackup(profilePath: string, profileName: string, nam
   return {
     type: 'folder',
     name,
-    profileName,
     path: backupPath,
     createdAt: Date.now(),
     fileCount: datFiles.length,
@@ -51,19 +54,18 @@ export async function createBackup(profilePath: string, profileName: string, nam
 
 /**
  * Creates a backup of a single .dat file.
- * File is copied into: <userData>/backups/<profileName>/<name>.dat
- * Display name is stored in the shared <profileName>/meta.json.
+ * File is copied into: <userData>/backups/<name>.dat
+ * Display name is stored in <userData>/backups/meta.json.
  */
-export async function createFileBackup(profilePath: string, profileName: string, sourcePath: string, name: string, displayName?: string): Promise<Backup> {
-  const profileBackupPath = join(getBackupRoot(), profileName)
-  await mkdir(profileBackupPath, { recursive: true })
-  const destPath = join(profileBackupPath, `${name}.dat`)
+export async function createFileBackup(profilePath: string, sourcePath: string, name: string, displayName?: string): Promise<Backup> {
+  const root = getBackupRoot()
+  await mkdir(root, { recursive: true })
+  const destPath = join(root, `${name}.dat`)
   await copyFile(sourcePath, destPath)
-  if (displayName) await updateMeta(profileBackupPath, name, displayName)
+  if (displayName) await updateMeta(name, displayName)
   return {
     type: 'file',
     name,
-    profileName,
     displayName,
     path: destPath,
     createdAt: Date.now(),
@@ -72,68 +74,55 @@ export async function createFileBackup(profilePath: string, profileName: string,
 }
 
 /**
- * Lists all backups across all profiles, newest first.
+ * Lists all backups, newest first.
  */
 export async function listBackups(): Promise<Backup[]> {
   const root = getBackupRoot()
-  const results: Backup[] = []
 
-  let profileDirs: Awaited<ReturnType<typeof readdir>>
+  let entries: Awaited<ReturnType<typeof readdir>>
   try {
-    profileDirs = (await readdir(root, { withFileTypes: true })).filter(e => e.isDirectory())
+    entries = await readdir(root, { withFileTypes: true })
   } catch {
     return []
   }
 
-  await Promise.all(profileDirs.map(async profileDir => {
-    const profileName = profileDir.name
-    const profileBackupPath = join(root, profileName)
+  const meta = await readMeta()
 
-    try {
-      const entries = await readdir(profileBackupPath, { withFileTypes: true })
-      const backups = await Promise.all([
-        // Folder backups — subdirectories
-        ...entries
-          .filter(e => e.isDirectory())
-          .map(async e => {
-            const backupPath = join(profileBackupPath, e.name)
-            const files = await readdir(backupPath)
-            const s = await stat(backupPath)
-            return {
-              type: 'folder' as const,
-              name: e.name,
-              profileName,
-              path: backupPath,
-              createdAt: s.birthtimeMs,
-              fileCount: files.filter(f => f.endsWith('.dat')).length,
-            }
-          }),
-        // File backups — .dat files in the profile dir
-        ...await (async () => {
-          const meta = await readMeta(profileBackupPath)
-          return entries
-            .filter(e => e.isFile() && e.name.endsWith('.dat'))
-            .map(async e => {
-              const filePath = join(profileBackupPath, e.name)
-              const name = e.name.replace(/\.dat$/, '')
-              const s = await stat(filePath)
-              return {
-                type: 'file' as const,
-                name,
-                profileName,
-                displayName: meta[name],
-                path: filePath,
-                createdAt: s.birthtimeMs,
-                fileCount: 1,
-              }
-            })
-        })(),
-      ])
-      results.push(...backups)
-    } catch { /* profile backup dir unreadable */ }
-  }))
+  const backups = await Promise.all([
+    // Folder backups — subdirectories
+    ...entries
+      .filter(e => e.isDirectory())
+      .map(async e => {
+        const backupPath = join(root, e.name)
+        const files = await readdir(backupPath)
+        const s = await stat(backupPath)
+        return {
+          type: 'folder' as const,
+          name: e.name,
+          path: backupPath,
+          createdAt: s.birthtimeMs,
+          fileCount: files.filter(f => f.endsWith('.dat')).length,
+        }
+      }),
+    // File backups — .dat files at root level
+    ...entries
+      .filter(e => e.isFile() && e.name.endsWith('.dat'))
+      .map(async e => {
+        const filePath = join(root, e.name)
+        const name = e.name.replace(/\.dat$/, '')
+        const s = await stat(filePath)
+        return {
+          type: 'file' as const,
+          name,
+          displayName: meta[name],
+          path: filePath,
+          createdAt: s.birthtimeMs,
+          fileCount: 1,
+        }
+      }),
+  ])
 
-  return results.sort((a, b) => b.createdAt - a.createdAt)
+  return backups.sort((a, b) => b.createdAt - a.createdAt)
 }
 
 /**
@@ -166,7 +155,6 @@ export async function deleteBackup(backupPath: string): Promise<void> {
 export async function deleteFileBackup(backupFilePath: string): Promise<void> {
   const { rm } = await import('node:fs/promises')
   await rm(backupFilePath, { force: true })
-  const profileBackupPath = dirname(backupFilePath)
   const name = basename(backupFilePath).replace(/\.dat$/, '')
-  await removeMeta(profileBackupPath, name)
+  await removeMeta(name)
 }

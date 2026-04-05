@@ -69,6 +69,8 @@ export default {
     backupFolderDetail: 'Todos os arquivos de "{name}" irão substituir o perfil atual.',
     deleteBackupTitle: 'Excluir backup?',
     deleteBackupDetail: 'O backup "{name}" será excluído permanentemente.\nSuas configurações atuais não serão afetadas.',
+    backupExistsTitle: 'O backup já existe',
+    backupExistsDetail: 'Já existe um backup chamado "{name}". Substituir?',
   },
   profile: {
     create: 'Novo perfil',

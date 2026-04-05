@@ -40,8 +40,8 @@ export function registerIpcHandlers(): void {
   ipcMain.handle('settings:resolve-names', (_e, ids: string[], server: EsiServer) => resolveCharNames(ids, server))
   ipcMain.handle('settings:copy', (_e, srcPath: string, destPaths: string[]) => copySettings(srcPath, destPaths))
   // ── Backup ─────────────────────────────────────────────────────────────────
-  ipcMain.handle('backup:create', (_e, profilePath: string, profileName: string, name: string) => createBackup(profilePath, profileName, name))
-  ipcMain.handle('backup:create-file', (_e, profilePath: string, profileName: string, sourcePath: string, name: string, displayName?: string) => createFileBackup(profilePath, profileName, sourcePath, name, displayName))
+  ipcMain.handle('backup:create', (_e, profilePath: string, name: string) => createBackup(profilePath, name))
+  ipcMain.handle('backup:create-file', (_e, profilePath: string, sourcePath: string, name: string, displayName?: string) => createFileBackup(profilePath, sourcePath, name, displayName))
   ipcMain.handle('backup:list', () => listBackups())
   ipcMain.handle('backup:restore', (_e, profilePath: string, backupPath: string) => restoreBackup(profilePath, backupPath))
   ipcMain.handle('backup:restore-file', (_e, profilePath: string, backupFilePath: string) => restoreFileBackup(profilePath, backupFilePath))

@@ -69,6 +69,8 @@ export default {
     backupFolderDetail: 'Todos los archivos de "{name}" sobrescribirán el perfil actual.',
     deleteBackupTitle: '¿Eliminar copia de seguridad?',
     deleteBackupDetail: 'La copia de seguridad "{name}" se eliminará permanentemente.\nTu configuración actual no se verá afectada.',
+    backupExistsTitle: 'La copia ya existe',
+    backupExistsDetail: 'Ya existe una copia de seguridad llamada "{name}". ¿Sobrescribirla?',
   },
   profile: {
     create: 'Nuevo perfil',

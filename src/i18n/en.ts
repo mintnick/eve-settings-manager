@@ -69,6 +69,8 @@ export default {
     backupFolderDetail: 'All files from "{name}" will overwrite the current profile.',
     deleteBackupTitle: 'Delete backup?',
     deleteBackupDetail: 'This will permanently delete the backup "{name}".\nYour current settings will not be affected.',
+    backupExistsTitle: 'Backup already exists',
+    backupExistsDetail: 'A backup named "{name}" already exists. Overwrite it?',
   },
   profile: {
     create: 'New Profile',

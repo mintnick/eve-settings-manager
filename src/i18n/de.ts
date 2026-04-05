@@ -69,6 +69,8 @@ export default {
     backupFolderDetail: 'Alle Dateien aus „{name}" überschreiben das aktuelle Profil.',
     deleteBackupTitle: 'Sicherung löschen?',
     deleteBackupDetail: 'Die Sicherung „{name}" wird dauerhaft gelöscht.\nDeine aktuellen Einstellungen werden nicht beeinflusst.',
+    backupExistsTitle: 'Sicherung existiert bereits',
+    backupExistsDetail: 'Eine Sicherung mit dem Namen "{name}" existiert bereits. Überschreiben?',
   },
   profile: {
     create: 'Neues Profil',

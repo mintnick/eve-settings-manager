@@ -70,6 +70,8 @@ export default {
     backupFolderDetail: '「{name}」のすべてのファイルが現在のプロファイルを上書きします。',
     deleteBackupTitle: 'バックアップを削除しますか？',
     deleteBackupDetail: 'バックアップ「{name}」を完全に削除します。\n現在の設定には影響しません。',
+    backupExistsTitle: 'バックアップが既に存在します',
+    backupExistsDetail: '「{name}」という名前のバックアップが既に存在します。上書きしますか？',
   },
   profile: {
     create: '新しいプロファイル',

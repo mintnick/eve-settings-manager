@@ -70,6 +70,8 @@ export default {
     backupFolderDetail: '"{name}" 中的所有文件将覆盖当前配置文件。',
     deleteBackupTitle: '删除备份？',
     deleteBackupDetail: '将永久删除备份「{name}」。\n当前设置不受影响。',
+    backupExistsTitle: '备份已存在',
+    backupExistsDetail: '名为「{name}」的备份已存在，确定要覆盖吗？',
   },
   profile: {
     create: '新建配置文件夹',

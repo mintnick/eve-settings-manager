@@ -31,7 +31,6 @@ export type SettingsFile = CharFile | UserFile
 export interface Backup {
   type: 'folder' | 'file'
   name: string
-  profileName: string
   displayName?: string
   path: string
   createdAt: number

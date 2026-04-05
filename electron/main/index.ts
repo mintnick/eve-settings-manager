@@ -65,6 +65,10 @@ async function createWindow() {
     webPreferences: { preload },
   })
 
+  // Remove the default menu bar on Windows/Linux — the app has its own UI.
+  // macOS menu bar is system-level (top of screen) and should be left intact.
+  if (process.platform !== 'darwin') win.removeMenu()
+
   win.on('close', () => {
     if (!win) return
     // Persist bounds only when not maximized/minimized so we restore a sensible size

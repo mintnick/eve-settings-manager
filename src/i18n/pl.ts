@@ -69,6 +69,8 @@ export default {
     backupFolderDetail: 'Wszystkie pliki z „{name}" nadpiszą bieżący profil.',
     deleteBackupTitle: 'Usunąć kopię zapasową?',
     deleteBackupDetail: 'Kopia zapasowa „{name}" zostanie trwale usunięta.\nBieżące ustawienia nie zostaną zmienione.',
+    backupExistsTitle: 'Kopia zapasowa już istnieje',
+    backupExistsDetail: 'Kopia zapasowa o nazwie „{name}“ już istnieje. Zastąpić ją?',
   },
   profile: {
     create: 'Nowy profil',

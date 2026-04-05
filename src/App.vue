@@ -87,6 +87,19 @@ function revealBackup(path: string) {
 async function confirmBackup() {
   const name = backupName.value.trim()
   if (!name) return
+  const exists = backupStore.backups.some(b => b.name === name && b.type === 'folder')
+  if (exists) {
+    ;(document.activeElement as HTMLElement)?.blur()
+    backupDialog.value = false
+    openWarnDialog(
+      t('warn.backupExistsDetail', { name }),
+      async () => { await backupStore.createBackup(name) },
+      t('warn.backupExistsTitle'),
+      false,
+      'confirm',
+    )
+    return
+  }
   ;(document.activeElement as HTMLElement)?.blur()
   backupDialog.value = false
   await backupStore.createBackup(name)
@@ -97,6 +110,17 @@ async function createFileBackupDirect(file: SettingsFile) {
   const displayName = file.type === 'char'
     ? (file.charName ?? settingsStore.charNames[file.id])
     : `Account ${file.id}`
+  const exists = backupStore.backups.some(b => b.name === name && b.type === 'file')
+  if (exists) {
+    openWarnDialog(
+      t('warn.backupExistsDetail', { name }),
+      async () => { await backupStore.createFileBackup(file.path, name, displayName) },
+      t('warn.backupExistsTitle'),
+      false,
+      'confirm',
+    )
+    return
+  }
   await backupStore.createFileBackup(file.path, name, displayName)
 }
 
@@ -352,6 +376,9 @@ const README_URLS: Record<string, string> = {
   'fr':     'https://github.com/mintnick/eve-settings-manager/blob/main/docs/README.fr.md',
   'de':     'https://github.com/mintnick/eve-settings-manager/blob/main/docs/README.de.md',
   'es':     'https://github.com/mintnick/eve-settings-manager/blob/main/docs/README.es.md',
+  'ru':     'https://github.com/mintnick/eve-settings-manager/blob/main/docs/README.ru.md',
+  'pt-BR':  'https://github.com/mintnick/eve-settings-manager/blob/main/docs/README.pt-BR.md',
+  'pl':     'https://github.com/mintnick/eve-settings-manager/blob/main/docs/README.pl.md',
 }
 const FALLBACK_README = 'https://github.com/mintnick/eve-settings-manager/blob/main/README.md'
 
@@ -470,8 +497,8 @@ async function setLanguage(lang: string) {
             </el-icon>
             <div class="backup-item-text">
               <span class="backup-name">{{ backupDisplayName(backup) }}</span>
-              <span class="backup-meta">{{ backup.profileName }}</span>
-              <span class="backup-meta">{{ formatDateOnly(backup.createdAt) }} · {{ backup.type === 'file' ? t('sidebar.singleFile') : t('sidebar.files', { n: backup.fileCount }) }}</span>
+              <span class="backup-meta">{{ formatDateOnly(backup.createdAt) }}</span>
+              <span class="backup-meta">{{ backup.type === 'file' ? t('sidebar.singleFile') : t('sidebar.files', { n: backup.fileCount }) }}</span>
             </div>
             <el-tooltip :content="t('sidebar.showInFolder')" placement="top">
               <el-icon class="backup-action-btn backup-reveal-btn" @click.stop="revealBackup(backup.path)">

@@ -70,6 +70,8 @@ export default {
     backupFolderDetail: '「{name}」中的所有檔案將覆蓋目前設定檔。',
     deleteBackupTitle: '刪除備份？',
     deleteBackupDetail: '將永久刪除備份「{name}」。\n目前設定不受影響。',
+    backupExistsTitle: '備份已存在',
+    backupExistsDetail: '名為「{name}」的備份已存在，確定要覆蓋嗎？',
   },
   profile: {
     create: '新增設定資料夾',

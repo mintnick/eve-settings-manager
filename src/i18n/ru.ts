@@ -69,6 +69,8 @@ export default {
     backupFolderDetail: 'Все файлы из «{name}» перезапишут текущий профиль.',
     deleteBackupTitle: 'Удалить резервную копию?',
     deleteBackupDetail: 'Резервная копия «{name}» будет удалена навсегда.\nТекущие настройки не пострадают.',
+    backupExistsTitle: 'Резервная копия уже существует',
+    backupExistsDetail: 'Резервная копия с именем "{name}" уже существует. Перезаписать?',
   },
   profile: {
     create: 'Новый профиль',
