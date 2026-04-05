@@ -10,8 +10,9 @@ export default {
   sidebar: {
     servers: 'Servidores',
     backups: 'Copias de seguridad',
-    setFolder: 'Seleccionar carpeta',
+    setFolder: 'Seleccionar carpeta manualmente',
     defaultPath: 'Ruta predeterminada',
+    folderTip: 'Seleccione su carpeta de configuración de EVE (p. ej., CCP/EVE) o acceda directamente a una carpeta de servidor (p. ej., c_tranquility)',
     noBackups: 'Sin copias de seguridad',
     showInFolder: 'Mostrar en carpeta',
     singleFile: 'archivo único',
@@ -22,7 +23,7 @@ export default {
   emptyState: {
     title: 'Carpeta de EVE no encontrada',
     sub: 'Asegúrese de que EVE Online esté instalado o seleccione la carpeta manualmente.',
-    selectFolder: 'Seleccionar carpeta',
+    selectFolder: 'Seleccionar carpeta de configuración manualmente',
   },
   table: {
     profilesLabel: 'Perfiles',
@@ -35,6 +36,8 @@ export default {
     noCharFiles: 'No se encontraron archivos de personaje',
     noAccountFiles: 'No se encontraron archivos de cuenta',
     selectProfile: 'Seleccione un perfil',
+    noProfilesSub: 'Haga clic en + arriba para crear su primer perfil',
+    noProfiles: 'Aún no hay perfiles',
     backupFile: 'Hacer copia del archivo',
     syncTip: 'Sincronizar con otros personajes',
     syncTipAccount: 'Sincronizar con otras cuentas',

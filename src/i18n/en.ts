@@ -10,8 +10,9 @@ export default {
   sidebar: {
     servers: 'Servers',
     backups: 'Backups',
-    setFolder: 'Set Folder',
+    setFolder: 'Manually Select Folder',
     defaultPath: 'Default Path',
+    folderTip: 'Select your EVE settings folder (e.g. CCP/EVE), or navigate directly into a server folder (e.g. c_tranquility)',
     noBackups: 'No backups yet',
     showInFolder: 'Show in folder',
     singleFile: 'single file',
@@ -22,7 +23,7 @@ export default {
   emptyState: {
     title: 'EVE settings folder not found',
     sub: 'Make sure EVE Online is installed, or set the folder manually.',
-    selectFolder: 'Select folder',
+    selectFolder: 'Manually Select Settings Folder',
   },
   table: {
     profilesLabel: 'Profiles',
@@ -35,6 +36,8 @@ export default {
     noCharFiles: 'No character files found',
     noAccountFiles: 'No account files found',
     selectProfile: 'Select a profile',
+    noProfiles: 'No profiles yet',
+    noProfilesSub: 'Click + above to create your first profile',
     backupFile: 'Backup file',
     syncTip: 'Sync to other characters',
     syncTipAccount: 'Sync to other accounts',

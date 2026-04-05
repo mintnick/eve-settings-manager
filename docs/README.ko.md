@@ -23,6 +23,43 @@
 
 ---
 
+## 설정 폴더 선택
+
+앱 시작 시 EVE 설정 폴더를 자동으로 찾습니다. 폴더를 찾지 못하거나 다른 경로를 지정해야 하는 경우, **설정 폴더 수동 선택** 버튼을 클릭하세요.
+
+**기본 경로:**
+
+| 플랫폼 | 기본 경로 |
+|---|---|
+| macOS | `~/Library/Application Support/CCP/EVE` |
+| Windows | `%LOCALAPPDATA%\CCP\EVE` |
+| Linux | Wine / Proton 접두사에 따라 다름 |
+
+**자동으로 찾지 못할 수 있는 이유:**
+
+- EVE가 비표준 디렉토리에 설치된 경우
+- Linux/macOS에서 커스텀 런처, Wine, 또는 Proton을 사용하는 경우
+- EVE가 여러 개 설치되어 있거나 지역 서버 클라이언트(예: 세레니티/인피니티)를 사용하는 경우
+
+**폴더 구조:**
+
+폴더에는 서버 이름의 하위 폴더(예: `c_tranquility`, `_tq_tranquility`, `c_serenity`)가 하나 이상 있어야 합니다. 각 서버 폴더 안에는 프로필 폴더(`settings_Default`, `settings_Custom` 등)가 있고, 그 안에 `.dat` 설정 파일이 들어 있습니다.
+
+```
+CCP/EVE/
+├── c_tranquility/
+│   ├── settings_Default/
+│   │   ├── core_char_12345678.dat
+│   │   └── core_user_12345678.dat
+│   └── settings_Custom/
+└── c_serenity/
+    └── settings_Default/
+```
+
+**팁:** 최상위 게임 폴더(예: `CCP/EVE`)를 선택하거나 서버 하위 폴더(예: `c_tranquility`)로 직접 이동해도 됩니다 — 앱이 나머지를 자동으로 인식합니다.
+
+---
+
 ## 데이터 저장 위치
 
 모든 영속 데이터는 로컬에 저장되며, 어떠한 서버에도 전송되지 않습니다.

@@ -10,8 +10,9 @@ export default {
   sidebar: {
     servers: 'Servidores',
     backups: 'Backups',
-    setFolder: 'Selecionar pasta',
+    setFolder: 'Selecionar pasta manualmente',
     defaultPath: 'Caminho padrão',
+    folderTip: 'Selecione a pasta de configurações do EVE (ex.: CCP/EVE) ou acesse diretamente uma pasta de servidor (ex.: c_tranquility)',
     noBackups: 'Nenhum backup ainda',
     showInFolder: 'Mostrar na pasta',
     singleFile: 'arquivo único',
@@ -22,7 +23,7 @@ export default {
   emptyState: {
     title: 'Pasta de configurações do EVE não encontrada',
     sub: 'Verifique se o EVE Online está instalado ou selecione a pasta manualmente.',
-    selectFolder: 'Selecionar pasta',
+    selectFolder: 'Selecionar pasta de configurações manualmente',
   },
   table: {
     profilesLabel: 'Perfis',
@@ -35,6 +36,8 @@ export default {
     noCharFiles: 'Nenhum arquivo de personagem encontrado',
     noAccountFiles: 'Nenhum arquivo de conta encontrado',
     selectProfile: 'Selecione um perfil',
+    noProfilesSub: 'Clique no + acima para criar seu primeiro perfil',
+    noProfiles: 'Nenhum perfil ainda',
     backupFile: 'Fazer backup do arquivo',
     syncTip: 'Sincronizar com outros personagens',
     syncTipAccount: 'Sincronizar com outras contas',

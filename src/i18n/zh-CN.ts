@@ -10,8 +10,9 @@ export default {
   sidebar: {
     servers: '服务器',
     backups: '备份',
-    setFolder: '选择文件夹',
+    setFolder: '手动选择文件夹',
     defaultPath: '默认路径',
+    folderTip: '选择您的 EVE 设置文件夹（如 CCP/EVE），或直接进入服务器文件夹（如 c_tranquility）',
     noBackups: '暂无备份',
     showInFolder: '在文件夹中显示',
     singleFile: '单个文件',
@@ -22,7 +23,7 @@ export default {
   emptyState: {
     title: '未找到 EVE 设置文件夹',
     sub: '请确认已安装 EVE Online，或手动指定文件夹。',
-    selectFolder: '选择文件夹',
+    selectFolder: '手动选择设置文件夹',
   },
   table: {
     profilesLabel: '配置文件',
@@ -35,6 +36,8 @@ export default {
     noCharFiles: '未找到角色文件',
     noAccountFiles: '未找到账户文件',
     selectProfile: '请选择配置文件',
+    noProfilesSub: '点击上方 + 创建第一个配置文件',
+    noProfiles: '暂无配置文件',
     backupFile: '备份文件',
     sync: '同步',
     syncTip: '同步到其他角色',

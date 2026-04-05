@@ -1,5 +1,5 @@
 import { ipcMain, shell } from 'electron'
-import { findEveFolder, openFolderDialog } from './folder.js'
+import { findEveFolder, openFolderDialog, resolveGameFolder } from './folder.js'
 import { detectServers, getServerStatus, inferEsiServer } from './server.js'
 import type { EsiServer } from './types.js'
 import { listProfiles, createProfile, renameProfile, duplicateProfile, deleteProfile } from './profile.js'
@@ -19,6 +19,7 @@ export function registerIpcHandlers(): void {
   // ── Folder ─────────────────────────────────────────────────────────────────
   ipcMain.handle('folder:find', (_e, customPath?: string) => findEveFolder(customPath))
   ipcMain.handle('folder:open-dialog', () => openFolderDialog())
+  ipcMain.handle('folder:resolve-game-folder', (_e, selectedPath: string) => resolveGameFolder(selectedPath))
   ipcMain.handle('folder:open-in-shell', (_e, path: string) => shell.openPath(path))
   ipcMain.handle('shell:open-external', (_e, url: string) => shell.openExternal(url))
   ipcMain.handle('folder:show-in-shell', (_e, path: string) => shell.showItemInFolder(path))

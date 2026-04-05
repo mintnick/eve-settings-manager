@@ -40,6 +40,43 @@ Go to the [Releases](https://github.com/mintnick/eve-settings-manager/releases/l
 
 ---
 
+## Selecting the Settings Folder
+
+The app looks for your EVE settings folder automatically on startup. If it is not found, or you need to point it to a different location, use the **Manually Select Settings Folder** button.
+
+**Default locations:**
+
+| Platform | Default path |
+|---|---|
+| macOS | `~/Library/Application Support/CCP/EVE` |
+| Windows | `%LOCALAPPDATA%\CCP\EVE` |
+| Linux | varies by Wine / Proton prefix |
+
+**Why it might not be found automatically:**
+
+- EVE was installed to a non-standard directory
+- You are using a custom launcher, Wine, or Proton on Linux/macOS
+- You have multiple EVE installations or regional clients (e.g. Serenity/Infinity)
+
+**What the folder looks like:**
+
+The folder should contain one or more server subfolders named after the server (e.g. `c_tranquility`, `_tq_tranquility`, `c_serenity`). Inside each server folder are profile folders (`settings_Default`, `settings_Custom`, etc.), which in turn contain the `.dat` settings files.
+
+```
+CCP/EVE/
+├── c_tranquility/
+│   ├── settings_Default/
+│   │   ├── core_char_12345678.dat
+│   │   └── core_user_12345678.dat
+│   └── settings_Custom/
+└── c_serenity/
+    └── settings_Default/
+```
+
+**Tip:** You can select either the top-level game folder (e.g. `CCP/EVE`) or navigate directly into a server subfolder (e.g. `c_tranquility`) — the app will figure out the rest.
+
+---
+
 ## Data & Privacy
 
 Everything is stored locally — nothing is sent to any server (ESI character name lookups use the official EVE API and contain no personal data).

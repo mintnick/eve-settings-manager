@@ -16,9 +16,9 @@ export const useServerStore = defineStore('server', () => {
   async function detectFolder(customPath?: string) {
     loadingFolder.value = true
     try {
-      // Use explicit custom path (e.g. dev fixture), then stored user override, then OS default
+      // Saved user override takes priority, then dev fixture path, then OS default
       const savedFolder: string = await window.ipcRenderer.invoke('store:get-custom-folder')
-      const folder = await window.ipcRenderer.invoke('folder:find', customPath || savedFolder || undefined)
+      const folder = await window.ipcRenderer.invoke('folder:find', savedFolder || customPath || undefined)
       eveFolder.value = folder ?? null
       if (folder) await detectServers()
     } finally {
@@ -27,12 +27,17 @@ export const useServerStore = defineStore('server', () => {
   }
 
   async function openFolderDialog() {
-    const folder = await window.ipcRenderer.invoke('folder:open-dialog')
-    if (folder) {
-      eveFolder.value = folder
-      activeServer.value = null
-      await window.ipcRenderer.invoke('store:set-custom-folder', folder)
-      await detectServers()
+    const selected = await window.ipcRenderer.invoke('folder:open-dialog')
+    if (!selected) return
+    const { gameFolder, serverFolder } = await window.ipcRenderer.invoke('folder:resolve-game-folder', selected)
+    eveFolder.value = gameFolder
+    activeServer.value = null
+    await window.ipcRenderer.invoke('store:set-custom-folder', gameFolder)
+    await detectServers()
+    // If user selected a server folder directly, override the auto-selection
+    if (serverFolder) {
+      const match = servers.value.find(s => s.path === serverFolder)
+      if (match) await selectServer(match)
     }
   }
 
@@ -45,7 +50,15 @@ export const useServerStore = defineStore('server', () => {
   async function detectServers() {
     if (!eveFolder.value) return
     servers.value = await window.ipcRenderer.invoke('server:detect', eveFolder.value)
-    if (!servers.value.length || activeServer.value) return
+
+    // No recognised server sub-dirs — treat the folder itself as the server so
+    // profile operations (create, list) have a valid path to work with.
+    if (!servers.value.length) {
+      activeServer.value = { name: '', path: eveFolder.value, displayName: '' }
+      return
+    }
+
+    if (activeServer.value) return
 
     // Restore last-selected server, or prefer a TQ-like server over others
     const lastName: string = await window.ipcRenderer.invoke('store:get-last-server')
@@ -58,11 +71,10 @@ export const useServerStore = defineStore('server', () => {
     activeServer.value = server
     serverStatus.value = null
     await window.ipcRenderer.invoke('store:set-last-server', server.name)
-    await refreshStatus()
   }
 
   async function refreshStatus() {
-    if (!activeServer.value) return
+    if (!activeServer.value?.name) return
     loadingStatus.value = true
     try {
       const esiServer: EsiServer = await window.ipcRenderer.invoke('server:infer-esi', activeServer.value.name)

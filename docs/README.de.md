@@ -23,6 +23,43 @@
 
 ---
 
+## Einstellungsordner auswählen
+
+Die App sucht beim Start automatisch nach dem EVE-Einstellungsordner. Falls er nicht gefunden wird oder ein anderer Pfad benötigt wird, klicken Sie auf **Einstellungsordner manuell auswählen**.
+
+**Standardpfade:**
+
+| Plattform | Standardpfad |
+|---|---|
+| macOS | `~/Library/Application Support/CCP/EVE` |
+| Windows | `%LOCALAPPDATA%\CCP\EVE` |
+| Linux | abhängig vom Wine-/Proton-Präfix |
+
+**Mögliche Ursachen, warum der Ordner nicht automatisch gefunden wird:**
+
+- EVE ist in einem nicht standardmäßigen Verzeichnis installiert
+- Ein benutzerdefinierter Launcher, Wine oder Proton wird unter Linux/macOS verwendet
+- Mehrere EVE-Installationen oder regionale Clients (z. B. Serenity/Infinity) sind vorhanden
+
+**Ordnerstruktur:**
+
+Der Ordner sollte einen oder mehrere Unterordner mit Servernamen enthalten (z. B. `c_tranquility`, `_tq_tranquility`, `c_serenity`). In jedem Serverordner befinden sich Profilordner (`settings_Default`, `settings_Custom` usw.), die wiederum die `.dat`-Einstellungsdateien enthalten.
+
+```
+CCP/EVE/
+├── c_tranquility/
+│   ├── settings_Default/
+│   │   ├── core_char_12345678.dat
+│   │   └── core_user_12345678.dat
+│   └── settings_Custom/
+└── c_serenity/
+    └── settings_Default/
+```
+
+**Tipp:** Es kann entweder der übergeordnete Spielordner (z. B. `CCP/EVE`) oder direkt ein Server-Unterordner (z. B. `c_tranquility`) ausgewählt werden — die App erkennt den Rest automatisch.
+
+---
+
 ## Datenspeicherung
 
 Alle persistenten Daten werden lokal gespeichert — nichts wird an externe Server übertragen.

@@ -10,8 +10,9 @@ export default {
   sidebar: {
     servers: 'サーバー',
     backups: 'バックアップ',
-    setFolder: 'フォルダを選択',
+    setFolder: 'フォルダーを手動選択',
     defaultPath: 'デフォルトパス',
+    folderTip: 'EVE 設定フォルダー（例：CCP/EVE）を選択するか、サーバーフォルダー（例：c_tranquility）を直接指定してください',
     noBackups: 'バックアップなし',
     showInFolder: 'フォルダで表示',
     singleFile: '単一ファイル',
@@ -22,7 +23,7 @@ export default {
   emptyState: {
     title: 'EVE 設定フォルダが見つかりません',
     sub: 'EVE Online がインストールされているか確認するか、フォルダを手動で指定してください。',
-    selectFolder: 'フォルダを選択',
+    selectFolder: '設定フォルダーを手動選択',
   },
   table: {
     profilesLabel: 'プロファイル',
@@ -35,6 +36,8 @@ export default {
     noCharFiles: 'キャラクターファイルが見つかりません',
     noAccountFiles: 'アカウントファイルが見つかりません',
     selectProfile: 'プロファイルを選択してください',
+    noProfilesSub: '上の + をクリックして最初のプロファイルを作成しましょう',
+    noProfiles: 'プロファイルがありません',
     backupFile: 'ファイルをバックアップ',
     sync: '同期',
     syncTip: '他のキャラクターに同期',

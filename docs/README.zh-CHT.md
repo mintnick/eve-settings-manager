@@ -23,6 +23,43 @@
 
 ---
 
+## 選擇設定資料夾
+
+應用程式啟動時會自動尋找 EVE 設定資料夾。若未能自動找到，或需要指定其他路徑，請點擊**手動選擇設定資料夾**按鈕。
+
+**預設路徑：**
+
+| 平台 | 預設路徑 |
+|---|---|
+| macOS | `~/Library/Application Support/CCP/EVE` |
+| Windows | `%LOCALAPPDATA%\CCP\EVE` |
+| Linux | 視 Wine / Proton 前置目錄而定 |
+
+**可能無法自動找到的原因：**
+
+- EVE 安裝於非標準目錄
+- 在 Linux/macOS 上使用自訂啟動器、Wine 或 Proton
+- 安裝了多個 EVE 用戶端或地區伺服器用戶端（如晨曦/曙光）
+
+**資料夾結構：**
+
+該資料夾應包含一個或多個以伺服器命名的子資料夾（如 `c_tranquility`、`_tq_tranquility`、`c_serenity`），每個伺服器資料夾內包含配置資料夾（`settings_Default`、`settings_Custom` 等），配置資料夾內存放 `.dat` 設定檔案。
+
+```
+CCP/EVE/
+├── c_tranquility/
+│   ├── settings_Default/
+│   │   ├── core_char_12345678.dat
+│   │   └── core_user_12345678.dat
+│   └── settings_Custom/
+└── c_serenity/
+    └── settings_Default/
+```
+
+**提示：** 可選擇頂層遊戲資料夾（如 `CCP/EVE`），或直接進入某個伺服器子資料夾（如 `c_tranquility`），應用程式將自動識別。
+
+---
+
 ## 資料儲存
 
 所有資料均儲存在本地，不會發送至任何伺服器。

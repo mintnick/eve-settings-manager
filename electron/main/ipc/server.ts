@@ -3,7 +3,7 @@ import { join } from 'node:path'
 import type { ServerDir, ServerStatus, EsiServer } from './types.js'
 import { httpsGet } from './http.js'
 
-const SERVER_KEYWORDS: [string, string][] = [
+export const SERVER_KEYWORDS: [string, string][] = [
   ['tranquil',   'Tranquility'],
   ['serenity',   'Serenity'],
   ['infinity',   'Infinity'],

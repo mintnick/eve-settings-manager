@@ -10,8 +10,9 @@ export default {
   sidebar: {
     servers: '서버',
     backups: '백업',
-    setFolder: '폴더 선택',
+    setFolder: '폴더 수동 선택',
     defaultPath: '기본 경로',
+    folderTip: 'EVE 설정 폴더(예: CCP/EVE)를 선택하거나 서버 폴더(예: c_tranquility)로 직접 이동하세요',
     noBackups: '백업 없음',
     showInFolder: '폴더에서 보기',
     singleFile: '단일 파일',
@@ -22,7 +23,7 @@ export default {
   emptyState: {
     title: 'EVE 설정 폴더를 찾을 수 없습니다',
     sub: 'EVE Online이 설치되어 있는지 확인하거나 폴더를 수동으로 지정하세요.',
-    selectFolder: '폴더 선택',
+    selectFolder: '설정 폴더 수동 선택',
   },
   table: {
     profilesLabel: '프로필',
@@ -35,6 +36,8 @@ export default {
     noCharFiles: '캐릭터 파일을 찾을 수 없습니다',
     noAccountFiles: '계정 파일을 찾을 수 없습니다',
     selectProfile: '프로필을 선택하세요',
+    noProfilesSub: '위의 + 버튼을 클릭하여 첫 번째 프로필을 만드세요',
+    noProfiles: '프로필이 없습니다',
     backupFile: '파일 백업',
     sync: '동기화',
     syncTip: '다른 캐릭터에 동기화',

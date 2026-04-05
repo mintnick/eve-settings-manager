@@ -10,8 +10,9 @@ export default {
   sidebar: {
     servers: 'Серверы',
     backups: 'Резервные копии',
-    setFolder: 'Выбрать папку',
+    setFolder: 'Выбрать папку вручную',
     defaultPath: 'Путь по умолчанию',
+    folderTip: 'Выберите папку настроек EVE (например, CCP/EVE) или перейдите в папку сервера (например, c_tranquility)',
     noBackups: 'Нет резервных копий',
     showInFolder: 'Показать в папке',
     singleFile: 'один файл',
@@ -22,7 +23,7 @@ export default {
   emptyState: {
     title: 'Папка настроек EVE не найдена',
     sub: 'Убедитесь, что EVE Online установлена, или укажите папку вручную.',
-    selectFolder: 'Выбрать папку',
+    selectFolder: 'Вручную выбрать папку настроек',
   },
   table: {
     profilesLabel: 'Профили',
@@ -35,6 +36,8 @@ export default {
     noCharFiles: 'Файлы персонажей не найдены',
     noAccountFiles: 'Файлы аккаунтов не найдены',
     selectProfile: 'Выберите профиль',
+    noProfilesSub: 'Нажмите + выше, чтобы создать первый профиль',
+    noProfiles: 'Профилей пока нет',
     backupFile: 'Резервная копия файла',
     syncTip: 'Синхронизировать с другими персонажами',
     syncTipAccount: 'Синхронизировать с другими аккаунтами',

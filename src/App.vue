@@ -39,14 +39,21 @@ onMounted(() => {
   backupStore.loadBackups()
 })
 
+async function selectFolder() {
+  await serverStore.openFolderDialog()
+  // If activeServer ended up null (empty folder), the watcher won't fire
+  // because null→null is not a change — clear downstream state explicitly
+  if (!serverStore.activeServer) {
+    await profileStore.loadProfiles()
+  }
+}
+
 watch(() => serverStore.activeServer, async (server) => {
-  if (!server) return
   await profileStore.loadProfiles()
-  await serverStore.refreshStatus()
+  if (server) await serverStore.refreshStatus()
 })
 
-watch(() => profileStore.activeProfile, async (profile) => {
-  if (!profile) return
+watch(() => profileStore.activeProfile, async () => {
   await settingsStore.loadSettings()
 })
 
@@ -76,8 +83,8 @@ function openBackupDialog() {
 }
 
 function openServerFolder() {
-  if (serverStore.activeServer)
-    window.ipcRenderer.invoke('folder:open-in-shell', serverStore.activeServer.path)
+  const target = profileStore.activeProfile?.path ?? serverStore.activeServer?.path
+  if (target) window.ipcRenderer.invoke('folder:open-in-shell', target)
 }
 
 function revealBackup(path: string) {
@@ -106,7 +113,7 @@ async function confirmBackup() {
 }
 
 async function createFileBackupDirect(file: SettingsFile) {
-  const name = file.path.split('/').pop()?.replace(/\.dat$/, '') ?? file.id
+  const name = file.path.split(/[\\/]/).pop()?.replace(/\.dat$/, '') ?? file.id
   const displayName = file.type === 'char'
     ? (file.charName ?? settingsStore.charNames[file.id])
     : `Account ${file.id}`
@@ -448,7 +455,9 @@ async function setLanguage(lang: string) {
       <el-icon :size="56" color="#606266"><Warning /></el-icon>
       <p class="empty-title">{{ t('emptyState.title') }}</p>
       <p class="empty-sub">{{ t('emptyState.sub') }}</p>
-      <el-button type="primary" @click="serverStore.openFolderDialog()">{{ t('emptyState.selectFolder') }}</el-button>
+      <el-tooltip :content="t('sidebar.folderTip')" :hide-after="0" placement="bottom">
+        <el-button type="primary" @click="selectFolder()">{{ t('emptyState.selectFolder') }}</el-button>
+      </el-tooltip>
     </div>
 
     <!-- Loading -->
@@ -473,9 +482,11 @@ async function setLanguage(lang: string) {
             {{ localizeServerName(server.displayName) }}
           </div>
           <div class="sidebar-folder-btn-wrap">
-            <button class="sidebar-folder-btn" @click="serverStore.openFolderDialog()">
-              <el-icon><FolderOpened /></el-icon> {{ t('sidebar.setFolder') }}
-            </button>
+            <el-tooltip :content="t('sidebar.folderTip')" :hide-after="0" placement="right">
+              <button class="sidebar-folder-btn" @click="selectFolder()">
+                <el-icon><FolderOpened /></el-icon> {{ t('sidebar.setFolder') }}
+              </button>
+            </el-tooltip>
             <button class="sidebar-folder-btn" @click="serverStore.resetFolder(fixturePath)">
               <el-icon><RefreshLeft /></el-icon> {{ t('sidebar.defaultPath') }}
             </button>
@@ -500,18 +511,18 @@ async function setLanguage(lang: string) {
               <span class="backup-meta">{{ formatDateOnly(backup.createdAt) }}</span>
               <span class="backup-meta">{{ backup.type === 'file' ? t('sidebar.singleFile') : t('sidebar.files', { n: backup.fileCount }) }}</span>
             </div>
-            <el-tooltip :content="t('sidebar.showInFolder')" placement="top">
+            <el-tooltip :content="t('sidebar.showInFolder')" :hide-after="0" placement="top">
               <el-icon class="backup-action-btn backup-reveal-btn" @click.stop="revealBackup(backup.path)">
                 <FolderOpened />
               </el-icon>
             </el-tooltip>
-            <el-tooltip :content="t('sidebar.restoreBackup')" placement="top">
+            <el-tooltip :content="t('sidebar.restoreBackup')" :hide-after="0" placement="top">
               <el-icon
                 class="backup-action-btn backup-restore-btn"
                 @click.stop="backup.type === 'file' ? putBackFile(backup) : putBackFolder(backup)"
               ><RefreshLeft /></el-icon>
             </el-tooltip>
-            <el-tooltip :content="t('sidebar.deleteBackup')" placement="top">
+            <el-tooltip :content="t('sidebar.deleteBackup')" :hide-after="0" placement="top">
               <el-icon
                 class="backup-action-btn backup-delete-btn"
                 @click.stop="deleteBackupItem(backup)"
@@ -547,21 +558,21 @@ async function setLanguage(lang: string) {
       <div class="right-panel">
 
         <!-- Profile tabs -->
-        <div v-if="profileStore.profiles.length" class="profile-tabs-row">
+        <div v-if="serverStore.hasFolder" class="profile-tabs-row">
           <span class="profile-tabs-label">{{ t('table.profilesLabel') }}</span>
           <div class="profile-tab-actions">
-            <el-tooltip :content="t('profile.create')" placement="top">
+            <el-tooltip :content="t('profile.create')" :hide-after="0" placement="top">
               <el-icon class="profile-tab-btn" @click="openProfileDialog('create')"><Plus /></el-icon>
             </el-tooltip>
             <el-dropdown trigger="click" @command="onProfileMenuCommand">
               <el-icon class="profile-tab-btn"><MoreFilled /></el-icon>
               <template #dropdown>
                 <el-dropdown-menu>
-                  <el-dropdown-item command="rename">{{ t('profile.rename') }}</el-dropdown-item>
-                  <el-dropdown-item command="duplicate">{{ t('profile.duplicate') }}</el-dropdown-item>
+                  <el-dropdown-item command="rename" :disabled="!profileStore.profiles.length">{{ t('profile.rename') }}</el-dropdown-item>
+                  <el-dropdown-item command="duplicate" :disabled="!profileStore.profiles.length">{{ t('profile.duplicate') }}</el-dropdown-item>
                   <el-dropdown-item
                     command="delete"
-                    :disabled="profileStore.profiles.length <= 1"
+                    :disabled="!profileStore.profiles.length"
                   >{{ t('profile.delete') }}</el-dropdown-item>
                 </el-dropdown-menu>
               </template>
@@ -589,6 +600,13 @@ async function setLanguage(lang: string) {
           <el-icon :size="32" class="loading-spin"><Files /></el-icon>
         </div>
 
+        <!-- No profiles hint -->
+        <div v-else-if="!profileStore.profiles.length" class="no-profiles-hint">
+          <el-icon :size="36" class="no-profiles-icon"><Files /></el-icon>
+          <p class="no-profiles-title">{{ t('table.noProfiles') }}</p>
+          <p class="no-profiles-sub">{{ t('table.noProfilesSub') }}</p>
+        </div>
+
         <!-- Tables -->
         <div v-else class="tables-row">
 
@@ -611,10 +629,10 @@ async function setLanguage(lang: string) {
               <el-table-column width="64" class-name="row-actions">
                 <template #default="{ row }">
                   <div class="row-actions-cell">
-                    <el-tooltip :content="t('table.backupFile')" placement="top">
+                    <el-tooltip :content="t('table.backupFile')" :hide-after="0" placement="top">
                       <el-icon class="row-icon backup-icon" @click.stop="createFileBackupDirect(row)"><DocumentCopy /></el-icon>
                     </el-tooltip>
-                    <el-tooltip :content="t('table.syncTip')" placement="top">
+                    <el-tooltip :content="t('table.syncTip')" :hide-after="0" placement="top">
                       <el-icon class="row-icon sync-icon" @click.stop="openSyncDialog(row)"><Share /></el-icon>
                     </el-tooltip>
                   </div>
@@ -645,7 +663,7 @@ async function setLanguage(lang: string) {
                       @change="(val: string) => saveNote(row.filename, val)"
                       @keydown.enter="($event.target as HTMLElement).blur()"
                     />
-                    <el-tooltip v-if="settingsStore.descriptions[row.filename]" :content="t('table.clearNote')" placement="top">
+                    <el-tooltip v-if="settingsStore.descriptions[row.filename]" :content="t('table.clearNote')" :hide-after="0" placement="top">
                       <el-icon class="notes-cell-clear" @click.stop="settingsStore.deleteDescription(row.filename)"><Remove /></el-icon>
                     </el-tooltip>
                   </div>
@@ -657,10 +675,10 @@ async function setLanguage(lang: string) {
               <el-table-column width="64" class-name="row-actions">
                 <template #default="{ row }">
                   <div class="row-actions-cell">
-                    <el-tooltip :content="t('table.backupFile')" placement="top">
+                    <el-tooltip :content="t('table.backupFile')" :hide-after="0" placement="top">
                       <el-icon class="row-icon backup-icon" @click.stop="createFileBackupDirect(row)"><DocumentCopy /></el-icon>
                     </el-tooltip>
-                    <el-tooltip :content="t('table.syncTipAccount')" placement="top">
+                    <el-tooltip :content="t('table.syncTipAccount')" :hide-after="0" placement="top">
                       <el-icon class="row-icon sync-icon" @click.stop="openSyncDialog(row)"><Share /></el-icon>
                     </el-tooltip>
                   </div>
@@ -681,18 +699,18 @@ async function setLanguage(lang: string) {
             {{ t('actions.openFolder') }}
           </el-button>
           <div class="action-bar-right">
-            <el-tooltip :content="isDark ? t('actions.lightMode') : t('actions.darkMode')" placement="top">
+            <el-tooltip :content="isDark ? t('actions.lightMode') : t('actions.darkMode')" :hide-after="0" placement="top">
               <el-icon class="theme-toggle-btn" @click="toggleTheme()">
                 <Sunny v-if="isDark" />
                 <Moon v-else />
               </el-icon>
             </el-tooltip>
-            <el-tooltip content="GitHub" placement="top">
+            <el-tooltip content="GitHub" :hide-after="0" placement="top">
               <el-icon class="theme-toggle-btn" @click="openGitHub()">
                 <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.009-.868-.013-1.703-2.782.604-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.463-1.11-1.463-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.831.092-.646.35-1.086.636-1.336-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0 1 12 6.836a9.59 9.59 0 0 1 2.504.337c1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.202 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.741 0 .267.18.578.688.48C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg>
               </el-icon>
             </el-tooltip>
-            <el-tooltip :content="t('actions.help')" placement="top">
+            <el-tooltip :content="t('actions.help')" :hide-after="0" placement="top">
               <el-icon class="theme-toggle-btn" @click="openHelp()"><QuestionFilled /></el-icon>
             </el-tooltip>
           </div>
@@ -946,6 +964,7 @@ html, body, #app {
   flex-shrink: 0;
   display: flex;
   align-items: center;
+  min-height: 40px;
   padding: 0 12px;
   background: var(--el-bg-color-page);
   border-bottom: 1px solid var(--el-border-color);
@@ -1106,6 +1125,18 @@ html, body, #app {
 @keyframes spin { to { transform: rotate(360deg); } }
 .mr-1 { margin-right: 4px; }
 .flex-1 { flex: 1; }
+.no-profiles-hint {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  color: var(--el-text-color-placeholder);
+}
+.no-profiles-icon { opacity: 0.4; }
+.no-profiles-title { margin: 0; font-size: 15px; font-weight: 500; }
+.no-profiles-sub { margin: 0; font-size: 13px; }
 
 /* Tooltips — no animation */
 .el-fade-in-linear-enter-active,

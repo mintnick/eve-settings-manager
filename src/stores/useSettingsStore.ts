@@ -14,7 +14,12 @@ export const useSettingsStore = defineStore('settings', () => {
   async function loadSettings() {
     const profileStore = useProfileStore()
     const serverStore = useServerStore()
-    if (!profileStore.activeProfile) return
+    if (!profileStore.activeProfile) {
+      charFiles.value = []
+      userFiles.value = []
+      descriptions.value = {}
+      return
+    }
     loading.value = true
     try {
       const files = await window.ipcRenderer.invoke('settings:list', profileStore.activeProfile.path)

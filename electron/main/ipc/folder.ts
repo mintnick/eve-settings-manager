@@ -1,7 +1,8 @@
 import { dialog } from 'electron'
 import { homedir, platform } from 'node:os'
-import { join } from 'node:path'
+import { join, dirname, basename } from 'node:path'
 import { access } from 'node:fs/promises'
+import { SERVER_KEYWORDS } from './server.js'
 
 export function getDefaultEvePath(): string {
   if (platform() === 'win32') {
@@ -22,6 +23,19 @@ export async function findEveFolder(customPath?: string): Promise<string | null>
   } catch {
     return null
   }
+}
+
+/**
+ * Given a path selected by the user, resolves the game folder and (if the user
+ * selected a server sub-folder directly) the matched server folder.
+ */
+export function resolveGameFolder(selectedPath: string): { gameFolder: string; serverFolder: string | null } {
+  const name = basename(selectedPath).toLowerCase()
+  const isServerFolder = SERVER_KEYWORDS.some(([kw]) => name.includes(kw))
+  if (isServerFolder) {
+    return { gameFolder: dirname(selectedPath), serverFolder: selectedPath }
+  }
+  return { gameFolder: selectedPath, serverFolder: null }
 }
 
 /**

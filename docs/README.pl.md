@@ -23,6 +23,43 @@
 
 ---
 
+## Wybór folderu ustawień
+
+Przy uruchomieniu aplikacja automatycznie szuka folderu ustawień EVE. Jeśli nie zostanie znaleziony lub chcesz wskazać inne miejsce, kliknij **Ręcznie wybierz folder ustawień**.
+
+**Domyślne lokalizacje:**
+
+| Platforma | Domyślna ścieżka |
+|---|---|
+| macOS | `~/Library/Application Support/CCP/EVE` |
+| Windows | `%LOCALAPPDATA%\CCP\EVE` |
+| Linux | zależy od prefiksu Wine / Proton |
+
+**Możliwe przyczyny braku automatycznego wykrycia:**
+
+- EVE zainstalowane w niestandardowym katalogu
+- Używasz własnego launchera, Wine lub Proton na Linux/macOS
+- Masz kilka instalacji EVE lub klientów regionalnych (np. Serenity/Infinity)
+
+**Struktura folderu:**
+
+Folder powinien zawierać jeden lub więcej podfolderów o nazwach serwerów (np. `c_tranquility`, `_tq_tranquility`, `c_serenity`). Wewnątrz każdego folderu serwera znajdują się foldery profili (`settings_Default`, `settings_Custom` itp.), a w nich pliki ustawień `.dat`.
+
+```
+CCP/EVE/
+├── c_tranquility/
+│   ├── settings_Default/
+│   │   ├── core_char_12345678.dat
+│   │   └── core_user_12345678.dat
+│   └── settings_Custom/
+└── c_serenity/
+    └── settings_Default/
+```
+
+**Wskazówka:** Możesz wybrać główny folder gry (np. `CCP/EVE`) lub przejść bezpośrednio do podfolderu serwera (np. `c_tranquility`) — aplikacja automatycznie rozpozna resztę.
+
+---
+
 ## Przechowywanie danych
 
 Wszystkie trwałe dane są przechowywane lokalnie — nic nie jest wysyłane na zewnętrzne serwery.

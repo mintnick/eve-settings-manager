@@ -10,7 +10,11 @@ export const useProfileStore = defineStore('profile', () => {
 
   async function loadProfiles() {
     const serverStore = useServerStore()
-    if (!serverStore.activeServer) return
+    if (!serverStore.activeServer) {
+      profiles.value = []
+      activeProfile.value = null
+      return
+    }
     loading.value = true
     try {
       profiles.value = await window.ipcRenderer.invoke('profile:list', serverStore.activeServer.path)

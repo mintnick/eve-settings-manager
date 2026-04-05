@@ -23,6 +23,43 @@
 
 ---
 
+## Selecionar a pasta de configurações
+
+Ao iniciar, o aplicativo busca automaticamente a pasta de configurações do EVE. Se ela não for encontrada ou você precisar apontar para outro local, clique em **Selecionar pasta de configurações manualmente**.
+
+**Locais padrão:**
+
+| Plataforma | Caminho padrão |
+|---|---|
+| macOS | `~/Library/Application Support/CCP/EVE` |
+| Windows | `%LOCALAPPDATA%\CCP\EVE` |
+| Linux | depende do prefixo do Wine / Proton |
+
+**Razões pelas quais a pasta pode não ser encontrada automaticamente:**
+
+- EVE está instalado em um diretório não padrão
+- Você usa um launcher personalizado, Wine ou Proton no Linux/macOS
+- Há várias instalações do EVE ou clientes regionais (ex.: Serenity/Infinity)
+
+**Estrutura da pasta:**
+
+A pasta deve conter uma ou mais subpastas nomeadas após os servidores (ex.: `c_tranquility`, `_tq_tranquility`, `c_serenity`). Dentro de cada pasta de servidor há pastas de perfil (`settings_Default`, `settings_Custom` etc.), que contêm os arquivos de configurações `.dat`.
+
+```
+CCP/EVE/
+├── c_tranquility/
+│   ├── settings_Default/
+│   │   ├── core_char_12345678.dat
+│   │   └── core_user_12345678.dat
+│   └── settings_Custom/
+└── c_serenity/
+    └── settings_Default/
+```
+
+**Dica:** Você pode selecionar a pasta raiz do jogo (ex.: `CCP/EVE`) ou navegar diretamente para uma subpasta de servidor (ex.: `c_tranquility`) — o aplicativo identifica o restante automaticamente.
+
+---
+
 ## Armazenamento de dados
 
 Todos os dados persistentes são armazenados localmente — nada é enviado a servidores externos.

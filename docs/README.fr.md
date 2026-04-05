@@ -23,6 +23,43 @@
 
 ---
 
+## Sélectionner le dossier de paramètres
+
+Au démarrage, l'application recherche automatiquement le dossier de paramètres EVE. S'il n'est pas trouvé ou si vous souhaitez indiquer un autre emplacement, cliquez sur **Sélectionner manuellement le dossier de paramètres**.
+
+**Emplacements par défaut :**
+
+| Plateforme | Chemin par défaut |
+|---|---|
+| macOS | `~/Library/Application Support/CCP/EVE` |
+| Windows | `%LOCALAPPDATA%\CCP\EVE` |
+| Linux | dépend du préfixe Wine / Proton |
+
+**Raisons pour lesquelles le dossier peut ne pas être trouvé automatiquement :**
+
+- EVE est installé dans un répertoire non standard
+- Vous utilisez un lanceur personnalisé, Wine ou Proton sous Linux/macOS
+- Plusieurs installations d'EVE ou des clients régionaux sont présents (ex. : Serenity/Infinity)
+
+**Structure du dossier :**
+
+Le dossier doit contenir un ou plusieurs sous-dossiers nommés d'après les serveurs (ex. : `c_tranquility`, `_tq_tranquility`, `c_serenity`). Chaque dossier serveur contient des dossiers de profil (`settings_Default`, `settings_Custom`, etc.), eux-mêmes contenant les fichiers de paramètres `.dat`.
+
+```
+CCP/EVE/
+├── c_tranquility/
+│   ├── settings_Default/
+│   │   ├── core_char_12345678.dat
+│   │   └── core_user_12345678.dat
+│   └── settings_Custom/
+└── c_serenity/
+    └── settings_Default/
+```
+
+**Astuce :** Vous pouvez sélectionner le dossier racine du jeu (ex. : `CCP/EVE`) ou naviguer directement dans un sous-dossier serveur (ex. : `c_tranquility`) — l'application s'adapte automatiquement.
+
+---
+
 ## Stockage des données
 
 Toutes les données persistantes sont stockées localement — rien n'est envoyé à un serveur externe.
