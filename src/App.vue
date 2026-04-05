@@ -601,7 +601,7 @@ async function setLanguage(lang: string) {
               :empty-text="profileStore.activeProfile ? t('table.noCharFiles') : t('table.selectProfile')"
               class="settings-table"
             >
-              <el-table-column prop="charName" :label="t('table.colCharacter')" sortable min-width="45">
+              <el-table-column prop="charName" :label="t('table.colCharacter')" sortable min-width="45" show-overflow-tooltip>
                 <template #default="{ row }">{{ row.charName ?? row.id }}</template>
               </el-table-column>
               <el-table-column prop="id" :label="t('table.colId')" width="110" />
@@ -635,7 +635,7 @@ async function setLanguage(lang: string) {
               class="settings-table"
             >
               <el-table-column prop="id" :label="t('table.colAccountId')" sortable width="110" />
-              <el-table-column :label="t('table.colNotes')" min-width="45">
+              <el-table-column :label="t('table.colNotes')" min-width="45" show-overflow-tooltip>
                 <template #default="{ row }">
                   <div class="notes-cell">
                     <el-input
@@ -1008,6 +1008,7 @@ html, body, #app {
 .settings-table .el-table__row { height: 46px; }
 .settings-table .el-table__cell { font-size: 15px !important; padding: 0 !important; }
 .settings-table .el-table__row:hover td.el-table__cell { background: var(--el-color-primary-light-8) !important; }
+.settings-table .el-table__header th.el-table__cell .cell { white-space: nowrap; }
 
 /* Action bar */
 .action-bar {
