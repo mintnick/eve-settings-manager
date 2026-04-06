@@ -6,14 +6,14 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 **EVE Online Settings Manager** — a desktop app (Electron + Vue 3 + TypeScript + Element Plus) for managing local EVE Online settings files (per-character and per-account).
 
-The `electron-vue-refactor` branch is the active branch. The app is feature-complete and in active polish/bugfix work. The legacy vanilla JS app lives on `main`.
+The app is feature-complete and actively maintained on `main`.
 
 ## Commands
 
 ```bash
 pnpm dev          # Start dev server + Electron (hot reload)
 pnpm build        # Type-check, build renderer + electron, package with electron-builder
-pnpm test         # Run all automated tests (Vitest, 73 tests across 6 IPC test files)
+pnpm test         # Run all automated tests (Vitest, 72 tests across 6 IPC test files)
 pnpm reset-fixtures  # Reset test fixture files to a clean state
 ```
 
