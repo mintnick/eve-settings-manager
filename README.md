@@ -126,3 +126,9 @@ EVE Online® and all related names, logos, and assets are the property of CCP Ga
 ## License
 
 MIT — see [LICENSE](LICENSE)
+
+---
+
+## Special Thanks
+
+[@Bombe](https://github.com/Bombe) — for contributions to the original version of this app.
