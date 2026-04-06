@@ -14,6 +14,8 @@
   <a href="https://github.com/mintnick/eve-settings-manager/releases/latest"><strong>Download ⬇</strong></a>
   &nbsp;·&nbsp;
   <a href="https://youtu.be/yBfFbY06otg"><strong>Demo Video ↗</strong></a>
+  &nbsp;·&nbsp;
+  <a href="https://www.virustotal.com/gui/file/9bd8174932cc0c0d14cf5fd1910805bf8206456843a844c709aebd579bd7b5ae?nocache=1"><strong>VirusTotal ↗</strong></a>
 </p>
 
 <p align="center">
