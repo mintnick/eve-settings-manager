@@ -29,7 +29,7 @@
 
 ## Sélectionner le dossier de paramètres
 
-Au démarrage, l'application recherche automatiquement le dossier de paramètres EVE. S'il n'est pas trouvé ou si vous souhaitez indiquer un autre emplacement, cliquez sur **Sélectionner manuellement le dossier de paramètres**.
+Au démarrage, l'application recherche automatiquement le dossier de paramètres EVE. S'il n'est pas trouvé ou si vous souhaitez indiquer un autre emplacement, cliquez sur **Sélectionner manuellement**.
 
 **Emplacements par défaut :**
 

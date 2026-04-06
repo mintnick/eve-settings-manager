@@ -29,7 +29,7 @@
 
 ## Einstellungsordner auswählen
 
-Die App sucht beim Start automatisch nach dem EVE-Einstellungsordner. Falls er nicht gefunden wird oder ein anderer Pfad benötigt wird, klicken Sie auf **Einstellungsordner manuell auswählen**.
+Die App sucht beim Start automatisch nach dem EVE-Einstellungsordner. Falls er nicht gefunden wird oder ein anderer Pfad benötigt wird, klicken Sie auf **Ordner manuell wählen**.
 
 **Standardpfade:**
 

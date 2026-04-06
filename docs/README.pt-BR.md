@@ -29,7 +29,7 @@
 
 ## Selecionar a pasta de configurações
 
-Ao iniciar, o aplicativo busca automaticamente a pasta de configurações do EVE. Se ela não for encontrada ou você precisar apontar para outro local, clique em **Selecionar pasta de configurações manualmente**.
+Ao iniciar, o aplicativo busca automaticamente a pasta de configurações do EVE. Se ela não for encontrada ou você precisar apontar para outro local, clique em **Selecionar pasta manualmente**.
 
 **Locais padrão:**
 

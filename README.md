@@ -11,7 +11,9 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/mintnick/eve-settings-manager/releases/latest"><strong>Download →</strong></a>
+  <a href="https://github.com/mintnick/eve-settings-manager/releases/latest"><strong>Download ⬇</strong></a>
+  &nbsp;·&nbsp;
+  <a href="https://youtu.be/yBfFbY06otg"><strong>Demo Video ↗</strong></a>
 </p>
 
 <p align="center">
@@ -46,7 +48,7 @@ Go to the [Releases](https://github.com/mintnick/eve-settings-manager/releases/l
 
 ## Selecting the Settings Folder
 
-The app looks for your EVE settings folder automatically on startup. If it is not found, or you need to point it to a different location, use the **Manually Select Settings Folder** button.
+The app looks for your EVE settings folder automatically on startup. If it is not found, or you need to point it to a different location, use the **Manually Select Folder** button.
 
 **Default locations:**
 

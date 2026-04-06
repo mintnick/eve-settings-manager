@@ -29,7 +29,7 @@
 
 ## Wybór folderu ustawień
 
-Przy uruchomieniu aplikacja automatycznie szuka folderu ustawień EVE. Jeśli nie zostanie znaleziony lub chcesz wskazać inne miejsce, kliknij **Ręcznie wybierz folder ustawień**.
+Przy uruchomieniu aplikacja automatycznie szuka folderu ustawień EVE. Jeśli nie zostanie znaleziony lub chcesz wskazać inne miejsce, kliknij **Wybierz folder ręcznie**.
 
 **Domyślne lokalizacje:**
 

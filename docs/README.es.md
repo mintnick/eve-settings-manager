@@ -29,7 +29,7 @@
 
 ## Seleccionar la carpeta de configuración
 
-Al iniciarse, la aplicación busca automáticamente la carpeta de configuración de EVE. Si no se encuentra o necesita indicar otra ubicación, haga clic en **Seleccionar carpeta de configuración manualmente**.
+Al iniciarse, la aplicación busca automáticamente la carpeta de configuración de EVE. Si no se encuentra o necesita indicar otra ubicación, haga clic en **Seleccionar carpeta manualmente**.
 
 **Ubicaciones predeterminadas:**
 
