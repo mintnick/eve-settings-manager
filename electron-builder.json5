@@ -1,0 +1,51 @@
+// @see https://www.electron.build/configuration/configuration
+{
+  "$schema": "https://raw.githubusercontent.com/electron-userland/electron-builder/master/packages/app-builder-lib/scheme.json",
+  "appId": "com.mintnick.eve-settings-manager",
+  "asar": true,
+  "productName": "EVE Settings Manager",
+  "directories": {
+    "output": "release/${version}"
+  },
+  "publish": {
+    "provider": "github",
+    "owner": "mintnick",
+    "repo": "eve-settings-manager"
+  },
+  "files": [
+    "dist",
+    "dist-electron"
+  ],
+  "mac": {
+    "identity": null,
+    "target": [
+      "dmg"
+    ],
+    "artifactName": "${productName}-${version}.${ext}"
+  },
+  "dmg": {
+    "background": "build/dmg-background.png",
+    "window": { "width": 540, "height": 230 },
+    "contents": [
+      { "x": 130, "y": 85, "type": "file" },
+      { "x": 410, "y": 85, "type": "link", "path": "/Applications" }
+    ]
+  },
+  "win": {
+    "target": [
+      {
+        "target": "portable",
+        "arch": [
+          "x64"
+        ]
+      }
+    ],
+    "artifactName": "${productName}-${version}.${ext}"
+  },
+  "linux": {
+    "target": [
+      "AppImage"
+    ],
+    "artifactName": "${productName}-${version}.${ext}"
+  }
+}

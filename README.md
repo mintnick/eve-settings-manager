@@ -1,47 +1,126 @@
-# EVE Settings Manager
+<p align="center">
+  <img src="docs/icon_pack/icon-128.png" width="96" alt="EVE Settings Manager" />
+</p>
 
-[中文文档](/docs/README_CN.md)
+<h1 align="center">EVE Settings Manager</h1>
 
-A third party tool that manages EVE Online local setting files.
+<p align="center">
+  A desktop app for managing your local EVE Online settings files —<br>
+  copy layouts between characters, back up profiles, and keep notes on accounts,<br>
+  all without touching the game client.
+</p>
 
-Refactor and upgrade from my previous project [ESAM](https://github.com/mintnick/ESAM), inspired by [EANM](https://github.com/FontaineRiant/EANM).
+<p align="center">
+  <a href="https://github.com/mintnick/eve-settings-manager/releases/latest"><strong>Download →</strong></a>
+</p>
 
-Newest version: v1.1.2
+<p align="center">
+  <a href="docs/README.zh-CN.md">简体中文</a> · <a href="docs/README.zh-CHT.md">繁體中文</a> · <a href="docs/README.ru.md">Русский</a> · <a href="docs/README.de.md">Deutsch</a> · <a href="docs/README.fr.md">Français</a> · <a href="docs/README.es.md">Español</a> · <a href="docs/README.pt-BR.md">Português (BR)</a> · <a href="docs/README.ko.md">한국어</a> · <a href="docs/README.ja.md">日本語</a> · <a href="docs/README.pl.md">Polski</a>
+</p>
 
-## Contributors
+- [Settings Folder](#selecting-the-settings-folder)
+- [macOS: "Damaged"](#download)
+- [Uninstall](#uninstalling)
 
-<a href="https://github.com/Bombe"> 
-    <img src="https://avatars.githubusercontent.com/u/81599?v=4" width="80px" height="80px"/>
-</a>
+---
 
-## Screenshot
+![EVE Settings Manager](docs/screenshots/screenshot-macos.png)
 
-![Screenshot 2024-01-31 at 07 48 24](https://github.com/mintnick/eve-settings-manager/assets/14357052/291cff8b-4b5b-4ffe-b65a-297afb0768aa)
+---
 
-## Usage
+## Download
 
-1. Download and unzip
-    - for MacOS: you can either run the .app file directly, or install it with .dmg file
-2. Run the program, select the setting folder and profile you are using
-3. (Optional) Use "Backup" button to prepare a backup
-4. Select one as base profile
-    - overwrite all other profiles
-    - overwrite selected profiles
+Go to the [Releases](https://github.com/mintnick/eve-settings-manager/releases/latest) page and download for your platform:
 
-## Other Features
+- **macOS** — `.dmg` — open and drag to Applications
+- **Windows** — `.exe` — run directly, no installation needed
+- **Linux** — `.AppImage` — make executable and run
 
-- Fetch and save character names
-- Add notes to characters and accounts
-- Support English and Simplified/Tranditional Chinese
-- Support Tranquility, Serenity, Singularity, Infinity (aka Dawn/曙光, new China server), Thunderdome
+> **macOS note:** The app is not yet code-signed. On first launch macOS may say it is "damaged and can't be opened". The most reliable fix is to run this in Terminal, then open the app normally:
+> ```bash
+> xattr -cr "/Applications/EVE Settings Manager.app"
+> ```
+> Alternatively, macOS shows an **Open Anyway** button in System Settings → Privacy & Security for about an hour after the blocked launch. If you don't see it, use the Terminal command above.
 
-## Uninstall
+---
 
-1. Delete the executable file
-2. (Optional) Delete the config file:
-    - Windows: Delete **C:\Users\\\<User>\AppData\Roaming\eve-settings-manager**
-    - Mac: Delete **\<User>/Library/Application Support/eve-settings-manager**
+## Selecting the Settings Folder
 
-## :warning: About Chat Channel Password
+The app looks for your EVE settings folder automatically on startup. If it is not found, or you need to point it to a different location, use the **Manually Select Settings Folder** button.
 
-If the base character is in a password-protected chat channel, the other characters won't grant permission automatically, but require entering password.
+**Default locations:**
+
+| Platform | Default path |
+|---|---|
+| macOS | `~/Library/Application Support/CCP/EVE` |
+| Windows | `%LOCALAPPDATA%\CCP\EVE` |
+| Linux | varies by Wine / Proton prefix |
+
+**Why it might not be found automatically:**
+
+- EVE was installed to a non-standard directory
+- You are using a custom launcher, Wine, or Proton on Linux/macOS
+- You have multiple EVE installations or regional clients (e.g. Serenity/Infinity)
+
+**What the folder looks like:**
+
+The folder should contain one or more server subfolders named after the server (e.g. `c_tranquility`, `_tq_tranquility`, `c_serenity`). Inside each server folder are profile folders (`settings_Default`, `settings_Custom`, etc.), which in turn contain the `.dat` settings files.
+
+```
+CCP/EVE/
+├── c_tranquility/
+│   ├── settings_Default/
+│   │   ├── core_char_12345678.dat
+│   │   └── core_user_12345678.dat
+│   └── settings_Custom/
+└── c_serenity/
+    └── settings_Default/
+```
+
+**Tip:** You can select either the top-level game folder (e.g. `CCP/EVE`) or navigate directly into a server subfolder (e.g. `c_tranquility`) — the app will figure out the rest.
+
+---
+
+## Data & Privacy
+
+Everything is stored locally — nothing is sent to any server (ESI character name lookups use the official EVE API and contain no personal data).
+
+| Platform | Local data |
+|---|---|
+| macOS | `~/Library/Application Support/eve-settings-manager/` |
+| Windows | `%APPDATA%\eve-settings-manager\` |
+| Linux | `~/.config/eve-settings-manager/` |
+
+---
+
+## Uninstalling
+
+- **macOS:** Delete the app from Applications. The data folder is not removed automatically — delete it manually if you want a clean uninstall: `~/Library/Application Support/eve-settings-manager`
+- **Windows:** Delete the `.exe`. Also delete the data folder to remove everything: `%APPDATA%\eve-settings-manager`
+- **Linux:** Delete the `.AppImage`. Also delete the data folder to remove everything: `~/.config/eve-settings-manager`
+
+---
+
+## Building from Source
+
+**Prerequisites:** Node.js 18+, pnpm
+
+```bash
+git clone https://github.com/mintnick/eve-settings-manager.git
+cd eve-settings-manager
+pnpm install
+pnpm dev        # dev server + Electron with hot reload
+pnpm build      # type-check, bundle, and package
+```
+
+---
+
+## Disclaimer
+
+EVE Online® and all related names, logos, and assets are the property of CCP Games.
+
+---
+
+## License
+
+MIT — see [LICENSE](LICENSE)

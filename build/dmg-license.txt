@@ -1,0 +1,11 @@
+EVE Settings Manager
+
+This app is not code-signed. macOS may block it on first launch with "damaged and can't be opened".
+
+To fix this, open Terminal and run:
+
+    xattr -cr "/Applications/EVE Settings Manager.app"
+
+Then open the app normally.
+
+Alternatively, after a blocked launch attempt, go to System Settings → Privacy & Security and click "Open Anyway".
