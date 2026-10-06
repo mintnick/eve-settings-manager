@@ -33,6 +33,13 @@ process.env.VITE_PUBLIC = VITE_DEV_SERVER_URL
 // Disable GPU Acceleration for Windows 7
 if (os.release().startsWith('6.1')) app.disableHardwareAcceleration()
 
+// Linux: run under X11/XWayland by default. Electron 38+ auto-selects native Wayland,
+// whose fractional scaling can misalign click areas with rendered UI (issue #15).
+// Users can still opt into Wayland by launching with --ozone-platform=wayland.
+if (process.platform === 'linux' && !app.commandLine.hasSwitch('ozone-platform')) {
+  app.commandLine.appendSwitch('ozone-platform', 'x11')
+}
+
 // Set application name for Windows 10+ notifications
 if (process.platform === 'win32') app.setAppUserModelId(app.getName())
 
