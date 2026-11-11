@@ -29,7 +29,7 @@
   "devDependencies": {
     "@element-plus/icons-vue": "^2.3.2",
     "@vitejs/plugin-vue": "^6.0.5",
-    "electron": "^41.1.1",
+    "electron": "^42.11.16",
     "electron-builder": "^26.8.2",
     "electron-store": "^11.0.2",
     "element-plus": "^2.13.6",
